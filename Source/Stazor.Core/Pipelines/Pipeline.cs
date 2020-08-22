@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Stazor.Core.Helpers;
+using Stazor.Core.Plugins;
 
 namespace Stazor.Core.Pipelines
 {
-    public class Pipeline
+    public sealed class Pipeline
     {
         readonly List<IPlugin> _plugins;
 
@@ -32,6 +33,22 @@ namespace Stazor.Core.Pipelines
                 yield return input;
             }
         }
+
+        //public async IAsyncEnumerable<IDocument> ExecuteAsync()
+        //{
+        //    //var inputs = AsyncEnumerableHelpers.Empty<IDocument>();
+        //    var s = new SortedList<string, IDocument>();
+
+        //    foreach (var plugin in _plugins)
+        //    {
+        //        plugin.Execute(s);
+        //    }
+
+        //    await foreach (var input in inputs)
+        //    {
+        //        yield return input;
+        //    }
+        //}
 
         public void WriteFiles()
         {

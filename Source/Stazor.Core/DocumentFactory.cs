@@ -2,7 +2,7 @@
 {
     public static class DocumentFactory
     {
-        public static IDocument GetDocument(string content)
+        public static IDocument GetDocument(byte[] content)
             => new Document(content);
     }
 }
