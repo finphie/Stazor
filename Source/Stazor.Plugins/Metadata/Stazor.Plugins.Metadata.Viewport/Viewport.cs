@@ -2,8 +2,9 @@
 using System.Buffers;
 using System.Collections.Generic;
 using Cysharp.Text;
+using Stazor.Core;
 
-namespace Stazor.Core.Plugins.Metadata
+namespace Stazor.Plugins.Metadata
 {
     public sealed class Viewport : IPlugin
     {

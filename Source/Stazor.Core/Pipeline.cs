@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Stazor.Core.Helpers;
-using Stazor.Core.Plugins;
 
-namespace Stazor.Core.Pipelines
+namespace Stazor.Core
 {
     public sealed class Pipeline
     {

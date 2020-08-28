@@ -1,0 +1,9 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)\Source\Stazor.Core\Stazor.Core.csproj" />
+  </ItemGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+</Project>

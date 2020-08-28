@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using Stazor.Core;
 
-namespace Stazor.Core.Plugins
+namespace Stazor.Plugins
 {
     public interface IPlugin
     {

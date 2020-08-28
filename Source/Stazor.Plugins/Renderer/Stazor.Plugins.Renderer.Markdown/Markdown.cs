@@ -8,10 +8,11 @@ using Markdig.Extensions.Yaml;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Stazor.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Stazor.Core.Plugins.Renderer
+namespace Stazor.Plugins.Renderer
 {
     public sealed class Markdown : IPlugin
     {

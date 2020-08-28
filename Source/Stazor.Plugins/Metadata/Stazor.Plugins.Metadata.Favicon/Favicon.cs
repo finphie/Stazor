@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Text;
+using Stazor.Core;
 
-namespace Stazor.Core.Plugins.Metadata
+namespace Stazor.Plugins.Metadata
 {
     public sealed class Favicon : IPlugin
     {

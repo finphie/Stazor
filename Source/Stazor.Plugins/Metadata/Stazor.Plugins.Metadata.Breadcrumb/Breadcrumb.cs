@@ -5,10 +5,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Stazor.Core;
 using Utf8Json;
 using Utf8Json.Resolvers;
 
-namespace Stazor.Core.Plugins.Metadata
+namespace Stazor.Plugins.Metadata
 {
     public sealed class Breadcrumb : IPlugin
     {

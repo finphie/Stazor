@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Cysharp.Text;
-using Stazor.Core.Pipelines;
-using Stazor.Core.Plugins.IO;
-using Stazor.Core.Plugins.Metadata;
-using Stazor.Core.Plugins.Renderer;
+using Stazor.Plugins.IO;
+using Stazor.Plugins.Metadata;
+using Stazor.Plugins.Renderer;
 
 namespace Stazor.Core.Themes
 {

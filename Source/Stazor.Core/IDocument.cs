@@ -1,4 +1,6 @@
-﻿namespace Stazor.Core
+﻿using System.Collections.Generic;
+
+namespace Stazor.Core
 {
     public interface IDocument
     {
