@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ConsoleAppFramework;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Stazor.Core.Themes;
+using Stazor.Core;
 using ZLogger;
 
 namespace Stazor
