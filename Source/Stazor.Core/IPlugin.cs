@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Stazor.Core
 {
@@ -9,6 +6,4 @@ namespace Stazor.Core
     {
         IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs);
     }
-
-    
 }

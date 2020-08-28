@@ -32,26 +32,5 @@ namespace Stazor.Core
                 yield return input;
             }
         }
-
-        //public async IAsyncEnumerable<IDocument> ExecuteAsync()
-        //{
-        //    //var inputs = AsyncEnumerableHelpers.Empty<IDocument>();
-        //    var s = new SortedList<string, IDocument>();
-
-        //    foreach (var plugin in _plugins)
-        //    {
-        //        plugin.Execute(s);
-        //    }
-
-        //    await foreach (var input in inputs)
-        //    {
-        //        yield return input;
-        //    }
-        //}
-
-        public void WriteFiles()
-        {
-
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Stazor.Core.Themes
+namespace Stazor.Core
 {
     public interface ITheme
     {

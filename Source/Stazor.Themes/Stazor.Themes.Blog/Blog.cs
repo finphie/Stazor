@@ -3,11 +3,12 @@ using System.Buffers;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Stazor.Core;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Plugins.Renderer;
 
-namespace Stazor.Core.Themes
+namespace Stazor.Themes
 {
     public sealed class Blog : ITheme
     {
