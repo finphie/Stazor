@@ -28,7 +28,10 @@ namespace Stazor.Plugins.IO
 
             foreach (var file in _files)
             {
-                yield return DocumentFactory.GetDocument(File.ReadAllBytes(file));
+                var document = DocumentFactory.GetDocument();
+                document.Content.Add(nameof(ReadFiles), File.ReadAllBytes(file));
+
+                yield return document;
             }
         }
     }

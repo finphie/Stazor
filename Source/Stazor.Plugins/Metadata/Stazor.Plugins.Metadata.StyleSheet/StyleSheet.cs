@@ -26,7 +26,7 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                input.Content.Head.Write(_html);
+                input.Content.Add(nameof(StyleSheet), _html);
                 yield return input;
             }
         }

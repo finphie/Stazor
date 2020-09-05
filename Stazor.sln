@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor", "Source\Stazor\Sta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Core", "Source\Stazor.Core\Stazor.Core.csproj", "{033008FF-B179-4E1A-A83B-15958B32A6EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engine", "Source\Stazor.Engine\Stazor.Engine.csproj", "{939DBD7B-11E3-42DE-B42F-B551FFFEF4F3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{19C587BA-C1EF-414B-AB3A-ABE59B9220C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{23BA20BD-4AEA-43F7-93A2-09DBC9895718}"
@@ -17,21 +15,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.IO.ReadFiles
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{8B7C60B1-7C0A-49A2-8635-8AD60B985779}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Themes.Blog", "Source\Stazor.Themes\Stazor.Themes.Blog\Stazor.Themes.Blog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.Blog", "Source\Stazor.Themes\Stazor.Themes.Blog\Stazor.Themes.Blog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Renderer", "Renderer", "{44A7B78A-6560-4764-86AD-20C1C3E7B733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Renderer.Markdown", "Source\Stazor.Plugins\Renderer\Stazor.Plugins.Renderer.Markdown\Stazor.Plugins.Renderer.Markdown.csproj", "{3696F9E8-7104-4017-8D20-ED77867092B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Renderer.Markdown", "Source\Stazor.Plugins\Renderer\Stazor.Plugins.Renderer.Markdown\Stazor.Plugins.Renderer.Markdown.csproj", "{3696F9E8-7104-4017-8D20-ED77867092B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{88A7B2DC-144B-463B-B63D-1CAFB24384E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Metadata.Breadcrumb", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj", "{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Breadcrumb", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj", "{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Metadata.Favicon", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Favicon\Stazor.Plugins.Metadata.Favicon.csproj", "{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Favicon", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Favicon\Stazor.Plugins.Metadata.Favicon.csproj", "{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Metadata.StyleSheet", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.StyleSheet\Stazor.Plugins.Metadata.StyleSheet.csproj", "{604745C8-AFB2-43B4-9A67-33E34D80FAED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.StyleSheet", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.StyleSheet\Stazor.Plugins.Metadata.StyleSheet.csproj", "{604745C8-AFB2-43B4-9A67-33E34D80FAED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Metadata.Viewport", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Viewport\Stazor.Plugins.Metadata.Viewport.csproj", "{01853244-7173-485E-9E14-ACB383058F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Viewport", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Viewport\Stazor.Plugins.Metadata.Viewport.csproj", "{01853244-7173-485E-9E14-ACB383058F1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engine.Razor", "Source\Stazor.Engine\Stazor.Engine.Razor\Stazor.Engine.Razor.csproj", "{C8783F6C-FB1C-43F4-B73E-797909FEB699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +49,6 @@ Global
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{939DBD7B-11E3-42DE-B42F-B551FFFEF4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{939DBD7B-11E3-42DE-B42F-B551FFFEF4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{939DBD7B-11E3-42DE-B42F-B551FFFEF4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{939DBD7B-11E3-42DE-B42F-B551FFFEF4F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9115EAB-CCE2-48B7-BC96-239AAF8DB0F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9115EAB-CCE2-48B7-BC96-239AAF8DB0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9115EAB-CCE2-48B7-BC96-239AAF8DB0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,6 +77,10 @@ Global
 		{01853244-7173-485E-9E14-ACB383058F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +95,7 @@ Global
 		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{604745C8-AFB2-43B4-9A67-33E34D80FAED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{01853244-7173-485E-9E14-ACB383058F1A} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
+		{C8783F6C-FB1C-43F4-B73E-797909FEB699} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BD94B82-777A-4266-A057-4F2B73161020}

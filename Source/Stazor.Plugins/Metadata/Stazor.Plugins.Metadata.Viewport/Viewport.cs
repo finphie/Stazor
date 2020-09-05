@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using Cysharp.Text;
 using Stazor.Core;
@@ -15,7 +14,6 @@ namespace Stazor.Plugins.Metadata
         public Viewport()
             : this("width=device-width, initial-scale=1")
         {
-
         }
 
         public Viewport(ReadOnlySpan<char> content)
@@ -33,7 +31,8 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs)
             {
-                input.Content.Head.Write(_html);
+                input.Content.Add(nameof(Viewport), _html);
+
                 yield return input;
             }
         }

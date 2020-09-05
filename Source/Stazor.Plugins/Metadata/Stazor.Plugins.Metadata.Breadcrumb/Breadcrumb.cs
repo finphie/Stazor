@@ -2,9 +2,11 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Cysharp.Text;
 using Stazor.Core;
 using Utf8Json;
 using Utf8Json.Resolvers;
@@ -13,15 +15,6 @@ namespace Stazor.Plugins.Metadata
 {
     public sealed class Breadcrumb : IPlugin
     {
-        static readonly byte[] StartNav = Encoding.UTF8.GetBytes("<nav>");
-        static readonly byte[] EndNav = Encoding.UTF8.GetBytes("</nav>");
-        static readonly byte[] StartOl = Encoding.UTF8.GetBytes("<ol class=\"breadcrumbs\">");
-        static readonly byte[] EndOl = Encoding.UTF8.GetBytes("</ol>");
-
-        static readonly byte[] Li1 = Encoding.UTF8.GetBytes("<li><a href=\"/\">ホーム</a>");
-        static readonly byte[] StartLi2 = Encoding.UTF8.GetBytes("<li><a href=\"");
-
-
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
             var json = new JsonLd();
@@ -39,22 +32,26 @@ namespace Stazor.Plugins.Metadata
             }
 
             json.Items[0].Name = "ホーム";
-            
-            await foreach (var input in inputs.ConfigureAwait(false))
-            {
-                input.Content.Body.Main.Header.Write(StartNav);
-                input.Content.Body.Main.Header.Write(StartOl);
-                input.Content.Body.Main.Header.Write(Li1);
-                input.Content.Body.Main.Header.Write(StartLi2);
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes(input.Metadata.Category!));
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes("\">"));
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes(input.Metadata.Category!));
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes("</a>"));
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes("<li>"));
-                input.Content.Body.Main.Header.Write(Encoding.UTF8.GetBytes(input.Metadata.Title!));
 
-                input.Content.Body.Main.Header.Write(EndOl);
-                input.Content.Body.Main.Header.Write(EndNav);
+            using var builder = ZString.CreateUtf8StringBuilder(true);
+            builder.Append("<nav><ol class=\"breadcrumbs\"><li><a href=\"/\">ホーム</a><li><a href=\"");
+
+            var length = builder.Length;
+
+            await foreach (var input in inputs.ConfigureAwait(false))
+            {       
+                builder.Append(input.Metadata.Category);
+                builder.Append("\">");
+                builder.Append(input.Metadata.Category);
+                builder.Append("</a>");
+                builder.Append("<li>");
+                builder.Append(input.Metadata.Title);
+
+                builder.Append("</ol>");
+                builder.Append("</nav>");
+
+                input.Content.Add(nameof(Breadcrumb), builder.AsSpan().ToArray());
+                builder.Advance(-length);
 
                 json.Items[1].Name = input.Metadata.Category!;
                 json.Items[1].Item = "https://example.com/";

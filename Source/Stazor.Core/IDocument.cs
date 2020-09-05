@@ -4,7 +4,7 @@ namespace Stazor.Core
 {
     public interface IDocument
     {
-        HtmlContent Content { get; }
+        Dictionary<string, object> Content { get; }
 
         IMetadata Metadata { get; set; }
     }

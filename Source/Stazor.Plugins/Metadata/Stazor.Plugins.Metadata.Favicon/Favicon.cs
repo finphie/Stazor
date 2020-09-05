@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -44,7 +43,7 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                input.Content.Head.Write(_html);
+                input.Content.Add(nameof(Favicon), _html);
                 yield return input;
             }
         }

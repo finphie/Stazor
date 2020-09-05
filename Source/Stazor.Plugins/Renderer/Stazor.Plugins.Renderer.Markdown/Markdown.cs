@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,26 +17,19 @@ namespace Stazor.Plugins.Renderer
 {
     public sealed class Markdown : IPlugin
     {
-        public static readonly Markdown Default;
+        static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
+            .UseAutoLinks()
+            .UsePipeTables()
+            .UseYamlFrontMatter()
+            .Build();
 
-        static readonly MarkdownPipeline Pipeline;
-
+        readonly string _inputKey;
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
 
-        static Markdown()
+        public Markdown(string inputKey)
         {
-            Pipeline = new MarkdownPipelineBuilder()
-                .UseAutoLinks()
-                .UsePipeTables()
-                .UseYamlFrontMatter()
-                .Build();
-
-            Default = new();
-        }
-
-        Markdown()
-        {
+            _inputKey = inputKey;
             _writer = new();
             _renderer = new(_writer);
             Pipeline.Setup(_renderer);
@@ -45,9 +39,13 @@ namespace Stazor.Plugins.Renderer
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                var body = Encoding.UTF8.GetString(input.Content.Body.Main.Article.WrittenSpan);
+                if (!input.Content.TryGetValue(_inputKey, out var value) || value is not byte[] utf8Data)
+                {
+                    throw new ArgumentException(nameof(_inputKey));
+                }
 
-                var markdown = Markdig.Markdown.Parse(body, Pipeline);
+                var data = Encoding.UTF8.GetString(utf8Data);
+                var markdown = Markdig.Markdown.Parse(data, Pipeline);
                 var title = markdown.Descendants<HeadingBlock>()
                     .First(x => x.Level == 1)
                     .Inline
@@ -62,8 +60,8 @@ namespace Stazor.Plugins.Renderer
                         .WithNamingConvention(UnderscoredNamingConvention.Instance)
                         .Build();
 
-                    var yamlString = body.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-                    input.Metadata = deserializer.Deserialize<Core.Metadata>(yamlString);
+                    var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
+                    input.Metadata = deserializer.Deserialize<Metadata>(yamlString);
                 }
 
                 input.Metadata.Title = title.ToString();
@@ -71,8 +69,7 @@ namespace Stazor.Plugins.Renderer
                 _renderer.Render(markdown);
                 _writer.Flush();
 
-                input.Content.Body.Main.Article.Clear();
-                Encoding.UTF8.GetBytes(_writer.ToString(), input.Content.Body.Main.Article);
+                input.Content.Add(nameof(Markdown), Encoding.UTF8.GetBytes(_writer.ToString()));
                 _writer.GetStringBuilder().Clear();
 
                 yield return input;
