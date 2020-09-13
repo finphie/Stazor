@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Stazor.Core;
@@ -14,15 +15,16 @@ namespace Stazor.Themes
 {
     public sealed class Blog : ITheme
     {
-        public IEngine Engine { get; }
+        public IEngine Engine => SimpleEngine.Default;
 
         public Pipeline Pipeline { get; } = new();
 
+        static readonly string TemplatePath =
+            Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.FullName, "Layouts/Page.html");
+
         public Blog(string path)
         {
-            Engine = new SimpleEngine(@"Stazor.Themes.Blog");
-
-            Pipeline.Add(new ReadFiles(path, "*.md", "Page.html"));
+            Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
             Pipeline.Add(new Markdown(nameof(ReadFiles)));
           
             //Pipeline.Add(Viewport.Default);

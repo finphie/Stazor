@@ -16,4 +16,10 @@
     <ProjectReference Include="..\..\Stazor.Plugins\Renderer\Stazor.Plugins.Renderer.Markdown\Stazor.Plugins.Renderer.Markdown.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Layouts\*.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

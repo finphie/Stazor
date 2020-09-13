@@ -6,7 +6,7 @@ namespace Stazor.Core
     {
         Dictionary<string, object> Content { get; }
 
-        string TemplateFileName { get; init; }
+        string TemplatePath { get; init; }
 
         IMetadata Metadata { get; set; }
     }

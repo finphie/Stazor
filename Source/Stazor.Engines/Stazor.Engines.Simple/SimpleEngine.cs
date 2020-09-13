@@ -10,34 +10,33 @@ namespace Stazor.Engines.Simple
 {
     public sealed class SimpleEngine : IEngine
     {
+        public static readonly SimpleEngine Default = new();
+
         public string Name => "Simple";
 
         public string Description => "Simple templates";
 
-        readonly string _templatePath;
-        readonly Dictionary<string, TemplateCache> _table;
+        readonly Dictionary<string, TemplateCache> _table = new();
 
-        public SimpleEngine(string templatePath)
+        SimpleEngine()
         {
-            _templatePath = templatePath;
-            _table = new();
         }
 
         public async ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
         {
-            Console.WriteLine(document.TemplateFileName);
+            var path = document.TemplatePath;
 
-            if (_table.TryGetValue(document.TemplateFileName, out var value))
+            if (_table.TryGetValue(path, out var value))
             {
-                value.Debug();
+                value.RenderTo(bufferWriter, document.Content);
                 return;
             }
 
-            var file = File.ReadAllBytes(Path.Combine(_templatePath, document.TemplateFileName));
-            var c = new TemplateCache(file);
-            _table.Add(document.TemplateFileName, c);
+            var file = File.ReadAllBytes(document.TemplatePath);
+            var cache = new TemplateCache(file);
+            _table.Add(path, cache);
 
-            c.Debug();
+            cache.RenderTo(bufferWriter, document.Content);
 
             // Console.WriteLine(Encoding.UTF8.GetString((document.Content["Markdown"] as byte[])!));
         }   

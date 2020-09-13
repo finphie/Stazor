@@ -8,17 +8,17 @@ namespace Stazor.Plugins.IO
     public sealed class ReadFiles : IPlugin
     {
         readonly IEnumerable<string> _files;
-        readonly string _templateFileName;
+        readonly string _templatePath;
 
         public ReadFiles(string path, string templateFileName)
             : this(path, "*", templateFileName)
         {
         }
 
-        public ReadFiles(string path, string searchPattern, string templateFileName)
+        public ReadFiles(string path, string searchPattern, string templatePath)
         {
             _files = Directory.EnumerateFiles(path, searchPattern);
-            _templateFileName = templateFileName;
+            _templatePath = templatePath;
         }
 
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
@@ -30,7 +30,7 @@ namespace Stazor.Plugins.IO
 
             foreach (var file in _files)
             {
-                var document = DocumentFactory.GetDocument(_templateFileName);
+                var document = DocumentFactory.GetDocument(_templatePath);
                 document.Content.Add(nameof(ReadFiles), File.ReadAllBytes(file));
 
                 yield return document;
