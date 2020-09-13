@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Vie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engine.Razor", "Source\Stazor.Engine\Stazor.Engine.Razor\Stazor.Engine.Razor.csproj", "{C8783F6C-FB1C-43F4-B73E-797909FEB699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.Simple", "Source\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +77,10 @@ Global
 		{01853244-7173-485E-9E14-ACB383058F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8783F6C-FB1C-43F4-B73E-797909FEB699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,7 +95,7 @@ Global
 		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{604745C8-AFB2-43B4-9A67-33E34D80FAED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{01853244-7173-485E-9E14-ACB383058F1A} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
-		{C8783F6C-FB1C-43F4-B73E-797909FEB699} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
+		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BD94B82-777A-4266-A057-4F2B73161020}

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Stazor.Core;
 using Stazor.Engine;
+using Stazor.Engines.Simple;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Plugins.Renderer;
@@ -19,13 +20,15 @@ namespace Stazor.Themes
 
         public Blog(string path)
         {
-            Pipeline.Add(new ReadFiles(path, "*.md"));
+            Engine = new SimpleEngine(@"Stazor.Themes.Blog");
+
+            Pipeline.Add(new ReadFiles(path, "*.md", "Page.html"));
             Pipeline.Add(new Markdown(nameof(ReadFiles)));
           
-            Pipeline.Add(Viewport.Default);
-            Pipeline.Add(new StyleSheet("style.css"));
-            Pipeline.Add(new Favicon("/favicon.svg"));
-            Pipeline.Add(new Breadcrumb());
+            //Pipeline.Add(Viewport.Default);
+            //Pipeline.Add(new StyleSheet("style.css"));
+            //Pipeline.Add(new Favicon("/favicon.svg"));
+            //Pipeline.Add(new Breadcrumb());
         }
 
         public async ValueTask ExecuteAsync()
@@ -37,8 +40,10 @@ namespace Stazor.Themes
             {
                 await Engine.ExecuteAsync(buffer, document).ConfigureAwait(false);
 
-                using var fs = new FileStream($"{count++}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
-                fs.Write(buffer.WrittenSpan);
+                Console.WriteLine(Encoding.UTF8.GetString(buffer.WrittenSpan));
+
+                //using var fs = new FileStream($"{count++}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
+                //fs.Write(buffer.WrittenSpan);
 
                 buffer.Clear();
             }

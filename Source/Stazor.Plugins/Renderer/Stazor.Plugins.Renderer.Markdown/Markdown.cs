@@ -70,6 +70,7 @@ namespace Stazor.Plugins.Renderer
                 _writer.Flush();
 
                 input.Content.Add(nameof(Markdown), Encoding.UTF8.GetBytes(_writer.ToString()));
+                //input.Content.Add(nameof(Markdown), _writer.ToString());
                 _writer.GetStringBuilder().Clear();
 
                 yield return input;

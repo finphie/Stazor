@@ -2,7 +2,7 @@
 {
     public static class DocumentFactory
     {
-        public static IDocument GetDocument()
-            => new Document();
+        public static IDocument GetDocument(string templateFileName)
+            => new Document() { TemplateFileName = templateFileName };
     }
 }
