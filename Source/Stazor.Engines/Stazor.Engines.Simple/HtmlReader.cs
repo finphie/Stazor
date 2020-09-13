@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Stazor.Engines.Simple
 {
@@ -36,16 +38,29 @@ namespace Stazor.Engines.Simple
 
             if (span.StartsWith(BeginObject))
             {
-                var end = span.IndexOf(EndObject);
-                if (end == -1)
+                _position += 2;
+                SkipWhitespace();
+
+                var startPosition = _position;
+
+                while (!TryFindIsEndObject())
                 {
-                    range = _position..;
+                    _position++;
+                }
+
+                if (startPosition == _position)
+                {
+                    range = startPosition..;
                     _position = _buffer.Length;
                     return BlockType.Html;
                 }
 
-                range = (_position + 2)..(_position + end);
-                _position += end + 2;
+                // trim whitespace
+                range = _buffer[_position - 1] is (byte)' ' or (byte)'\t'
+                    ? (startPosition..(_position - 1))
+                    : (startPosition.._position);
+
+                _position += 2;
                 return BlockType.Object;
             }
 
@@ -60,6 +75,37 @@ namespace Stazor.Engines.Simple
             range = _position..begin;
             _position += begin;
             return BlockType.Html;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        bool TryFindIsEndObject()
+        {
+            if (_position + 1 < _buffer.Length)
+            {
+                ref var bufferStart = ref Unsafe.Add(ref MemoryMarshal.GetReference(_buffer), _position);
+                var end = Unsafe.ReadUnaligned<ushort>(ref MemoryMarshal.GetReference(EndObject));
+
+                return Unsafe.ReadUnaligned<ushort>(ref bufferStart) == end;
+            }
+
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void SkipWhitespace()
+        {
+            ref var x = ref MemoryMarshal.GetReference(_buffer);
+
+            while (_position < _buffer.Length)
+            {
+                if (Unsafe.Add(ref x, _position) is (byte)' ' or (byte)'\t')
+                {
+                    _position++;
+                    continue;
+                }
+
+                return;
+            }
         }
     }
 }
