@@ -87,7 +87,7 @@ namespace Stazor.Engines.Simple
                 goto END;
             }
 
-            _position += 2;
+            _position += sizeof(ushort);
 
             // '{'が3つ以上連続している場合
             if (_position >= _buffer.Length || Unsafe.Add(ref bufferStart, _position) == (byte)'{')
@@ -95,7 +95,7 @@ namespace Stazor.Engines.Simple
                 goto END;
             }
 
-            // '{'と連続するスペースを削除
+            // '{'に連続するスペースを削除
             SkipWhiteSpace();
 
             var startPosition = _position;
@@ -138,11 +138,11 @@ namespace Stazor.Engines.Simple
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void SkipWhiteSpace()
         {
-            ref var x = ref MemoryMarshal.GetReference(_buffer);
+            ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
 
             while (_position < _buffer.Length)
             {
-                if (Unsafe.Add(ref x, _position).IsWhiteSpace())
+                if (Unsafe.Add(ref bufferStart, _position).IsWhiteSpace())
                 {
                     _position++;
                     continue;
