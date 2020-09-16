@@ -52,7 +52,7 @@ namespace Stazor.Engines.Simple
         {
             var reader = new HtmlReader(Buffer);
 
-            while ((reader.TryRead(out var value) is var type) && type != BlockType.None)
+            while ((reader.Read(out var value) is var type) && type != BlockType.None)
             {
                 _blocks.Add((type, value));
             }
