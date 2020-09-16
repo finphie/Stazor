@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using FluentAssertions;
 using Stazor.Engines.Simple;
 using Xunit;
+using static Stazor.Engines.Simple.HtmlParserException;
 
 namespace Stazor.Tests.Engines.Simple
 {
@@ -15,19 +17,24 @@ namespace Stazor.Tests.Engines.Simple
                 CreateMembers(new Block(BlockType.None, ""))
             },
             {
-                "{", new(new[] { new Block(BlockType.Html, "{") })
+                "{",
+                CreateMembers(new Block(BlockType.Html, "{"))
             },
             {
-                "a", new(new[] { new Block(BlockType.Html, "a") })
+                "a",
+                CreateMembers(new Block(BlockType.Html, "a"))
             },
             {
-                "ab", CreateMembers(new Block(BlockType.Html, "ab"))
+                "ab",
+                CreateMembers(new Block(BlockType.Html, "ab"))
             },
             {
-                "abc", CreateMembers(new Block(BlockType.Html, "abc"))
+                "abc",
+                CreateMembers(new Block(BlockType.Html, "abc"))
             },
             {
-                "{ A }", CreateMembers(new Block(BlockType.Html, "{ A }"))
+                "{ A }",
+                CreateMembers(new Block(BlockType.Html, "{ A }"))
             },
             {
                 "z{{A}}z",
@@ -75,34 +82,7 @@ namespace Stazor.Tests.Engines.Simple
             }
         };
 
-        public sealed class Block
-        {
-            public object Type { get; set; }
-
-            public string Value { get; set; }
-
-            public Block(object type, string value)
-                => (Type, Value) = (type, value);
-        }
-
         [Theory]
-        //[InlineData("", "")]
-        //[InlineData("{", "{")]
-        //[InlineData("a", "a")]
-        //[InlineData("ab", "ab")]
-        //[InlineData("abc", "abc")]
-        //[InlineData("{ A }", "{ A }")]
-        //[InlineData("z{{A}}z", "z", "A", "z")]
-        //[InlineData("z{{ A }}z", "z", "A", "z")]
-        //[InlineData("z{{", "z{{")]
-        //[InlineData("{{", "{{")]
-        //[InlineData("{{ ", "{{ ")]
-        //[InlineData("{{ A", "{{ A")]
-        //[InlineData("}}", "}}")]
-        //[InlineData("{{{A}}", "{", "A")]
-        //[InlineData("{{{ A}}", "{", "A")]
-        //[InlineData("{{A}}}", "A", "}")]
-        //[InlineData("{{A }}}", "A", "}")]
         [MemberData(nameof(TestData))]
         public void ReadTest(string html, MemberSerializer<Block[]> expectedItems)
         {
@@ -126,60 +106,79 @@ namespace Stazor.Tests.Engines.Simple
         }
 
         [Theory]
-        [InlineData("", "")]
-        [InlineData("{", "{")]
-        [InlineData("a", "a")]
-        [InlineData("ab", "ab")]
-        [InlineData("abc", "abc")]
-        [InlineData("{ A }", "{ A }")]
-        [InlineData("z{{ A }}z", "z")]
-        [InlineData("z{{", "z")]
-        [InlineData("{{", "")]
-        public void ReadHtmlTest(string html, string expected)
+        [InlineData("{", "{", true)]
+        [InlineData("a", "a", true)]
+        [InlineData("ab", "ab", true)]
+        [InlineData("abc", "abc", true)]
+        [InlineData("{ A }", "{ A }", true)]
+        [InlineData("z{{ A }}z", "z", true)]
+        [InlineData("z{{", "z", true)]
+        [InlineData("", "", false)]
+        [InlineData("{{", "", false)]
+        public void TryReadHtmlTest(string html, string expected, bool expectedSuccess)
         {
             var utf8Html = GetBytes(html);
             var reader = new HtmlReader(utf8Html);
-            reader.ReadHtml(out var range);
+            var success = reader.TryReadHtml(out var range);
 
             var actual = utf8Html[range];
+            success.Should().Be(expectedSuccess);
             actual.Should().Equal(GetBytes(expected));
         }
 
         [Theory]
-        [InlineData("", "", false)]
-        [InlineData("{", "", false)]
-        [InlineData("a", "", false)]
-        [InlineData("ab", "", false)]
-        [InlineData("abc", "", false)]
-        [InlineData("{{", "", false)]
-        [InlineData("{{ ", "", false)]
-        [InlineData("{{ A", "", false)]
-        [InlineData("{A}", "", false)]
-        [InlineData("{ A }", "", false)]
-        [InlineData("z{{A}}z", "", false)]
-        [InlineData("{{{A}}", "", false)]
-        [InlineData("{{{ A}}", "", false)]
-        [InlineData("{{A}}", "A", true)]
-        [InlineData("{{AB}}", "AB", true)]
-        [InlineData("{{ A }}", "A", true)]
-        [InlineData("{{   A   }}", "A", true)]
-        [InlineData("{{ ABC }}", "ABC", true)]
-        [InlineData("{{ A B }}", "A B", true)]
-        [InlineData("{{A}}}", "A", true)]
-        [InlineData("{{A }}}", "A", true)]
-        public void TryReadObjectTest(string html, string expected, bool expectedStatus)
+        [InlineData("{{A}}", "A")]
+        [InlineData("{{AB}}", "AB")]
+        [InlineData("{{ A }}", "A")]
+        [InlineData("{{   A   }}", "A")]
+        [InlineData("{{ ABC }}", "ABC")]
+        [InlineData("{{ A B }}", "A B")]
+        public void ReadObjectTest(string html, string expected)
         {
             var utf8Html = GetBytes(html);
             var reader = new HtmlReader(utf8Html);
-            var status = reader.TryReadObject(out var range);
-
+            reader.ReadObject(out var range);
+            
             var actual = utf8Html[range];
-            status.Should().Be(expectedStatus);
-            actual.Should().Equal(GetBytes(expected));
+            actual.Should().Equal(GetBytes(expected));       
+        }
+
+        [Theory]
+        [InlineData("", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("{", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("a", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("ab", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("abc", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("z{{A}}z", ParserError.ExpectedBeginObject, 0)]
+        [InlineData("{A}", ParserError.ExpectedBeginObject, 1)]
+        [InlineData("{ A }", ParserError.ExpectedBeginObject, 1)]
+        [InlineData("{{{A}}", ParserError.ExpectedBeginObject, 2)]
+        [InlineData("{{{ A}}", ParserError.ExpectedBeginObject, 2)]
+        [InlineData("{{", ParserError.ExpectedEndObject, 1)]
+        [InlineData("{{ ", ParserError.ExpectedEndObject, 2)]
+        [InlineData("{{ A", ParserError.ExpectedEndObject, 3)]
+        [InlineData("{{A}}}", ParserError.ExpectedEndObject, 5)]
+        [InlineData("{{A }}}", ParserError.ExpectedEndObject, 6)]
+        public void ReadObjectTest_Error(string html, ParserError error, int position)
+        {
+            FluentActions.Invoking(Execute).Should().Throw<HtmlParserException>()
+                .Where(x => x.Error == error && x.Position == position);
+
+            Range Execute()
+            {
+                var utf8Html = GetBytes(html);
+                var reader = new HtmlReader(utf8Html);
+                reader.ReadObject(out var range);
+
+                return range;
+            }
         }
 
         static MemberSerializer<T[]> CreateMembers<T>(params T[] values) => new(values);
 
         static byte[] GetBytes(string value) => Encoding.UTF8.GetBytes(value);
+
+        [SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "record parameters")]
+        public record Block(object Type, string Value);
     }
 }

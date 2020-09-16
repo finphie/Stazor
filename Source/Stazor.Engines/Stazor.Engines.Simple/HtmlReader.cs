@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Stazor.Engines.Simple.Extensions;
+using Stazor.Engines.Simple.Helpers;
+using static Stazor.Engines.Simple.HtmlParserException;
 
 [assembly: InternalsVisibleTo("Stazor.Tests.Engines.Simple")]
 
@@ -37,54 +40,65 @@ namespace Stazor.Engines.Simple
                 return BlockType.None;
             }
 
-            if (TryReadObject(out range))
+            if (TryReadHtml(out range))
             {
-                return BlockType.Object;
+                return BlockType.Html;
             }
 
-            ReadHtml(out range);           
-            return BlockType.Html;
+            ReadObject(out range);           
+            return BlockType.Object;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadHtml(out Range range)
+        public bool TryReadHtml(out Range range)
         {
             if (_position >= _buffer.Length)
             {
                 range = default;
-                return;
+                return false;
             }
 
-            var position = _position;
+            var startPosition = _position;
             ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
 
             while (_position + 1 < _buffer.Length)
             {
-                if (Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == BeginObject)
+                // '{{'で始まらない場合
+                if (!IsBeginObjectInternal(ref bufferStart))
                 {
-                    range = position.._position;
-                    return;
+                    _position++;
+                    continue;
                 }
 
-                _position++;
+                // 出力対象文字が1文字もない場合
+                if (startPosition == _position)
+                {
+                    // TODO
+                    range = default;
+                    return false;
+                }
+
+                range = startPosition.._position;
+                return true;
             }
 
-            range = position..++_position;
+            range = startPosition..++_position;
+            return true;
         }
 
-        public bool TryReadObject(out Range range)
+        public void ReadObject(out Range range)
         {
             if (_position >= _buffer.Length)
             {
-                goto END;
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
             ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
 
             // '{{'で始まらない場合
-            if (_position + 1 >= _buffer.Length || Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) != BeginObject)
+            if (!IsBeginObjectInternal(ref bufferStart))
             {
-                goto END;
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
             _position += sizeof(ushort);
@@ -92,18 +106,18 @@ namespace Stazor.Engines.Simple
             // '{'が3つ以上連続している場合
             if (_position >= _buffer.Length || Unsafe.Add(ref bufferStart, _position) == (byte)'{')
             {
-                goto END;
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
             // '{'に連続するスペースを削除
-            SkipWhiteSpace();
+            SkipWhiteSpaceInternal(ref bufferStart);
 
             var startPosition = _position;
 
             while (_position + 1 < _buffer.Length)
             {
                 // '}}'で終わる場合
-                if (Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == EndObject)
+                if (IsEndObjectInternal(ref bufferStart))
                 {
                     // 末尾のスペースを削除
                     var endPosition = _position;
@@ -118,37 +132,62 @@ namespace Stazor.Engines.Simple
                     _position += sizeof(ushort);
 
                     // '}'が3つ以上連続している場合
-                    //if (_position < _buffer.Length && Unsafe.Add(ref bufferStart, _position) == (byte)'}')
-                    //{
-                    //    goto END;
-                    //}
+                    if (_position < _buffer.Length && Unsafe.Add(ref bufferStart, _position) == (byte)'}')
+                    {
+                        ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, _position);
+                    }
 
                     range = startPosition..endPosition;
-                    return true;
+                    return;
                 }
 
                 _position++;
             }
 
-            END:
+            ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, _position);
             range = default;
-            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void SkipWhiteSpace()
+        public bool IsBeginObject()
+            => IsBeginObjectInternal(ref MemoryMarshal.GetReference(_buffer));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsEndObject()
+            => IsEndObjectInternal(ref MemoryMarshal.GetReference(_buffer));    
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipWhiteSpace()
+            => SkipWhiteSpaceInternal(ref MemoryMarshal.GetReference(_buffer));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        bool IsBeginObjectInternal(ref byte bufferStart)
         {
-            ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
+            Debug.Assert(_buffer[0] == bufferStart);
+            return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == BeginObject;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        bool IsEndObjectInternal(ref byte bufferStart)
+        {
+            Debug.Assert(_buffer[0] == bufferStart);
+            return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == EndObject;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void SkipWhiteSpaceInternal(ref byte bufferStart)
+        {
+            Debug.Assert(_buffer[0] == bufferStart);
 
             while (_position < _buffer.Length)
             {
-                if (Unsafe.Add(ref bufferStart, _position).IsWhiteSpace())
+                if (!Unsafe.Add(ref bufferStart, _position).IsWhiteSpace())
                 {
-                    _position++;
-                    continue;
+                    return;
                 }
 
-                return;
+                _position++;
+                continue;
             }
         }
     }

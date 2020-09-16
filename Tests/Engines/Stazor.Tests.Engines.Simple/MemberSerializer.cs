@@ -30,17 +30,14 @@ namespace Stazor.Tests.Engines.Simple
         }
 #nullable restore
 
-        public MemberSerializer(T objectToSerialize) => Object = objectToSerialize;
+        public MemberSerializer(T obj) => Object = obj;
 
         public void Deserialize(IXunitSerializationInfo info)
-        {
-            Object = JsonSerializer.Deserialize<T>(info.GetValue<string>(nameof(Object)))!;
-        }
+            => Object = JsonSerializer.Deserialize<T>(info.GetValue<string>(nameof(Object)))!;
 
         public void Serialize(IXunitSerializationInfo info)
             => info.AddValue(nameof(Object), JsonSerializer.Serialize(Object, SerializerOptions));
 
-        public override string ToString()
-            => JsonSerializer.Serialize(Object, SerializerOptions);
+        public override string ToString() => JsonSerializer.Serialize(Object, SerializerOptions);
     }
 }
