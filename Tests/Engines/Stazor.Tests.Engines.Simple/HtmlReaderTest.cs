@@ -106,24 +106,36 @@ namespace Stazor.Tests.Engines.Simple
         }
 
         [Theory]
-        [InlineData("{", "{", true)]
-        [InlineData("a", "a", true)]
-        [InlineData("ab", "ab", true)]
-        [InlineData("abc", "abc", true)]
-        [InlineData("{ A }", "{ A }", true)]
-        [InlineData("z{{ A }}z", "z", true)]
-        [InlineData("z{{", "z", true)]
-        [InlineData("", "", false)]
-        [InlineData("{{", "", false)]
-        public void TryReadHtmlTest(string html, string expected, bool expectedSuccess)
+        [InlineData("{", "{")]
+        [InlineData("a", "a")]
+        [InlineData("ab", "ab")]
+        [InlineData("abc", "abc")]
+        [InlineData("{ A }", "{ A }")]
+        [InlineData("z{{ A }}z", "z")]
+        [InlineData("z{{", "z")]
+        public void TryReadHtmlTest(string html, string expected)
         {
             var utf8Html = GetBytes(html);
             var reader = new HtmlReader(utf8Html);
             var success = reader.TryReadHtml(out var range);
 
             var actual = utf8Html[range];
-            success.Should().Be(expectedSuccess);
+            success.Should().BeTrue();
             actual.Should().Equal(GetBytes(expected));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("{{")]
+        public void TryReadHtmlTest_Error(string html)
+        {
+            var utf8Html = GetBytes(html);
+            var reader = new HtmlReader(utf8Html);
+            var success = reader.TryReadHtml(out var range);
+
+            var actual = utf8Html[range];
+            success.Should().BeFalse();
+            actual.Should().BeEmpty();
         }
 
         [Theory]
