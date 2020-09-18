@@ -144,6 +144,7 @@ namespace Stazor.Tests.Engines.Simple
         }
 
         [Theory]
+        [InlineData("{{}}", ParserError.InvalidObjectFormat, 2)]
         [InlineData("", ParserError.ExpectedStartObject, 0)]
         [InlineData("{", ParserError.ExpectedStartObject, 0)]
         [InlineData("a", ParserError.ExpectedStartObject, 0)]

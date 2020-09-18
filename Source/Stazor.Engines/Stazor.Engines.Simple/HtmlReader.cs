@@ -137,9 +137,16 @@ namespace Stazor.Engines.Simple
             {
                 // '}}'で終わる場合
                 if (IsEndObjectInternal(ref bufferStart))
-                {
-                    // 末尾のスペースを削除
+                {                   
                     var endPosition = _position;
+
+                    // '{{'と'}}'の間に1文字もない場合
+                    if (startPosition == endPosition)
+                    {
+                        ThrowHelper.ThrowHtmlParserException(ParserError.InvalidObjectFormat, _position);
+                    }
+
+                    // 末尾のスペースを削除
                     for (; endPosition - 1 > startPosition; endPosition--)
                     {
                         if (!Unsafe.Add(ref bufferStart, endPosition - 1).IsWhiteSpace())

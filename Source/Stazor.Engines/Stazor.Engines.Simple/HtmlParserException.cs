@@ -27,6 +27,7 @@ namespace Stazor.Engines.Simple
 
         public enum ParserError
         {
+            InvalidObjectFormat,
             ExpectedStartObject,
             ExpectedEndObject
         }
