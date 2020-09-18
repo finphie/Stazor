@@ -27,7 +27,7 @@ namespace Stazor.Engines.Simple
 
         public enum ParserError
         {
-            ExpectedBeginObject,
+            ExpectedStartObject,
             ExpectedEndObject
         }
     }

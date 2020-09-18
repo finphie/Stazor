@@ -15,7 +15,7 @@ namespace Stazor.Engines.Simple
         /// <summary>
         /// '{{'
         /// </summary>
-        const ushort BeginObject = 0x7b7b;
+        const ushort StartObject = 0x7b7b;
 
         /// <summary>
         /// '}}'
@@ -64,7 +64,7 @@ namespace Stazor.Engines.Simple
             while (_position + 1 < _buffer.Length)
             {
                 // '{{'で始まらない場合
-                if (!IsBeginObjectInternal(ref bufferStart))
+                if (!IsStartObjectInternal(ref bufferStart))
                 {
                     _position++;
                     continue;
@@ -88,16 +88,17 @@ namespace Stazor.Engines.Simple
 
         public void ReadObject(out Range range)
         {
+            // TODO: 改行を考慮する。
+
             if (_position >= _buffer.Length)
             {
-                // EndOfData
-                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedStartObject, _position);
             }
 
             ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
 
             // '{{'で始まらない場合
-            if (!IsBeginObjectInternal(ref bufferStart))
+            if (!IsStartObjectInternal(ref bufferStart))
             {
                 // 2文字の内、最初の1文字が'{'の場合
                 if (_position + 1 < _buffer.Length && Unsafe.Add(ref bufferStart, _position) == (byte)'{')
@@ -105,21 +106,20 @@ namespace Stazor.Engines.Simple
                     _position++;
                 }
 
-                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedStartObject, _position);
             }
 
             _position += sizeof(ushort);
 
             if (_position >= _buffer.Length)
             {
-                // EndOfData
                 ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, --_position);
             }
 
             // '{'が3つ以上連続している場合
             if (Unsafe.Add(ref bufferStart, _position) == (byte)'{')
             {
-                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedStartObject, _position);
             }
 
             // '{'に連続するスペースを削除
@@ -163,14 +163,13 @@ namespace Stazor.Engines.Simple
                 _position++;
             }
 
-            // EndOfLine
             ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, _position);
             range = default;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool IsBeginObject()
-            => IsBeginObjectInternal(ref MemoryMarshal.GetReference(_buffer));
+        public bool IsStartObject()
+            => IsStartObjectInternal(ref MemoryMarshal.GetReference(_buffer));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsEndObject()
@@ -181,10 +180,10 @@ namespace Stazor.Engines.Simple
             => SkipWhiteSpaceInternal(ref MemoryMarshal.GetReference(_buffer));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        bool IsBeginObjectInternal(ref byte bufferStart)
+        bool IsStartObjectInternal(ref byte bufferStart)
         {
             Debug.Assert(_buffer[0] == bufferStart);
-            return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == BeginObject;
+            return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == StartObject;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
