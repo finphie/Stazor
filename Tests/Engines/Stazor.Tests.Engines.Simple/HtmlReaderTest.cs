@@ -45,40 +45,28 @@ namespace Stazor.Tests.Engines.Simple
                 CreateMembers<Block>(new(BlockType.Html, "z"), new(BlockType.Object, "A"), new(BlockType.Html, "z"))
             },
             {
-                "z{{",
-                CreateMembers(new Block(BlockType.Html, "z{{"))
-            },
-            {
-                "{{",
-                CreateMembers(new Block(BlockType.Html, "{{"))
-            },
-            {
-                "{{ ",
-                CreateMembers(new Block(BlockType.Html, "{{ "))
-            },
-            {
-                "{{ A",
-                CreateMembers(new Block(BlockType.Html, "{{ A"))
-            },
-            {
                 "}}",
                 CreateMembers(new Block(BlockType.Html, "}}"))
             },
             {
-                "{{{A}}",
-                CreateMembers<Block>(new(BlockType.Html, "{"), new(BlockType.Object, "A"))
+                "{{ A }}123{{ B }}",
+                CreateMembers<Block>(new(BlockType.Object, "A"), new(BlockType.Html, "123"), new(BlockType.Object, "B"))
             },
             {
-                "{{{ A}}",
-                CreateMembers<Block>(new(BlockType.Html, "{"), new(BlockType.Object, "A"))
+                "x{{ A }}123{{ B }}x",
+                CreateMembers<Block>(new(BlockType.Html, "x"), new(BlockType.Object, "A"), new(BlockType.Html, "123"), new(BlockType.Object, "B"), new(BlockType.Html, "x"))
             },
             {
-                "{{A}}}",
-                CreateMembers<Block>(new(BlockType.Object, "A"), new(BlockType.Html, "}"))
+                "{{ A }}{{ B }}",
+                CreateMembers<Block>(new(BlockType.Object, "A"), new(BlockType.Object, "B"))
             },
             {
-                "{{A }}}",
-                CreateMembers<Block>(new(BlockType.Object, "A"), new(BlockType.Html, "}"))
+                "{{ AAA }}{{ BBB }}",
+                CreateMembers<Block>(new(BlockType.Object, "AAA"), new(BlockType.Object, "BBB"))
+            },
+            {
+                "{{ AAA }}z{{ BBB }}",
+                CreateMembers<Block>(new(BlockType.Object, "AAA"), new(BlockType.Html, "z"), new(BlockType.Object, "BBB"))
             }
         };
 
