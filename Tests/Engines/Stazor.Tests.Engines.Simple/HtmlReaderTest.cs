@@ -138,7 +138,7 @@ namespace Stazor.Tests.Engines.Simple
             var utf8Html = GetBytes(html);
             var reader = new HtmlReader(utf8Html);
             reader.ReadObject(out var range);
-            
+
             var actual = utf8Html[range];
             actual.Should().Equal(GetBytes(expected));       
         }
@@ -152,6 +152,7 @@ namespace Stazor.Tests.Engines.Simple
         [InlineData("z{{A}}z", ParserError.ExpectedBeginObject, 0)]
         [InlineData("{A}", ParserError.ExpectedBeginObject, 1)]
         [InlineData("{ A }", ParserError.ExpectedBeginObject, 1)]
+        [InlineData("{{{", ParserError.ExpectedBeginObject, 2)]
         [InlineData("{{{A}}", ParserError.ExpectedBeginObject, 2)]
         [InlineData("{{{ A}}", ParserError.ExpectedBeginObject, 2)]
         [InlineData("{{", ParserError.ExpectedEndObject, 1)]

@@ -90,6 +90,7 @@ namespace Stazor.Engines.Simple
         {
             if (_position >= _buffer.Length)
             {
+                // EndOfData
                 ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
@@ -98,19 +99,37 @@ namespace Stazor.Engines.Simple
             // '{{'で始まらない場合
             if (!IsBeginObjectInternal(ref bufferStart))
             {
+                // 2文字の内、最初の1文字が'{'の場合
+                if (_position + 1 < _buffer.Length && Unsafe.Add(ref bufferStart, _position) == (byte)'{')
+                {
+                    _position++;
+                }
+
                 ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
             _position += sizeof(ushort);
 
+            if (_position >= _buffer.Length)
+            {
+                // EndOfData
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, --_position);
+            }
+
             // '{'が3つ以上連続している場合
-            if (_position >= _buffer.Length || Unsafe.Add(ref bufferStart, _position) == (byte)'{')
+            if (Unsafe.Add(ref bufferStart, _position) == (byte)'{')
             {
                 ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedBeginObject, _position);
             }
 
             // '{'に連続するスペースを削除
             SkipWhiteSpaceInternal(ref bufferStart);
+
+            // スペースを削除後、bufferの末尾に到達した場合
+            if (_position >= _buffer.Length)
+            {
+                ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, --_position);
+            }
 
             var startPosition = _position;
 
@@ -144,6 +163,7 @@ namespace Stazor.Engines.Simple
                 _position++;
             }
 
+            // EndOfLine
             ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedEndObject, _position);
             range = default;
         }
