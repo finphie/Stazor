@@ -23,7 +23,7 @@ namespace Stazor.Engines.Simple
             Parse();
         }
 
-        public void RenderTo(IBufferWriter<byte> bufferWriter, Dictionary<string, object> content)
+        public void RenderTo(IBufferWriter<byte> bufferWriter, Dictionary<string, byte[]> content)
         {
             var buffer = Buffer;
 
@@ -37,7 +37,7 @@ namespace Stazor.Engines.Simple
                         bufferWriter.Write(value);
                         break;
                     case BlockType.Object:
-                        bufferWriter.Write(content[Encoding.UTF8.GetString(value)] as byte[]);
+                        bufferWriter.Write(content[Encoding.UTF8.GetString(value)]);
                         break;
                     default:
                         throw new Exception();

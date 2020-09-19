@@ -37,8 +37,6 @@ namespace Stazor.Engines.Simple
             _table.Add(path, cache);
 
             cache.RenderTo(bufferWriter, document.Content);
-
-            // Console.WriteLine(Encoding.UTF8.GetString((document.Content["Markdown"] as byte[])!));
         }   
     }
 }

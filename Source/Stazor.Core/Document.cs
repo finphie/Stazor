@@ -4,7 +4,7 @@ namespace Stazor.Core
 {
     public sealed class Document : IDocument
     {
-        public Dictionary<string, object> Content { get; } = new();
+        public Dictionary<string, byte[]> Content { get; } = new();
 
         public string TemplatePath { get; init; }
 

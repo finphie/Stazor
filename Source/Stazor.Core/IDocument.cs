@@ -4,7 +4,7 @@ namespace Stazor.Core
 {
     public interface IDocument
     {
-        Dictionary<string, object> Content { get; }
+        Dictionary<string, byte[]> Content { get; }
 
         string TemplatePath { get; init; }
 

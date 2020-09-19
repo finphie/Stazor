@@ -39,12 +39,12 @@ namespace Stazor.Plugins.Renderer
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                if (!input.Content.TryGetValue(_inputKey, out var value) || value is not byte[] utf8Data)
+                if (!input.Content.TryGetValue(_inputKey, out var value))
                 {
                     throw new ArgumentException(nameof(_inputKey));
                 }
 
-                var data = Encoding.UTF8.GetString(utf8Data);
+                var data = Encoding.UTF8.GetString(value);
                 var markdown = Markdig.Markdown.Parse(data, Pipeline);
                 var title = markdown.Descendants<HeadingBlock>()
                     .First(x => x.Level == 1)
