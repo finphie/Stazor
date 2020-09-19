@@ -9,9 +9,7 @@ namespace Stazor
         readonly AssemblyDependencyResolver _resolver;
 
         public LoadContext(string pluginPath)
-        {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
-        }
+            => _resolver = new AssemblyDependencyResolver(pluginPath);
 
         protected override Assembly? Load(AssemblyName assemblyName)
         {
