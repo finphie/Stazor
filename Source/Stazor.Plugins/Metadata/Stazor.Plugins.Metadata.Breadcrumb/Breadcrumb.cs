@@ -15,6 +15,11 @@ namespace Stazor.Plugins.Metadata
 {
     public sealed class Breadcrumb : IPlugin
     {
+        public static readonly byte[] Key = new byte[]
+        {
+            0x42, 0x72, 0x65, 0x61, 0x64, 0x63, 0x72, 0x75, 0x6D, 0x62
+        };
+
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
             var json = new JsonLd();
@@ -50,7 +55,7 @@ namespace Stazor.Plugins.Metadata
                 builder.Append("</ol>");
                 builder.Append("</nav>");
 
-                input.Content.Add(nameof(Breadcrumb), builder.AsSpan().ToArray());
+                input.Content.Add(Key, builder.AsSpan().ToArray());
                 builder.Advance(-length);
 
                 json.Items[1].Name = input.Metadata.Category!;

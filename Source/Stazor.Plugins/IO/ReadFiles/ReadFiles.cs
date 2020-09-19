@@ -7,6 +7,11 @@ namespace Stazor.Plugins.IO
 {
     public sealed class ReadFiles : IPlugin
     {
+        public static readonly byte[] Key = new byte[]
+        {
+            0x52, 0x65, 0x61, 0x64, 0x46, 0x69, 0x6C, 0x65, 0x73
+        };
+
         readonly IEnumerable<string> _files;
         readonly string _templatePath;
 
@@ -31,7 +36,7 @@ namespace Stazor.Plugins.IO
             foreach (var file in _files)
             {
                 var document = DocumentFactory.GetDocument(_templatePath);
-                document.Content.Add(nameof(ReadFiles), File.ReadAllBytes(file));
+                document.Content.Add(Key, File.ReadAllBytes(file));
 
                 yield return document;
             }

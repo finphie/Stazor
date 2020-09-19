@@ -25,7 +25,7 @@ namespace Stazor.Themes
         public Blog(string path)
         {
             Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
-            Pipeline.Add(new Markdown(nameof(ReadFiles)));
+            Pipeline.Add(new Markdown(ReadFiles.Key));
           
             //Pipeline.Add(Viewport.Default);
             //Pipeline.Add(new StyleSheet("style.css"));

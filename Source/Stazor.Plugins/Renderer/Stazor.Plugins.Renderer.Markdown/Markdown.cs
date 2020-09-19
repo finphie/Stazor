@@ -17,17 +17,22 @@ namespace Stazor.Plugins.Renderer
 {
     public sealed class Markdown : IPlugin
     {
+        public static readonly byte[] Key = new byte[]
+        {
+            0x4D, 0x61, 0x72, 0x6B, 0x64, 0x6F, 0x77, 0x6E
+        };
+
         static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
             .UseAutoLinks()
             .UsePipeTables()
             .UseYamlFrontMatter()
             .Build();
 
-        readonly string _inputKey;
+        readonly byte[] _inputKey;
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
 
-        public Markdown(string inputKey)
+        public Markdown(byte[] inputKey)
         {
             _inputKey = inputKey;
             _writer = new();
@@ -69,7 +74,7 @@ namespace Stazor.Plugins.Renderer
                 _renderer.Render(markdown);
                 _writer.Flush();
 
-                input.Content.Add(nameof(Markdown), Encoding.UTF8.GetBytes(_writer.ToString()));
+                input.Content.Add(Key, Encoding.UTF8.GetBytes(_writer.ToString()));
                 //input.Content.Add(nameof(Markdown), _writer.ToString());
                 _writer.GetStringBuilder().Clear();
 

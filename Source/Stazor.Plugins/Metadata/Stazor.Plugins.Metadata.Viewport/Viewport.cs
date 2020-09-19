@@ -9,6 +9,11 @@ namespace Stazor.Plugins.Metadata
     {
         public static readonly Viewport Default = new();
 
+        public static readonly byte[] Key = new byte[]
+        {
+            0x56, 0x69, 0x65, 0x77, 0x70, 0x6F, 0x72, 0x74
+        };
+
         readonly byte[] _html;
 
         public Viewport()
@@ -31,7 +36,7 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs)
             {
-                input.Content.Add(nameof(Viewport), _html);
+                input.Content.Add(Key, _html);
 
                 yield return input;
             }

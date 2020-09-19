@@ -9,6 +9,11 @@ namespace Stazor.Plugins.Metadata
 {
     public sealed class Favicon : IPlugin
     {
+        public static readonly byte[] Key = new byte[]
+        {
+            0x46, 0x61, 0x76, 0x69, 0x63, 0x6F, 0x6E
+        };
+
         readonly byte[] _html;
 
         public Favicon(ReadOnlySpan<char> href)
@@ -43,7 +48,7 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                input.Content.Add(nameof(Favicon), _html);
+                input.Content.Add(Key, _html);
                 yield return input;
             }
         }

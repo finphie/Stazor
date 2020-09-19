@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Text;
@@ -9,6 +8,11 @@ namespace Stazor.Plugins.Metadata
 {
     public sealed class StyleSheet : IPlugin
     {
+        public static readonly byte[] Key = new byte[]
+        {
+            0x53, 0x74, 0x79, 0x6C, 0x65, 0x53, 0x68, 0x65, 0x65, 0x74
+        };
+
         readonly byte[] _html;
 
         public StyleSheet(ReadOnlySpan<char> href)
@@ -26,7 +30,7 @@ namespace Stazor.Plugins.Metadata
         {
             await foreach (var input in inputs.ConfigureAwait(false))
             {
-                input.Content.Add(nameof(StyleSheet), _html);
+                input.Content.Add(Key, _html);
                 yield return input;
             }
         }

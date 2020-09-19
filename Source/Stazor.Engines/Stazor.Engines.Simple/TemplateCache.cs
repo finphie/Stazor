@@ -23,7 +23,7 @@ namespace Stazor.Engines.Simple
             Parse();
         }
 
-        public void RenderTo(IBufferWriter<byte> bufferWriter, Dictionary<string, byte[]> content)
+        public void RenderTo(IBufferWriter<byte> bufferWriter, Dictionary<byte[], byte[]> content)
         {
             var buffer = Buffer;
 
@@ -37,14 +37,13 @@ namespace Stazor.Engines.Simple
                         bufferWriter.Write(value);
                         break;
                     case BlockType.Object:
-                        bufferWriter.Write(content[Encoding.UTF8.GetString(value)]);
+                        // TODO: パフォーマンス                     
+                        content.TryGetValue(value.ToArray(), out var x);
+                        bufferWriter.Write(x);
                         break;
                     default:
                         throw new Exception();
-                }
-
-                var s = Encoding.UTF8.GetString(buffer[block.Range]);
-                Console.WriteLine($"{block}: {s}");
+                }              
             }
         }
 
