@@ -25,15 +25,16 @@ namespace Stazor
                     logging.ClearProviders();
                     logging.AddZLoggerConsole();
                 })
-                .RunConsoleAppFrameworkAsync<Program>(args);
+                .RunConsoleAppFrameworkAsync<Program>(args)
+                .ConfigureAwait(false);
         }
 
         // [Command("build")]
-        public async Task Build(string themePath, string themeName, string[] args)
+        public async Task BuildAsync(string themePath, string themeName, string[] args)
         {
             var theme = CreateTheme(themePath, themeName, args);           
 
-            await theme.ExecuteAsync();
+            await theme.ExecuteAsync().ConfigureAwait(false);
         }
 
         static ITheme CreateTheme(string themePath, string themeName, params string[] args)

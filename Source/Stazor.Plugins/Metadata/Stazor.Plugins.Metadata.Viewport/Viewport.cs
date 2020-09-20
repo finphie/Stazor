@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Text;
 using Stazor.Core;
 
@@ -34,7 +35,7 @@ namespace Stazor.Plugins.Metadata
 
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
-            await foreach (var input in inputs)
+            await foreach (var input in inputs.ConfigureAwait(false))
             {
                 input.Content.Add(Key, _html);
 

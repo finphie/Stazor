@@ -1,4 +1,5 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace Stazor.Engines.Simple
         public async ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
 #pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         {
+            if (document is null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
             var path = document.TemplatePath;
 
             if (_table.TryGetValue(path, out var value))

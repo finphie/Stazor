@@ -7,12 +7,12 @@ namespace Stazor.Core
     {
         string? Title { get; set; }
 
-        DateTimeOffset Date { get; set; }
+        DateTimeOffset PublishedDate { get; set; }
 
         DateTimeOffset? ModifiedDate { get; set; }
 
         string? Category { get; set; }
 
-        List<string>? Tags { get; set; }
+        List<string>? Tags { get; }
     }
 }

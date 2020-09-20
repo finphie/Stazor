@@ -29,7 +29,7 @@ namespace Stazor.Plugins.Metadata
                 : extension.SequenceEqual(".svg") ? "image/svg+xml"
                 : extension.SequenceEqual(".png") ? "png"
                 : (extension.SequenceEqual(".jpg") || extension.SequenceEqual(".jpeg")) ? "jpg"
-                : throw new ArgumentException(nameof(href));
+                : throw new ArgumentOutOfRangeException(nameof(href));
 
             if (type is not null)
             {

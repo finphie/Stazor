@@ -42,7 +42,9 @@ namespace Stazor.Plugins.Renderer
 
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+#pragma warning disable CA1508 // 使用されない条件付きコードを回避する
             await foreach (var input in inputs.ConfigureAwait(false))
+#pragma warning restore CA1508 // 使用されない条件付きコードを回避する
             {
                 if (!input.Content.TryGetValue(_inputKey, out var value))
                 {

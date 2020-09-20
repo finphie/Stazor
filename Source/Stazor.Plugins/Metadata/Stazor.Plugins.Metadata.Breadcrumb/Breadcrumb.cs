@@ -22,11 +22,12 @@ namespace Stazor.Plugins.Metadata
 
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
-            var json = new JsonLd();
-            json.Context = "https://schema.org";
-            json.Type = "BreadcrumbList";
-
-            json.Items = new JsonLd.ItemListElement[2];
+            var json = new JsonLd
+            {
+                Context = "https://schema.org",
+                Type = "BreadcrumbList",
+                Items = new JsonLd.ItemListElement[2]
+            };
 
             for (var i = 0; i < json.Items.Length; i++)
             {
@@ -43,7 +44,9 @@ namespace Stazor.Plugins.Metadata
 
             var length = builder.Length;
 
+#pragma warning disable CA1508 // 使用されない条件付きコードを回避する
             await foreach (var input in inputs.ConfigureAwait(false))
+#pragma warning restore CA1508 // 使用されない条件付きコードを回避する
             {       
                 builder.Append(input.Metadata.Category);
                 builder.Append("\">");

@@ -43,6 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Tests.Engines.Simple
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{6E4A3309-3DAE-456C-B886-1264AC76AF80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A632B5DB-30D0-4773-B080-2B4944DEC5A4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

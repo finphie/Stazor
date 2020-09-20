@@ -25,6 +25,14 @@ namespace Stazor.Engines.Simple
             Position = position;
         }
 
+        public HtmlParserException(string message) : base(message)
+        {
+        }
+
+        public HtmlParserException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
         public enum ParserError
         {
             InvalidObjectFormat,
