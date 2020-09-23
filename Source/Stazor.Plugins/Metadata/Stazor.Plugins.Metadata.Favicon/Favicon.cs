@@ -7,8 +7,14 @@ using Stazor.Core;
 
 namespace Stazor.Plugins.Metadata
 {
+    /// <summary>
+    /// Set the favicon.
+    /// </summary>
     public sealed class Favicon : IPlugin
     {
+        /// <summary>
+        /// The content key.
+        /// </summary>
         public static readonly byte[] Key = new byte[]
         {
             0x46, 0x61, 0x76, 0x69, 0x63, 0x6F, 0x6E
@@ -16,6 +22,10 @@ namespace Stazor.Plugins.Metadata
 
         readonly byte[] _html;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Favicon"/> class.
+        /// </summary>
+        /// <param name="href">The favicon url.</param>
         public Favicon(ReadOnlySpan<char> href)
         {
             using var builder = ZString.CreateUtf8StringBuilder(true);
@@ -44,6 +54,7 @@ namespace Stazor.Plugins.Metadata
             builder.TryCopyTo(_html, out _);
         }
 
+        /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
             await foreach (var input in inputs.ConfigureAwait(false))

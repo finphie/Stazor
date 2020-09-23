@@ -1,10 +1,5 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 using Cysharp.Text;
 using Stazor.Core;
@@ -13,13 +8,20 @@ using Utf8Json.Resolvers;
 
 namespace Stazor.Plugins.Metadata
 {
+    /// <summary>
+    /// Create a Breadcrumb Navigation.
+    /// </summary>
     public sealed class Breadcrumb : IPlugin
     {
+        /// <summary>
+        /// The content key.
+        /// </summary>
         public static readonly byte[] Key = new byte[]
         {
             0x42, 0x72, 0x65, 0x61, 0x64, 0x63, 0x72, 0x75, 0x6D, 0x62
         };
 
+        /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
             var json = new JsonLd
@@ -47,7 +49,7 @@ namespace Stazor.Plugins.Metadata
 #pragma warning disable CA1508 // 使用されない条件付きコードを回避する
             await foreach (var input in inputs.ConfigureAwait(false))
 #pragma warning restore CA1508 // 使用されない条件付きコードを回避する
-            {       
+            {
                 builder.Append(input.Metadata.Category);
                 builder.Append("\">");
                 builder.Append(input.Metadata.Category);
@@ -63,8 +65,9 @@ namespace Stazor.Plugins.Metadata
 
                 json.Items[1].Name = input.Metadata.Category!;
                 json.Items[1].Item = "https://example.com/";
-                // TODO
-                var a = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+
+                // TODO: JSON
+                _ = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
 
                 yield return input;
             }

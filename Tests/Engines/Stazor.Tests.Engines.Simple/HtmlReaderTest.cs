@@ -13,8 +13,8 @@ namespace Stazor.Tests.Engines.Simple
         public static TheoryData<string, MemberSerializer<Block[]>> TestData => new()
         {
             {
-                "",
-                CreateMembers(new Block(BlockType.None, ""))
+                string.Empty,
+                CreateMembers(new Block(BlockType.None, string.Empty))
             },
             {
                 "{",
@@ -140,7 +140,7 @@ namespace Stazor.Tests.Engines.Simple
             reader.ReadObject(out var range);
 
             var actual = utf8Html[range];
-            actual.Should().Equal(GetBytes(expected));       
+            actual.Should().Equal(GetBytes(expected));
         }
 
         [Theory]
@@ -181,6 +181,8 @@ namespace Stazor.Tests.Engines.Simple
         static byte[] GetBytes(string value) => Encoding.UTF8.GetBytes(value);
 
         [SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "record parameters")]
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "record")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1313:Parameter names should begin with lower-case letter", Justification = "record parameters")]
         public record Block(object Type, string Value);
     }
 }

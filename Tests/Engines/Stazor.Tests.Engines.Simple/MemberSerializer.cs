@@ -6,9 +6,17 @@ namespace Stazor.Tests.Engines.Simple
 {
     public sealed class MemberSerializer<T> : IXunitSerializable
     {
-        public T Object { get; private set; }
-
         static JsonSerializerOptions? _serializerOptions;
+
+#nullable disable
+        public MemberSerializer()
+        {
+        }
+#nullable restore
+
+        public MemberSerializer(T obj) => Object = obj;
+
+        public T Object { get; private set; }
 
         static JsonSerializerOptions SerializerOptions
         {
@@ -23,14 +31,6 @@ namespace Stazor.Tests.Engines.Simple
                 return _serializerOptions;
             }
         }
-
-#nullable disable
-        public MemberSerializer()
-        {
-        }
-#nullable restore
-
-        public MemberSerializer(T obj) => Object = obj;
 
         public void Deserialize(IXunitSerializationInfo info)
             => Object = JsonSerializer.Deserialize<T>(info.GetValue<string>(nameof(Object)))!;

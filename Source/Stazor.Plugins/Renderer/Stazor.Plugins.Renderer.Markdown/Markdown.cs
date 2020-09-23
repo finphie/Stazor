@@ -15,8 +15,14 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Stazor.Plugins.Renderer
 {
+    /// <summary>
+    /// Parses markdown and renders it to HTML.
+    /// </summary>
     public sealed class Markdown : IPlugin
     {
+        /// <summary>
+        /// The content key.
+        /// </summary>
         public static readonly byte[] Key = new byte[]
         {
             0x4D, 0x61, 0x72, 0x6B, 0x64, 0x6F, 0x77, 0x6E
@@ -32,6 +38,10 @@ namespace Stazor.Plugins.Renderer
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Markdown"/> class.
+        /// </summary>
+        /// <param name="inputKey">The key to specify the content.</param>
         public Markdown(byte[] inputKey)
         {
             _inputKey = inputKey;
@@ -40,6 +50,7 @@ namespace Stazor.Plugins.Renderer
             Pipeline.Setup(_renderer);
         }
 
+        /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
 #pragma warning disable CA1508 // 使用されない条件付きコードを回避する
@@ -77,7 +88,6 @@ namespace Stazor.Plugins.Renderer
                 _writer.Flush();
 
                 input.Content.Add(Key, Encoding.UTF8.GetBytes(_writer.ToString()));
-                //input.Content.Add(nameof(Markdown), _writer.ToString());
                 _writer.GetStringBuilder().Clear();
 
                 yield return input;

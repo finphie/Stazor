@@ -11,6 +11,11 @@ using ZLogger;
 
 namespace Stazor
 {
+    /// <summary>
+    /// The Main class of the application.
+    /// </summary>
+    [SuppressMessage("Performance", "CA1822:メンバーを static に設定します", Justification = "Command-line application")]
+    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Entry-point")]
     class Program : ConsoleAppBase
     {
         [SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "Entry-point")]
@@ -32,7 +37,7 @@ namespace Stazor
         // [Command("build")]
         public async Task BuildAsync(string themePath, string themeName, string[] args)
         {
-            var theme = CreateTheme(themePath, themeName, args);           
+            var theme = CreateTheme(themePath, themeName, args);
 
             await theme.ExecuteAsync().ConfigureAwait(false);
         }

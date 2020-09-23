@@ -10,15 +10,18 @@ using static Stazor.Engines.Simple.HtmlParserException;
 
 namespace Stazor.Engines.Simple
 {
+    /// <summary>
+    /// Read-only access to the UTF-8 encoded HTML text.
+    /// </summary>
     ref struct HtmlReader
     {
         /// <summary>
-        /// '{{'
+        /// '{{' (UTF-8 encoded).
         /// </summary>
         const ushort StartObject = 0x7b7b;
 
         /// <summary>
-        /// '}}'
+        /// '}}' (UTF-8 encoded).
         /// </summary>
         const ushort EndObject = 0x7d7d;
 
@@ -26,12 +29,22 @@ namespace Stazor.Engines.Simple
 
         int _position;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HtmlReader"/> struct.
+        /// </summary>
+        /// <param name="input">The UTF-8 encoded HTML text to process.</param>
         public HtmlReader(ReadOnlySpan<byte> input)
         {
             _buffer = input;
             _position = 0;
         }
 
+        /// <summary>
+        /// Read an HTML.
+        /// </summary>
+        /// <param name="range">The location of the object or HTML.</param>
+        /// <returns>The type of the block.</returns>
+        /// <exception cref="HtmlParserException">Exception throws when a parsing error occurs.</exception>
         public BlockType Read(out Range range)
         {
             if (_position >= _buffer.Length)
@@ -45,10 +58,18 @@ namespace Stazor.Engines.Simple
                 return BlockType.Html;
             }
 
-            ReadObject(out range);           
+            ReadObject(out range);
             return BlockType.Object;
         }
 
+        /// <summary>
+        /// Read an HTML text.
+        /// </summary>
+        /// <param name="range">The location of the HTML.</param>
+        /// <returns>
+        /// <see langword="true"/> if the current token is '{{'.
+        /// Otherwise, returns <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryReadHtml(out Range range)
         {
@@ -86,10 +107,13 @@ namespace Stazor.Engines.Simple
             return true;
         }
 
+        /// <summary>
+        /// Read an object.
+        /// </summary>
+        /// <param name="range">The location of the object.</param>
+        /// <exception cref="HtmlParserException">Exception throws when a parsing error occurs.</exception>
         public void ReadObject(out Range range)
         {
-            // TODO: 改行を考慮する。
-
             if (_position >= _buffer.Length)
             {
                 ThrowHelper.ThrowHtmlParserException(ParserError.ExpectedStartObject, _position);
@@ -137,7 +161,7 @@ namespace Stazor.Engines.Simple
             {
                 // '}}'で終わる場合
                 if (IsEndObjectInternal(ref bufferStart))
-                {                   
+                {
                     var endPosition = _position;
 
                     // '{{'と'}}'の間に1文字もない場合
@@ -174,14 +198,31 @@ namespace Stazor.Engines.Simple
             range = default;
         }
 
+        /// <summary>
+        /// Returns a value stating whether the current token is '{{'.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the current token is '{{'.
+        /// Otherwise, returns <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsStartObject()
             => IsStartObjectInternal(ref MemoryMarshal.GetReference(_buffer));
 
+        /// <summary>
+        /// Returns a value stating whether the current token is '}}'.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the current token is '}}'.
+        /// Otherwise, returns <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsEndObject()
-            => IsEndObjectInternal(ref MemoryMarshal.GetReference(_buffer));    
+            => IsEndObjectInternal(ref MemoryMarshal.GetReference(_buffer));
 
+        /// <summary>
+        /// Consume all whitespace.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SkipWhiteSpace()
             => SkipWhiteSpaceInternal(ref MemoryMarshal.GetReference(_buffer));
@@ -189,21 +230,21 @@ namespace Stazor.Engines.Simple
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool IsStartObjectInternal(ref byte bufferStart)
         {
-            Debug.Assert(_buffer[0] == bufferStart);
+            Debug.Assert(_buffer[0] == bufferStart, "Invalid position");
             return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == StartObject;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         bool IsEndObjectInternal(ref byte bufferStart)
         {
-            Debug.Assert(_buffer[0] == bufferStart);
+            Debug.Assert(_buffer[0] == bufferStart, "Invalid position");
             return _position + 1 < _buffer.Length && Unsafe.ReadUnaligned<ushort>(ref Unsafe.Add(ref bufferStart, _position)) == EndObject;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void SkipWhiteSpaceInternal(ref byte bufferStart)
         {
-            Debug.Assert(_buffer[0] == bufferStart);
+            Debug.Assert(_buffer[0] == bufferStart, "Invalid position");
 
             while (_position < _buffer.Length)
             {

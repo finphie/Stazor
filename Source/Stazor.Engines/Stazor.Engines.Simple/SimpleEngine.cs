@@ -8,13 +8,15 @@ using Stazor.Engine;
 
 namespace Stazor.Engines.Simple
 {
+    /// <summary>
+    /// A simple template engine.
+    /// </summary>
     public sealed class SimpleEngine : IEngine
     {
+        /// <summary>
+        /// Gets a singleton instance of the <see cref="SimpleEngine"/>.
+        /// </summary>
         public static readonly SimpleEngine Default = new();
-
-        public string Name => "Simple";
-
-        public string Description => "Simple templates";
 
         readonly Dictionary<string, TemplateCache> _table = new();
 
@@ -22,7 +24,14 @@ namespace Stazor.Engines.Simple
         {
         }
 
+        /// <inheritdoc/>
+        public string Name => "Simple";
+
+        /// <inheritdoc/>
+        public string Description => "Simple templates";
+
 #pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
+        /// <inheritdoc/>
         public async ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
 #pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         {
@@ -44,6 +53,6 @@ namespace Stazor.Engines.Simple
             _table.Add(path, cache);
 
             cache.RenderTo(bufferWriter, document.Content);
-        }   
+        }
     }
 }
