@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace Stazor.Core
 {
-    // TODO: metadata
+    /// <summary>
+    /// The document metadata.
+    /// </summary>
     public interface IMetadata
     {
         /// <summary>
@@ -39,11 +41,11 @@ namespace Stazor.Core
         string? Category { get; set; }
 
         /// <summary>
-        /// Gets the tags.
+        /// Gets or sets the tags.
         /// </summary>
         /// <value>
         /// The tags.
         /// </value>
-        List<string>? Tags { get; }
+        IReadOnlySet<string> Tags { get; set; }
     }
 }

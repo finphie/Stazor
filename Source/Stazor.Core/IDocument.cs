@@ -25,11 +25,11 @@ namespace Stazor.Core
         string TemplatePath { get; init; }
 
         /// <summary>
-        /// Gets or sets the metadata associated with this document.
+        /// Gets the metadata associated with this document.
         /// </summary>
         /// <value>
         /// The metadata.
         /// </value>
-        IMetadata Metadata { get; set; }
+        IMetadata Metadata { get; }
     }
 }

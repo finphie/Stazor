@@ -37,6 +37,7 @@ namespace Stazor.Plugins.Renderer
         readonly byte[] _inputKey;
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
+        readonly IDeserializer _yamlDeserializer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Markdown"/> class.
@@ -48,6 +49,11 @@ namespace Stazor.Plugins.Renderer
             _writer = new();
             _renderer = new(_writer);
             Pipeline.Setup(_renderer);
+
+            _yamlDeserializer = new DeserializerBuilder()
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .WithNodeTypeResolver(SortedSetResolver.Default)
+                .Build();
         }
 
         /// <inheritdoc/>
@@ -74,12 +80,14 @@ namespace Stazor.Plugins.Renderer
 
                 if (yaml is not null)
                 {
-                    var deserializer = new DeserializerBuilder()
-                        .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                        .Build();
-
                     var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-                    input.Metadata = deserializer.Deserialize<Metadata>(yamlString);
+                    var metadata = _yamlDeserializer.Deserialize<Metadata>(yamlString);
+
+                    input.Metadata.Title = metadata.Title;
+                    input.Metadata.PublishedDate = metadata.PublishedDate;
+                    input.Metadata.ModifiedDate = metadata.ModifiedDate;
+                    input.Metadata.Category = metadata.Category;
+                    input.Metadata.Tags = metadata.Tags;
                 }
 
                 input.Metadata.Title = title.ToString();

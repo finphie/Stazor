@@ -4,6 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Core
 {
+    /// <summary>
+    /// The document metadata.
+    /// </summary>
     [SuppressMessage("Naming", "CA1724:型名は名前空間と同一にすることはできません", Justification = "Content metadata")]
     public sealed class Metadata : IMetadata
     {
@@ -20,6 +23,7 @@ namespace Stazor.Core
         public string? Category { get; set; }
 
         /// <inheritdoc/>
-        public List<string>? Tags { get; }
+        [AllowNull]
+        public IReadOnlySet<string> Tags { get; set; }
     }
 }
