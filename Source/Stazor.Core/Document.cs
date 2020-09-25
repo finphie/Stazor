@@ -7,6 +7,15 @@ namespace Stazor.Core
     /// </summary>
     public sealed class Document : IDocument
     {
+#nullable disable
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Document"/> class.
+        /// </summary>
+        public Document()
+        {
+        }
+#nullable restore
+
         /// <inheritdoc/>
         public Dictionary<byte[], byte[]> Content { get; } = new(ByteArrayComparer.Default);
 
@@ -14,6 +23,6 @@ namespace Stazor.Core
         public string TemplatePath { get; init; }
 
         /// <inheritdoc/>
-        public IMetadata Metadata { get; set; } = new Metadata();
+        public IMetadata Metadata { get; } = new Metadata();
     }
 }

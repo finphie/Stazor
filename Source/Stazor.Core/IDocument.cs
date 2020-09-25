@@ -5,7 +5,6 @@ namespace Stazor.Core
     /// <summary>
     /// A document consists of a set of content and metadata attributes.
     /// </summary>
-    // TODO: document
     public interface IDocument
     {
         /// <summary>
