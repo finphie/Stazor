@@ -82,14 +82,14 @@ namespace Stazor.Tests.Engines.Simple
             while (reader.Read(out range) is var type && type != BlockType.None)
             {
                 var actual = utf8Html[range];
-                actual.Should().Equal(GetBytes(expectedItems.Object[count++].Value));
+                actual.Should().Equal(GetBytes(expectedItems.Value[count++].Value));
             }
 
             utf8Html[range].Should().BeEmpty();
 
             if (!string.IsNullOrEmpty(html))
             {
-                count.Should().Be(expectedItems.Object.Length);
+                count.Should().Be(expectedItems.Value.Length);
             }
         }
 
