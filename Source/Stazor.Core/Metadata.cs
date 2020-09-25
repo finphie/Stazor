@@ -11,16 +11,18 @@ namespace Stazor.Core
     public sealed class Metadata : IMetadata
     {
         /// <inheritdoc/>
-        public string? Title { get; set; }
+        [AllowNull]
+        public string Title { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset PublishedDate { get; set; }
 
         /// <inheritdoc/>
-        public DateTimeOffset? ModifiedDate { get; set; }
+        public DateTimeOffset ModifiedDate { get; set; }
 
         /// <inheritdoc/>
-        public string? Category { get; set; }
+        [AllowNull]
+        public string Category { get; set; }
 
         /// <inheritdoc/>
         [AllowNull]

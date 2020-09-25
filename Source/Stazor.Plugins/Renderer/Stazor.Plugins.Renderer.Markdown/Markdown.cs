@@ -85,7 +85,9 @@ namespace Stazor.Plugins.Renderer
 
                     input.Metadata.Title = metadata.Title;
                     input.Metadata.PublishedDate = metadata.PublishedDate;
-                    input.Metadata.ModifiedDate = metadata.ModifiedDate;
+                    input.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
+                        ? metadata.ModifiedDate
+                        : metadata.PublishedDate;
                     input.Metadata.Category = metadata.Category;
                     input.Metadata.Tags = metadata.Tags;
                 }

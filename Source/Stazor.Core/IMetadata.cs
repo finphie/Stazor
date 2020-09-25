@@ -30,7 +30,7 @@ namespace Stazor.Core
         /// <value>
         /// The modified date.
         /// </value>
-        DateTimeOffset? ModifiedDate { get; set; }
+        DateTimeOffset ModifiedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the category name.
