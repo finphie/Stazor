@@ -1,0 +1,98 @@
+name: Config
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 * * * *'
+
+jobs:
+  update-dotfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: main
+      
+      - name: Checkout dotfiles repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.actor }}/dotfiles
+          path: dotfiles
+        
+      - name: Test
+        run: ll -d $(find `pwd`)
+
+      - name: Check pull request
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd main
+          $pr = Invoke-Expression 'gh pr list --label ci --limit 1'
+          if ($pr.Length -ne 0) {
+              exit -1
+          }
+          
+      - name: Sync dotfiles
+        shell: pwsh
+        run: |
+          $directory = 'dotfiles'
+          $mainDirectory = 'main'
+
+          cd $directory
+          $lines = Invoke-Expression 'git diff HEAD^ --name-status'
+
+          if (!$?) {
+              exit -1
+          }
+
+          cd -
+          Write-Output $lines
+
+          foreach ($line in $lines) {
+              $x = $line -split '\t'
+
+              if ($x[0] -eq 'M' -or $x[0] -eq 'A') {
+                  $path = Join-Path $directory $x[1]
+                  $mainPath = Join-Path $mainDirectory $x[1]
+                  $mainParentPath = Split-Path $mainPath -Parent
+                  Write-Output "+: $mainPath"
+                  New-Item $mainParentPath -ItemType Directory -Force | Out-Null
+                  Copy-Item $path $mainPath -Force
+              }
+              elseif ($x[0] -eq 'D') {
+                  $mainPath = Join-Path $mainDirectory $x[1]
+                  Write-Output "-: $mainPath"
+                  Remove-Item $mainPath
+              }
+              elseif ($x[0].StartsWith('R')) {
+                  $path = Join-Path $directory $x[2]
+                  $mainPath = Join-Path $mainDirectory $x[2]
+                  $mainParentPath = Split-Path $mainPath -Parent
+                  $oldMainPath = Join-Path $mainDirectory $x[1]
+                  Write-Output ("-: $oldMainPath")
+                  Remove-Item $oldMainPath
+                  Write-Output ("+: $mainPath")
+                  New-Item $mainParentPath -ItemType Directory -Force | Out-Null
+                  Copy-Item $path $mainPath -Force
+              }
+              else {
+                  exit -1
+              }
+          }
+          
+      - name: Test
+        run: ll -d $(find `pwd`)
+      
+      #- name: Create pull request
+      #  uses: peter-evans/create-pull-request@v3
+      #  with:
+      #    author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+      #    path: main
+      #    commit-message: Update dotfiles
+      #    branch: ci/dotfiles-
+      #    branch-suffix: timestamp
+      #    title: '[CI] Update dotfiles'
+      #    body: ''
+      #    labels: CI
