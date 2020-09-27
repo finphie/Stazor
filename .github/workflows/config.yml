@@ -6,7 +6,7 @@ on:
 #    - cron: '0 * * * *'
 
 jobs:
-  update-dotfiles:
+  sync-dotfiles:
     runs-on: ubuntu-latest
 
     steps:
@@ -87,8 +87,8 @@ jobs:
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           path: main
           commit-message: Update dotfiles
-          branch: ci/dotfiles-
+          branch: ci/dotfiles
           branch-suffix: timestamp
           title: '[CI] Update dotfiles'
           body: ''
-          labels: CI
+          labels: ci
