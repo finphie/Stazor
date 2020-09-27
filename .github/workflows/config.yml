@@ -21,7 +21,7 @@ jobs:
           path: dotfiles
         
       - name: Test
-        run: ll -d $(find `pwd`)
+        run: ls -l -d $(find `pwd`)
 
       - name: Check pull request
         shell: pwsh
@@ -83,7 +83,7 @@ jobs:
           }
           
       - name: Test
-        run: ll -d $(find `pwd`)
+        run: ls -l -d $(find `pwd`)
       
       #- name: Create pull request
       #  uses: peter-evans/create-pull-request@v3
