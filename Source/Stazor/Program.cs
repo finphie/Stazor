@@ -34,7 +34,7 @@ namespace Stazor
                 .ConfigureAwait(false);
         }
 
-        // [Command("build")]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Command-line application")]
         public async Task BuildAsync(string themePath, string themeName, string[] args)
         {
             var theme = CreateTheme(themePath, themeName, args);
