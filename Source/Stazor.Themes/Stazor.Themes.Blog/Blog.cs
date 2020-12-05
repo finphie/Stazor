@@ -29,11 +29,10 @@ namespace Stazor.Themes
         {
             Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
             Pipeline.Add(new Markdown(ReadFiles.Key));
-
-            // Pipeline.Add(Viewport.Default);
-            // Pipeline.Add(new StyleSheet("style.css"));
-            // Pipeline.Add(new Favicon("/favicon.svg"));
-            // Pipeline.Add(new Breadcrumb());
+            Pipeline.Add(Viewport.Default);
+            Pipeline.Add(new StyleSheet("style.css"));
+            Pipeline.Add(new Favicon("/favicon.svg"));
+            Pipeline.Add(new Breadcrumb());
         }
 
         /// <inheritdoc/>
