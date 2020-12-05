@@ -21,6 +21,14 @@ namespace Stazor.Plugins.Metadata
             0x42, 0x72, 0x65, 0x61, 0x64, 0x63, 0x72, 0x75, 0x6D, 0x62
         };
 
+        /// <summary>
+        /// JSON-LD key.
+        /// </summary>
+        public static readonly byte[] JsonLdKey = new byte[]
+        {
+            0x4A, 0x73, 0x6F, 0x6E, 0x4C, 0x64
+        };
+
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
@@ -64,10 +72,12 @@ namespace Stazor.Plugins.Metadata
                 builder.Advance(-length);
 
                 json.Items[1].Name = input.Metadata.Category!;
+
+                // TODO: JSON-LD URL
                 json.Items[1].Item = "https://example.com/";
 
-                // TODO: JSON
-                _ = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+                var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+                input.Content.Add(JsonLdKey, jsonLd);
 
                 yield return input;
             }
@@ -81,6 +91,7 @@ namespace Stazor.Plugins.Metadata
             [DataMember(Name = "@type")]
             public string? Type { get; set; }
 
+            [DataMember(Name = "itemListElement")]
             public ItemListElement[]? Items { get; set; }
 
             public sealed class ItemListElement
