@@ -1,5 +1,30 @@
 <html>
-<body>
-    {{ Markdown }}
-</body>
+
+  <head>
+    {{ Viewport }}
+    {{ StyleSheet }}
+    {{ Favicon }}
+  </head>
+
+  <body>
+    <header>
+      <!-- TODO: トップページへのリンクなど -->
+    </header>
+    <main>
+      <header>
+        {{ Breadcrumb }}
+      </header>
+      <article>
+        {{ Markdown }}
+      </article>
+      <!-- TODO: 前後の記事へのナビゲーション -->
+    </main>
+    <footer>
+      <!-- TODO: カテゴリーリンク、コピーライト表記など -->
+    </footer>
+    <script type="application/ld+json">
+      [{{ JsonLd }}]
+    </script>
+  </body>
+
 </html>
