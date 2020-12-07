@@ -1,0 +1,88 @@
+body {
+  background: #fff;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: .05em;
+  margin: 0;
+  color: #333;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #222;
+    color: #ddd;
+  }
+
+  a {
+    color: #4BE;
+  }
+
+  a:visited {
+    color: #DAA;
+  }
+
+  code {
+    background-color: #333;
+  }
+}
+
+main {
+  max-width: 960px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  border-bottom: double 3px #bbb;
+}
+
+h3 {
+  font-size: 1.5rem;
+  border-bottom: solid 1px #bbb;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+.breadcrumbs {
+  font-size: 1rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.breadcrumbs a {
+  text-decoration: none;
+}
+
+.breadcrumbs a::after {
+    color: #ddd;
+    content: '>';
+    font-weight: bold;
+    padding: 0 3px;
+}
+
+@media screen and (max-width : 767px){
+  body {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.375rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  h4 {
+    font-size: 1.125rem;
+  }
+}
