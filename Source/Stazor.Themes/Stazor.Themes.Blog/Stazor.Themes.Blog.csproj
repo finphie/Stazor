@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" Private="false" ExcludeAssets="runtime" />
     <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj" />
+    <ProjectReference Include="..\..\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\IO\ReadFiles\Stazor.Plugins.IO.ReadFiles.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Favicon\Stazor.Plugins.Metadata.Favicon.csproj" />

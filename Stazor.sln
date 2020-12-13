@@ -48,6 +48,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contents", "Contents", "{DC15BA35-40C1-4851-BF77-032E40BFFA0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Contents.Sort", "Source\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj", "{D788F003-37B4-4146-8985-E779BC137BC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +102,10 @@ Global
 		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D788F003-37B4-4146-8985-E779BC137BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D788F003-37B4-4146-8985-E779BC137BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D788F003-37B4-4146-8985-E779BC137BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D788F003-37B4-4146-8985-E779BC137BC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +129,8 @@ Global
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
 		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11} = {6E4A3309-3DAE-456C-B886-1264AC76AF80}
 		{6E4A3309-3DAE-456C-B886-1264AC76AF80} = {578CF194-B595-42E2-AD3A-5CE0CFF11BE2}
+		{DC15BA35-40C1-4851-BF77-032E40BFFA0A} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
+		{D788F003-37B4-4146-8985-E779BC137BC3} = {DC15BA35-40C1-4851-BF77-032E40BFFA0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BD94B82-777A-4266-A057-4F2B73161020}

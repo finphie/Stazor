@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Stazor.Core;
 using Stazor.Engine;
 using Stazor.Engines.Simple;
+using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Plugins.Renderer;
@@ -29,6 +30,7 @@ namespace Stazor.Themes
         {
             Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
             Pipeline.Add(new Markdown(ReadFiles.Key));
+            Pipeline.Add(new Sort());
             Pipeline.Add(Viewport.Default);
             Pipeline.Add(new StyleSheet("style.css"));
             Pipeline.Add(new Favicon("/favicon.svg"));
