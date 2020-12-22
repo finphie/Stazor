@@ -17,5 +17,7 @@ namespace Stazor.Themes
         public ViewportSettings Viewport { get; set; } = new();
 
         public StyleSheetSettings StyleSheet { get; set; } = new();
+
+        public FaviconSettings Favicon { get; set; } = new();
     }
 }

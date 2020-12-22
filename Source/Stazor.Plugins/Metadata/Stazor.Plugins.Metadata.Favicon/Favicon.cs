@@ -20,26 +20,30 @@ namespace Stazor.Plugins.Metadata
             0x46, 0x61, 0x76, 0x69, 0x63, 0x6F, 0x6E
         };
 
+        readonly IStazorLogger _logger;
+        readonly FaviconSettings _settings;
         readonly byte[] _html;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Favicon"/> class.
         /// </summary>
-        /// <param name="href">The favicon url.</param>
-        public Favicon(ReadOnlySpan<char> href)
+        public Favicon(IStazorLogger logger, FaviconSettings settings)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+
             using var builder = ZString.CreateUtf8StringBuilder(true);
             builder.Append("<link rel=\"icon\" href=\"");
-            builder.Append(href);
+            builder.Append(_settings.Href);
             builder.Append('\"');
 
-            var extension = Path.GetExtension(href);
+            var extension = Path.GetExtension(_settings.Href.AsSpan());
 
             var type = extension.SequenceEqual(".ico") ? null
                 : extension.SequenceEqual(".svg") ? "image/svg+xml"
                 : extension.SequenceEqual(".png") ? "png"
                 : (extension.SequenceEqual(".jpg") || extension.SequenceEqual(".jpeg")) ? "jpg"
-                : throw new ArgumentOutOfRangeException(nameof(href));
+                : throw new ArgumentOutOfRangeException(nameof(settings));
 
             if (type is not null)
             {
