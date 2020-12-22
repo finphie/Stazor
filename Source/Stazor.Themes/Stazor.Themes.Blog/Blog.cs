@@ -35,7 +35,7 @@ namespace Stazor.Themes
 
             Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), settings.ReadFiles));
             // Pipeline.Add(new Markdown(ReadFiles.Key));
-            // Pipeline.Add(new Sort());
+            Pipeline.Add(new Sort(CreateLogger<Sort>()));
             // Pipeline.Add(Viewport.Default);
             // Pipeline.Add(new StyleSheet("style.css"));
             // Pipeline.Add(new Favicon("/favicon.svg"));
