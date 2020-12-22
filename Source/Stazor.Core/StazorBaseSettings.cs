@@ -4,6 +4,8 @@ namespace Stazor.Core
 {
     public abstract class StazorBaseSettings : ISettings
     {
+        public const string Key = nameof(Stazor);
+
         /// <summary>
         /// サイトタイトル
         /// </summary>

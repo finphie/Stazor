@@ -7,9 +7,8 @@ namespace Stazor.Themes
 {
     public sealed class StazorSettings : StazorBaseSettings
     {
+        public BreadcrumbSettings Breadcrumb { get; set; } = new();
 
-        public BreadcrumbSettings Breadcrumb { get; set; }
-
-        public ReadFilesSettings ReadFiles { get; set; }
+        public ReadFilesSettings ReadFiles { get; set; } = new();
     }
 }
