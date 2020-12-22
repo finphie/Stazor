@@ -10,5 +10,7 @@ namespace Stazor.Themes
         public BreadcrumbSettings Breadcrumb { get; set; } = new();
 
         public ReadFilesSettings ReadFiles { get; set; } = new();
+
+        public ViewportSettings Viewport { get; set; } = new();
     }
 }
