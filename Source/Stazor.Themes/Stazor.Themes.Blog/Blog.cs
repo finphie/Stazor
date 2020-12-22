@@ -33,13 +33,15 @@ namespace Stazor.Themes
             _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline.Add(new ReadFiles(_loggerFactory.CreateLogger<ReadFiles>(), settings.ReadFiles));
+            Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), settings.ReadFiles));
             // Pipeline.Add(new Markdown(ReadFiles.Key));
             // Pipeline.Add(new Sort());
             // Pipeline.Add(Viewport.Default);
             // Pipeline.Add(new StyleSheet("style.css"));
             // Pipeline.Add(new Favicon("/favicon.svg"));
             // Pipeline.Add(new Breadcrumb(loggerFactory.CreateLogger<Breadcrumb>(), settings.Breadcrumb));
+
+            IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
         }
 
         /// <inheritdoc/>
