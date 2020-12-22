@@ -6,7 +6,7 @@ namespace Stazor.Extensions
 {
     static class ServiceCollectionExtensions
     {
-        public static void Configure(this IServiceCollection services, IConfiguration configuration, Type type)
+        public static void Configure(this IServiceCollection services, Type type, IConfiguration configuration)
         {
             var settings = Activator.CreateInstance(type);
             configuration.Bind(settings);
