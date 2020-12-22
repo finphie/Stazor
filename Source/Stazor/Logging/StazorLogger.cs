@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Stazor.Core;
 using ZLogger;
 
-namespace Stazor
+namespace Stazor.Logging
 {
     public sealed class StazorLogger<TCategoryName> : IStazorLogger<TCategoryName>
     {
@@ -16,16 +16,5 @@ namespace Stazor
         {
             _logger.ZLogInformation(message);
         }
-    }
-
-    public sealed class StazorLoggerFactory : IStazorLoggerFactory
-    {
-        readonly ILoggerFactory _loggerFactory;
-
-        public StazorLoggerFactory(ILoggerFactory loggerFactory)
-            => _loggerFactory = loggerFactory;
-
-        public IStazorLogger CreateLogger<TCategory>()
-            => new StazorLogger<TCategory>(_loggerFactory.CreateLogger<TCategory>());
     }
 }

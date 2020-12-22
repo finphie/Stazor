@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Stazor.Commands;
 using Stazor.Core;
 using Stazor.Extensions;
+using Stazor.Logging;
 using ZLogger;
 
 namespace Stazor
