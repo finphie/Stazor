@@ -15,5 +15,7 @@ namespace Stazor.Themes
         public MarkdownSettings Markdown { get; set; } = new();
 
         public ViewportSettings Viewport { get; set; } = new();
+
+        public StyleSheetSettings StyleSheet { get; set; } = new();
     }
 }
