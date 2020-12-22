@@ -6,5 +6,7 @@ namespace Stazor.Plugins.Metadata
     {
         [Required]
         public bool JsonLd { get; set; }
+
+        public string SiteUrl { get; set; }
     }
 }
