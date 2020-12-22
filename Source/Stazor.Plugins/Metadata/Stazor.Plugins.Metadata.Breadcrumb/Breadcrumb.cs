@@ -13,6 +13,8 @@ namespace Stazor.Plugins.Metadata
     /// </summary>
     public sealed class Breadcrumb : IPlugin
     {
+        readonly IStazorLogger _logger;
+
         /// <summary>
         /// The content key.
         /// </summary>
@@ -28,6 +30,11 @@ namespace Stazor.Plugins.Metadata
         {
             0x4A, 0x73, 0x6F, 0x6E, 0x4C, 0x64
         };
+
+        public Breadcrumb(IStazorLogger logger, BreadcrumbSettings settings)
+        {
+            _logger = logger;
+        }
 
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)

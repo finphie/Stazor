@@ -25,16 +25,17 @@ namespace Stazor.Themes
         /// <summary>
         /// Initializes a new instance of the <see cref="Blog"/> class.
         /// </summary>
-        /// <param name="path">The path of the markdown file.</param>
-        public Blog(string path)
+        public Blog(IStazorLogger logger, StazorSettings settings)
         {
-            Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
-            Pipeline.Add(new Markdown(ReadFiles.Key));
-            Pipeline.Add(new Sort());
-            Pipeline.Add(Viewport.Default);
-            Pipeline.Add(new StyleSheet("style.css"));
-            Pipeline.Add(new Favicon("/favicon.svg"));
-            Pipeline.Add(new Breadcrumb());
+            logger.Info("test");
+
+            Pipeline.Add(new ReadFiles(logger, settings.ReadFiles));
+            // Pipeline.Add(new Markdown(ReadFiles.Key));
+            // Pipeline.Add(new Sort());
+            // Pipeline.Add(Viewport.Default);
+            // Pipeline.Add(new StyleSheet("style.css"));
+            // Pipeline.Add(new Favicon("/favicon.svg"));
+            // Pipeline.Add(new Breadcrumb(loggerFactory.CreateLogger<Breadcrumb>(), settings.Breadcrumb));
         }
 
         /// <inheritdoc/>

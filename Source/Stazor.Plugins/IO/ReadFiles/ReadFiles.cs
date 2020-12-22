@@ -18,29 +18,21 @@ namespace Stazor.Plugins.IO
             0x52, 0x65, 0x61, 0x64, 0x46, 0x69, 0x6C, 0x65, 0x73
         };
 
+        readonly IStazorLogger _logger;
+        readonly ReadFilesSettings _settings;
         readonly IEnumerable<string> _files;
         readonly string _templatePath;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadFiles"/> class.
         /// </summary>
-        /// <param name="path">The relative or absolute path to the directory to search.</param>
-        /// <param name="templatePath">The relative or absolute path to the template directory.</param>
-        public ReadFiles(string path, string templatePath)
-            : this(path, "*", templatePath)
+        public ReadFiles(IStazorLogger logger, ReadFilesSettings settings)
         {
-        }
+            _logger = logger;
+            _settings = settings;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadFiles"/> class.
-        /// </summary>
-        /// <param name="path">The relative or absolute path to the directory to search.</param>
-        /// <param name="searchPattern">The search string to match against the names of files in path.</param>
-        /// <param name="templatePath">The relative or absolute path to the template directory.</param>
-        public ReadFiles(string path, string searchPattern, string templatePath)
-        {
-            _files = Directory.EnumerateFiles(path, searchPattern);
-            _templatePath = templatePath;
+            _files = Directory.EnumerateFiles(_settings.Path, _settings.SearchPattern);
+            _templatePath = _settings.TemplatePath;
         }
 
         /// <inheritdoc/>
