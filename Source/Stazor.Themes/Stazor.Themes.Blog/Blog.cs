@@ -22,18 +22,18 @@ namespace Stazor.Themes
         static readonly string TemplatePath =
             Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.FullName, "Layouts/Page.html");
 
-        readonly IStazorLogger _logger;
+        readonly IStazorLoggerFactory _loggerFactory;
         readonly StazorSettings _settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blog"/> class.
         /// </summary>
-        public Blog(IStazorLogger logger, StazorSettings settings)
+        public Blog(IStazorLoggerFactory loggerFactory, StazorSettings settings)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline.Add(new ReadFiles(_logger, settings.ReadFiles));
+            Pipeline.Add(new ReadFiles(_loggerFactory.CreateLogger<ReadFiles>(), settings.ReadFiles));
             // Pipeline.Add(new Markdown(ReadFiles.Key));
             // Pipeline.Add(new Sort());
             // Pipeline.Add(Viewport.Default);

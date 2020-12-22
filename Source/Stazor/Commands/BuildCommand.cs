@@ -8,7 +8,7 @@ namespace Stazor.Commands
 {
     public sealed class BuildCommand : ConsoleAppBase
     {
-        readonly ILogger<BuildCommand> _logger;
+        readonly ILogger _logger;
         readonly ITheme _theme;
 
         public BuildCommand(ILogger<BuildCommand> logger, ITheme theme)
