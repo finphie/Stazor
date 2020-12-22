@@ -8,7 +8,9 @@ namespace Stazor.Extensions
     {
         public static void Configure(this IServiceCollection services, Type type, IConfiguration configuration)
         {
-            var settings = Activator.CreateInstance(type);
+            // nullにはならないはず
+            var settings = Activator.CreateInstance(type)!;
+
             configuration.Bind(settings);
             services.AddSingleton(type, settings);
         }
