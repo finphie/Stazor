@@ -34,6 +34,8 @@ namespace Stazor.Plugins.Renderer
             .UseYamlFrontMatter()
             .Build();
 
+        readonly IStazorLogger _logger;
+        readonly MarkdownSettings _settings;
         readonly byte[] _inputKey;
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
@@ -42,10 +44,12 @@ namespace Stazor.Plugins.Renderer
         /// <summary>
         /// Initializes a new instance of the <see cref="Markdown"/> class.
         /// </summary>
-        /// <param name="inputKey">The key to specify the content.</param>
-        public Markdown(byte[] inputKey)
+        public Markdown(IStazorLogger logger, MarkdownSettings settings)
         {
-            _inputKey = inputKey;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+
+            _inputKey = Encoding.UTF8.GetBytes(_settings.InputKey);
             _writer = new();
             _renderer = new(_writer);
             Pipeline.Setup(_renderer);

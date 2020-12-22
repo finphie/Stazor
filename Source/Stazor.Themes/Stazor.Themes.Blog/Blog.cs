@@ -34,7 +34,7 @@ namespace Stazor.Themes
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
             Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), settings.ReadFiles));
-            // Pipeline.Add(new Markdown(ReadFiles.Key));
+            Pipeline.Add(new Markdown(CreateLogger<Markdown>(), settings.Markdown));
             Pipeline.Add(new Sort(CreateLogger<Sort>()));
             Pipeline.Add(new Viewport(CreateLogger<Viewport>(), settings.Viewport));
             // Pipeline.Add(new StyleSheet("style.css"));
