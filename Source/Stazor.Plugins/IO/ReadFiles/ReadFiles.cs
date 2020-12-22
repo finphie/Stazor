@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Stazor.Core;
@@ -28,8 +29,8 @@ namespace Stazor.Plugins.IO
         /// </summary>
         public ReadFiles(IStazorLogger logger, ReadFilesSettings settings)
         {
-            _logger = logger;
-            _settings = settings;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
             _files = Directory.EnumerateFiles(_settings.Path, _settings.SearchPattern);
             _templatePath = _settings.TemplatePath;
