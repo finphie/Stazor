@@ -10,7 +10,7 @@ namespace Stazor.Logging
         public StazorLoggerFactory(ILoggerFactory loggerFactory)
             => _loggerFactory = loggerFactory;
 
-        public IStazorLogger CreateLogger<TCategory>()
-            => new StazorLogger<TCategory>(_loggerFactory.CreateLogger<TCategory>());
+        public IStazorLogger CreateLogger<TCategoryName>()
+            => new StazorLogger<TCategoryName>(_loggerFactory.CreateLogger<TCategoryName>());
     }
 }
