@@ -2,7 +2,7 @@
 
 namespace Stazor.Core
 {
-    public abstract class StazorBaseSettings : ISettings
+    public abstract class StazorBaseSettings : IStazorSettings
     {
         public const string Key = nameof(Stazor);
 
@@ -17,10 +17,5 @@ namespace Stazor.Core
 
         // slug
         // カテゴリ・タグ
-    }
-
-    public interface ISettings
-    {
-
     }
 }
