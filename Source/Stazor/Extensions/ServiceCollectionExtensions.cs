@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stazor.Core;
 
 namespace Stazor.Extensions
 {
@@ -12,6 +13,13 @@ namespace Stazor.Extensions
             var settings = Activator.CreateInstance(type)!;
 
             configuration.Bind(settings);
+
+            // 設定値を検証する。
+            if (settings is IValidatable value)
+            {
+                value.Validate();
+            }
+
             services.AddSingleton(type, settings);
         }
     }

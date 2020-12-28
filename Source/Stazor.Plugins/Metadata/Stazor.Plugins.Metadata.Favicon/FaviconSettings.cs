@@ -1,10 +1,22 @@
-﻿namespace Stazor.Plugins.Metadata
+﻿using Stazor.Core;
+using Stazor.Core.Helpers;
+
+namespace Stazor.Plugins.Metadata
 {
-    public sealed class FaviconSettings
+    public sealed class FaviconSettings : IValidatable
     {
         /// <summary>
         /// The favicon url.
         /// </summary>
         public string Href { get; set; }
+
+        /// <inheritdoc/>
+        public void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Href))
+            {
+                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Href));
+            }
+        }
     }
 }

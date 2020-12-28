@@ -1,19 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stazor.Core.Helpers;
 
 namespace Stazor.Core
 {
-    public abstract class StazorBaseSettings : IStazorSettings
+    public abstract class StazorBaseSettings : IStazorSettings, IValidatable
     {
         public const string Key = nameof(Stazor);
 
         /// <summary>
         /// サイトタイトル
         /// </summary>
-        [Required]
         public string? SiteTitle { get; set; }
 
-        [Required]
         public string? Copyright { get; set; }
+
+        /// <inheritdoc/>
+        public virtual void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(SiteTitle))
+            {
+                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(SiteTitle));
+            }
+
+            if (string.IsNullOrWhiteSpace(Copyright))
+            {
+                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Copyright));
+            }
+        }
 
         // slug
         // カテゴリ・タグ
