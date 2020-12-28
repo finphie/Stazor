@@ -1,4 +1,5 @@
-﻿using Stazor.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Stazor.Core;
 using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.IO
@@ -8,17 +9,19 @@ namespace Stazor.Plugins.IO
         /// <summary>
         /// The relative or absolute path to the directory to search.
         /// </summary>
-        public string Path { get; set; }
+        [DisallowNull]
+        public string? Path { get; init; }
 
         /// <summary>
         /// The relative or absolute path to the template directory.
         /// </summary>
-        public string TemplatePath { get; set; }
+        [DisallowNull]
+        public string? TemplatePath { get; init; }
 
         /// <summary>
         /// The search string to match against the names of files in path.
         /// </summary>
-        public string SearchPattern { get; set; }
+        public string SearchPattern { get; init; } = "*.md";
 
         /// <inheritdoc/>
         public void Validate()

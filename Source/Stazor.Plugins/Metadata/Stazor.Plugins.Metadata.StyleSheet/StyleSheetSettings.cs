@@ -1,4 +1,5 @@
-﻿using Stazor.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Stazor.Core;
 using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
@@ -8,7 +9,8 @@ namespace Stazor.Plugins.Metadata
         /// <summary>
         /// The CSS file url.
         /// </summary>
-        public string Href { get; set; }
+        [DisallowNull]
+        public string? Href { get; init; }
 
         /// <inheritdoc/>
         public void Validate()

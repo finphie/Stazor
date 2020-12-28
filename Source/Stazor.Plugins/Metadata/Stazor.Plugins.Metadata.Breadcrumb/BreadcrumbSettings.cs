@@ -1,14 +1,16 @@
-﻿using Stazor.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Stazor.Core;
 using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
     public sealed class BreadcrumbSettings : IValidatable
     {
-        public bool JsonLd { get; set; }
+        public bool JsonLd { get; init; }
 
         // TODO: 不要なのでは
-        public string SiteUrl { get; set; }
+        [DisallowNull]
+        public string? SiteUrl { get; init; }
 
         /// <inheritdoc/>
         public void Validate()

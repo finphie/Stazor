@@ -1,11 +1,13 @@
-﻿using Stazor.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Stazor.Core;
 using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Renderer
 {
     public sealed class MarkdownSettings : IValidatable
     {
-        public string InputKey { get; set; }
+        [DisallowNull]
+        public string? InputKey { get; init; }
 
         /// <inheritdoc/>
         public void Validate()

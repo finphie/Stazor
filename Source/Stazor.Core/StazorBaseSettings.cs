@@ -1,4 +1,5 @@
-﻿using Stazor.Core.Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
+using Stazor.Core.Helpers;
 
 namespace Stazor.Core
 {
@@ -9,9 +10,11 @@ namespace Stazor.Core
         /// <summary>
         /// サイトタイトル
         /// </summary>
-        public string? SiteTitle { get; set; }
+        [DisallowNull]
+        public string? SiteTitle { get; init; }
 
-        public string? Copyright { get; set; }
+        [DisallowNull]
+        public string? Copyright { get; init; }
 
         /// <inheritdoc/>
         public virtual void Validate()
