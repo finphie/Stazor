@@ -14,7 +14,7 @@ namespace Stazor.Plugins.Renderer
         {
             if (string.IsNullOrWhiteSpace(InputKey))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(InputKey));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(InputKey));
             }
         }
     }

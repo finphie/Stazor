@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Stazor.Core;
 using Stazor.Core.Helpers;
 
@@ -9,9 +10,9 @@ namespace Stazor.Plugins.IO
         /// <summary>
         /// The relative or absolute path to the directory to search.
         /// </summary>
-        [DisallowNull]
-        public string? Path { get; init; }
+        public string Path { get; init; } = ".";
 
+        // TODO: 変数名変更
         /// <summary>
         /// The relative or absolute path to the template directory.
         /// </summary>
@@ -21,24 +22,34 @@ namespace Stazor.Plugins.IO
         /// <summary>
         /// The search string to match against the names of files in path.
         /// </summary>
-        public string SearchPattern { get; init; } = "*.md";
+        public string SearchPattern { get; init; } = "*";
 
         /// <inheritdoc/>
         public void Validate()
         {
             if (string.IsNullOrWhiteSpace(Path))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Path));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Path));
+            }
+
+            if (!Directory.Exists(Path))
+            {
+                ThrowHelper.ThrowDirectoryNotFoundException();
             }
 
             if (string.IsNullOrWhiteSpace(TemplatePath))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(TemplatePath));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(TemplatePath));
+            }
+
+            if (!File.Exists(TemplatePath))
+            {
+                ThrowHelper.ThrowFileNotFoundException(TemplatePath);
             }
 
             if (string.IsNullOrWhiteSpace(SearchPattern))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(SearchPattern));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(SearchPattern));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Stazor.Plugins.Metadata
         {
             if (string.IsNullOrWhiteSpace(Content))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Content));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Content));
             }
         }
     }

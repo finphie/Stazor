@@ -17,7 +17,7 @@ namespace Stazor.Plugins.Metadata
         {
             if (string.IsNullOrWhiteSpace(SiteUrl))
             {
-                ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(SiteUrl));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(SiteUrl));
             }
         }
     }

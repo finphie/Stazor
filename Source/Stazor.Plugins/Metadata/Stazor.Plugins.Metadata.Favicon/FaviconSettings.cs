@@ -15,9 +15,10 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public void Validate()
         {
+            // TODO: ファイル存在チェック
             if (string.IsNullOrWhiteSpace(Href))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Href));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Href));
             }
         }
     }

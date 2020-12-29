@@ -21,12 +21,12 @@ namespace Stazor.Core
         {
             if (string.IsNullOrWhiteSpace(SiteTitle))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(SiteTitle));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(SiteTitle));
             }
 
             if (string.IsNullOrWhiteSpace(Copyright))
             {
-                throw ThrowHelper.CreateArgumentNullOrWhitespaceException(nameof(Copyright));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Copyright));
             }
         }
 
