@@ -3,7 +3,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed class ViewportSettings : IValidatable
+    public sealed class ViewportSettings : IStazorSettings, IValidatable
     {
         public string Content { get; init; } = "width=device-width, initial-scale=1";
 

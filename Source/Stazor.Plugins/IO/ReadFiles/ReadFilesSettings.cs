@@ -4,7 +4,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.IO
 {
-    public sealed class ReadFilesSettings : IValidatable
+    public sealed class ReadFilesSettings : IStazorSettings, IValidatable
     {
         /// <summary>
         /// The relative or absolute path to the directory to search.
