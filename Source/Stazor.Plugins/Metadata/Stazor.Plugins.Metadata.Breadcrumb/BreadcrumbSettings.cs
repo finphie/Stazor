@@ -4,7 +4,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed class BreadcrumbSettings : IStazorSettings, IValidatable
+    public sealed record BreadcrumbSettings : IStazorSettings, IValidatable
     {
         public bool JsonLd { get; init; }
 

@@ -49,7 +49,7 @@ namespace Stazor.Plugins.Renderer
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            _inputKey = Encoding.UTF8.GetBytes(_settings.InputKey);
+            _inputKey = Encoding.UTF8.GetBytes(_settings.InputKey!);
             _writer = new();
             _renderer = new(_writer);
             Pipeline.Setup(_renderer);

@@ -4,7 +4,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed class FaviconSettings : IStazorSettings, IValidatable
+    public sealed record FaviconSettings : IStazorSettings, IValidatable
     {
         /// <summary>
         /// The favicon url.

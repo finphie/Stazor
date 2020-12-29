@@ -4,7 +4,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Renderer
 {
-    public sealed class MarkdownSettings : IStazorSettings, IValidatable
+    public sealed record MarkdownSettings : IStazorSettings, IValidatable
     {
         [DisallowNull]
         public string? InputKey { get; init; }

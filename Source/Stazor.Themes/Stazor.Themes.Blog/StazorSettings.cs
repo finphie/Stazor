@@ -5,7 +5,7 @@ using Stazor.Plugins.Renderer;
 
 namespace Stazor.Themes
 {
-    public sealed class StazorSettings : StazorBaseSettings
+    public sealed record StazorSettings : StazorBaseSettings
     {
         public BreadcrumbSettings Breadcrumb { get; init; } = new();
 

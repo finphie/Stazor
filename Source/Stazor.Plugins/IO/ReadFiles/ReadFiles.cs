@@ -33,7 +33,7 @@ namespace Stazor.Plugins.IO
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
             _files = Directory.EnumerateFiles(_settings.Path, _settings.SearchPattern);
-            _templatePath = _settings.TemplatePath;
+            _templatePath = _settings.TemplatePath!;
         }
 
         /// <inheritdoc/>

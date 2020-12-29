@@ -4,7 +4,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed class StyleSheetSettings : IStazorSettings, IValidatable
+    public sealed record StyleSheetSettings : IStazorSettings, IValidatable
     {
         /// <summary>
         /// The CSS file url.
