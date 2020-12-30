@@ -39,8 +39,8 @@ namespace Stazor
                     var loadContext = new LoadContext(themePath);
                     var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(themePath)));
                     var types = assembly.GetTypes();
-                    var type = types.First(x => typeof(StazorBaseSettings).IsAssignableFrom(x));
-                    var themeType = types.First(x => typeof(ITheme).IsAssignableFrom(x));
+                    var type = types.First(static x => typeof(StazorBaseSettings).IsAssignableFrom(x));
+                    var themeType = types.First(static x => typeof(ITheme).IsAssignableFrom(x));
 
                     services.Configure(type, content.Configuration.GetSection(StazorBaseSettings.Key));
                     services.AddSingleton(typeof(ITheme), themeType);
@@ -49,7 +49,7 @@ namespace Stazor
                 .ConfigureLogging(static logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddZLoggerConsole(options =>
+                    logging.AddZLoggerConsole(static options =>
                     {
                         var prefixFormat = ZString.PrepareUtf8<DateTime, LogLevel, string>("{0:O} [{1}] {2} - ");
 
@@ -64,9 +64,9 @@ namespace Stazor
         [ModuleInitializer]
         internal static void RegisterLogLevel()
         {
-            Utf8ValueStringBuilder.RegisterTryFormat((LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
+            Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
             {
-                // ログレベルを表すUTF-8文字列
+                // ログレベルを表す4文字のUTF-8文字列
                 var value = logLevel switch
                 {
                     // trce
