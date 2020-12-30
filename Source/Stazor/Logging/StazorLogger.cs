@@ -12,9 +12,16 @@ namespace Stazor.Logging
         public StazorLogger(ILogger<TCategoryName> logger)
             => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        public void Info(string message)
-        {
-            _logger.ZLogInformation(message);
-        }
+        public void Trace(string message) => _logger.ZLogTrace(message);
+
+        public void Debug(string message) => _logger.ZLogDebug(message);
+
+        public void Information(string message) => _logger.ZLogInformation(message);
+
+        public void Warning(string message) => _logger.ZLogWarning(message);
+
+        public void Error(string message) => _logger.ZLogError(message);
+
+        public void Critical(string message) => _logger.ZLogCritical(message);
     }
 }
