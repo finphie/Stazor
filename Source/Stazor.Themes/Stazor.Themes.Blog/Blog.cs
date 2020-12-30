@@ -19,9 +19,6 @@ namespace Stazor.Themes
     /// </summary>
     public sealed class Blog : ITheme
     {
-        static readonly string TemplatePath =
-            Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.FullName, "Layouts/Page.html");
-
         readonly IStazorLoggerFactory _loggerFactory;
         readonly StazorSettings _settings;
 
@@ -33,13 +30,13 @@ namespace Stazor.Themes
             _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), settings.ReadFiles));
-            Pipeline.Add(new Markdown(CreateLogger<Markdown>(), settings.Markdown));
+            Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), _settings.ReadFiles));
+            Pipeline.Add(new Markdown(CreateLogger<Markdown>(), _settings.Markdown));
             Pipeline.Add(new Sort(CreateLogger<Sort>()));
-            Pipeline.Add(new Viewport(CreateLogger<Viewport>(), settings.Viewport));
-            Pipeline.Add(new StyleSheet(CreateLogger<StyleSheet>(), settings.StyleSheet));
-            Pipeline.Add(new Favicon(CreateLogger<Favicon>(), settings.Favicon));
-            Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), settings.Breadcrumb));
+            Pipeline.Add(new Viewport(CreateLogger<Viewport>(), _settings.Viewport));
+            Pipeline.Add(new StyleSheet(CreateLogger<StyleSheet>(), _settings.StyleSheet));
+            Pipeline.Add(new Favicon(CreateLogger<Favicon>(), _settings.Favicon));
+            Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
 
             IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
         }
