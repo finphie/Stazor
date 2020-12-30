@@ -45,6 +45,7 @@ namespace Stazor.Plugins.Metadata
             _logger.Information("Start");
 
             using var builder = ZString.CreateUtf8StringBuilder(true);
+
             // TODO: "ホーム"文字列を可変
             builder.Append("<nav><ol class=\"breadcrumbs\"><li><a href=\"/\">ホーム</a><li><a href=\"");
 

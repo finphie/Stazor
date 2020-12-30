@@ -45,6 +45,7 @@ namespace Stazor
                     services.Configure(type, content.Configuration.GetSection(StazorBaseSettings.Key));
                     services.AddSingleton(typeof(ITheme), themeType);
                     services.AddSingleton<IStazorLoggerFactory, StazorLoggerFactory>();
+                    services.AddSingleton<IStazorLogger<BuildCommand>, StazorLogger<BuildCommand>>();
                 })
                 .ConfigureLogging(static logging =>
                 {
