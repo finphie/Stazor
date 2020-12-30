@@ -39,6 +39,8 @@ namespace Stazor.Plugins.IO
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+            _logger.Information("Start");
+
             await foreach (var input in inputs.ConfigureAwait(false))
             {
                 yield return input;
@@ -51,6 +53,8 @@ namespace Stazor.Plugins.IO
 
                 yield return document;
             }
+
+            _logger.Information("End");
         }
     }
 }

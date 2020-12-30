@@ -20,12 +20,16 @@ namespace Stazor.Plugins.Contents
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+            _logger.Information("Start");
+
             var documents = await inputs.OrderBy(x => x.Metadata.PublishedDate).ToArrayAsync().ConfigureAwait(false);
 
             foreach (var document in documents)
             {
                 yield return document;
             }
+
+            _logger.Information("End");
         }
     }
 }

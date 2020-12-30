@@ -43,12 +43,16 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+            _logger.Information("Start");
+
             await foreach (var input in inputs.ConfigureAwait(false))
             {
                 input.Content.Add(Key, _html);
 
                 yield return input;
             }
+
+            _logger.Information("End");
         }
     }
 }

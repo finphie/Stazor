@@ -63,6 +63,8 @@ namespace Stazor.Plugins.Renderer
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+            _logger.Information("Start");
+
 #pragma warning disable CA1508 // 使用されない条件付きコードを回避する
             await foreach (var input in inputs.ConfigureAwait(false))
 #pragma warning restore CA1508 // 使用されない条件付きコードを回避する
@@ -106,6 +108,8 @@ namespace Stazor.Plugins.Renderer
 
                 yield return input;
             }
+
+            _logger.Information("End");
         }
     }
 }

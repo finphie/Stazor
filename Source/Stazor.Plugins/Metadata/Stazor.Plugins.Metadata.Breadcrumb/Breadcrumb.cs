@@ -42,6 +42,8 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
+            _logger.Information("Start");
+
             using var builder = ZString.CreateUtf8StringBuilder(true);
             builder.Append("<nav><ol class=\"breadcrumbs\"><li><a href=\"/\">ホーム</a><li><a href=\"");
 
@@ -93,6 +95,8 @@ namespace Stazor.Plugins.Metadata
 
                 yield return input;
             }
+
+            _logger.Information("End");
         }
 
         sealed class JsonLd
