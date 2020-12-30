@@ -45,6 +45,7 @@ namespace Stazor.Plugins.Metadata
             _logger.Information("Start");
 
             using var builder = ZString.CreateUtf8StringBuilder(true);
+            // TODO: "ホーム"文字列を可変
             builder.Append("<nav><ol class=\"breadcrumbs\"><li><a href=\"/\">ホーム</a><li><a href=\"");
 
             var length = builder.Length;
@@ -86,8 +87,8 @@ namespace Stazor.Plugins.Metadata
 
                     json.Items[0].Name = "ホーム";
                     json.Items[1].Name = input.Metadata.Category!;
-                    json.Items[0].Item = _settings.SiteUrl;
-                    json.Items[1].Item = string.Join('/', _settings.SiteUrl, input.Metadata.Category);
+                    json.Items[0].Item = "/";
+                    json.Items[1].Item = "/" + input.Metadata.Category;
 
                     var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
                     input.Content.Add(JsonLdKey, jsonLd);

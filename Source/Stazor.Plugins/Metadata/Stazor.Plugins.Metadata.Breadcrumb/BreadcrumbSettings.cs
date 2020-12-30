@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Stazor.Core;
-using Stazor.Core.Helpers;
+﻿using Stazor.Core;
 
 namespace Stazor.Plugins.Metadata
 {
@@ -8,17 +6,9 @@ namespace Stazor.Plugins.Metadata
     {
         public bool JsonLd { get; init; }
 
-        // TODO: 不要なのでは
-        [DisallowNull]
-        public string? SiteUrl { get; init; }
-
         /// <inheritdoc/>
         public void Validate()
         {
-            if (string.IsNullOrWhiteSpace(SiteUrl))
-            {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(SiteUrl));
-            }
         }
     }
 }
