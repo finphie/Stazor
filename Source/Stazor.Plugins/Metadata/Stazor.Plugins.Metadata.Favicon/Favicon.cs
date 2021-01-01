@@ -32,21 +32,22 @@ namespace Stazor.Plugins.Metadata
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
+            var filePath = _settings.FilePath.AsSpan();
             using var builder = ZString.CreateUtf8StringBuilder(true);
-            builder.Append("<link rel=\"icon\" href=\"");
-            builder.Append(_settings.Href);
+            builder.Append("<link rel=\"icon\" href=\"/");
+            builder.Append(filePath);
             builder.Append('\"');
 
-            var extension = Path.GetExtension(_settings.Href.AsSpan());
+            var extension = Path.GetExtension(filePath);
 
-            var type = extension.SequenceEqual(".ico") ? null
-                : extension.SequenceEqual(".svg") ? "image/svg+xml"
-                : extension.SequenceEqual(".png") ? "png"
-                : (extension.SequenceEqual(".jpg") || extension.SequenceEqual(".jpeg")) ? "jpg"
-                : throw new ArgumentOutOfRangeException(nameof(settings));
-
-            if (type is not null)
+            if (!extension.SequenceEqual(".ico"))
             {
+                var type = extension.SequenceEqual(".svg") ? "image/svg+xml"
+                    : extension.SequenceEqual(".webp") ? "image/webp"
+                    : extension.SequenceEqual(".png") ? "png"
+                    : (extension.SequenceEqual(".jpg") || extension.SequenceEqual(".jpeg")) ? "jpg"
+                    : throw new ArgumentOutOfRangeException(nameof(settings));
+
                 builder.Append(" type=\"");
                 builder.Append(type);
                 builder.Append('\"');

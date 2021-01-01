@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Stazor.Core;
 using Stazor.Core.Helpers;
 
@@ -10,15 +11,19 @@ namespace Stazor.Plugins.Metadata
         /// The favicon url.
         /// </summary>
         [DisallowNull]
-        public string? Href { get; init; }
+        public string? FilePath { get; init; }
 
         /// <inheritdoc/>
         public void Validate()
         {
-            // TODO: ファイル存在チェック
-            if (string.IsNullOrWhiteSpace(Href))
+            if (string.IsNullOrWhiteSpace(FilePath))
             {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Href));
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(FilePath));
+            }
+
+            if (!File.Exists(FilePath))
+            {
+                ThrowHelper.ThrowFileNotFoundException(FilePath);
             }
         }
     }
