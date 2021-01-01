@@ -28,8 +28,6 @@ namespace Stazor
         [SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "Entry-point")]
         static async Task Main(string[] args)
         {
-            // TODO: 設定ファイル検証
-
             await Host.CreateDefaultBuilder(args)
                 .ConfigureServices(static (content, services) =>
                 {
@@ -63,7 +61,7 @@ namespace Stazor
         }
 
         [ModuleInitializer]
-        internal static void RegisterLogLevel()
+        public static void RegisterLogLevel()
         {
             Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
             {
