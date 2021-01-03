@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Cysharp.Text;
@@ -13,6 +14,9 @@ namespace Stazor.Plugins.Metadata
     /// </summary>
     public sealed class Breadcrumb : IPlugin
     {
+        readonly IStazorLogger _logger;
+        readonly BreadcrumbSettings _settings;
+
         /// <summary>
         /// The content key.
         /// </summary>
@@ -29,27 +33,20 @@ namespace Stazor.Plugins.Metadata
             0x4A, 0x73, 0x6F, 0x6E, 0x4C, 0x64
         };
 
+        public Breadcrumb(IStazorLogger logger, BreadcrumbSettings settings)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        }
+
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
         {
-            var json = new JsonLd
-            {
-                Context = "https://schema.org",
-                Type = "BreadcrumbList",
-                Items = new JsonLd.ItemListElement[2]
-            };
-
-            for (var i = 0; i < json.Items.Length; i++)
-            {
-                json.Items[i] = new();
-                json.Items[i].Type = "ListItem";
-                json.Items[i].Position = i + 1;
-                json.Items[0].Item = "https://example.com";
-            }
-
-            json.Items[0].Name = "ホーム";
+            _logger.Information("Start");
 
             using var builder = ZString.CreateUtf8StringBuilder(true);
+
+            // TODO: "ホーム"文字列を可変
             builder.Append("<nav><ol class=\"breadcrumbs\"><li><a href=\"/\">ホーム</a><li><a href=\"");
 
             var length = builder.Length;
@@ -69,18 +66,39 @@ namespace Stazor.Plugins.Metadata
                 builder.Append("</nav>");
 
                 input.Content.Add(Key, builder.AsSpan().ToArray());
-                builder.Advance(-length);
 
-                json.Items[1].Name = input.Metadata.Category!;
+                if (_settings.JsonLd)
+                {
+                    builder.Advance(-length);
 
-                // TODO: JSON-LD URL
-                json.Items[1].Item = "https://example.com/";
+                    // TODO: JSON-LD 高速化
+                    var json = new JsonLd
+                    {
+                        Context = "https://schema.org",
+                        Type = "BreadcrumbList",
+                        Items = new JsonLd.ItemListElement[2]
+                    };
 
-                var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-                input.Content.Add(JsonLdKey, jsonLd);
+                    for (var i = 0; i < json.Items.Length; i++)
+                    {
+                        json.Items[i] = new();
+                        json.Items[i].Type = "ListItem";
+                        json.Items[i].Position = i + 1;
+                    }
+
+                    json.Items[0].Name = "ホーム";
+                    json.Items[1].Name = input.Metadata.Category!;
+                    json.Items[0].Item = "/";
+                    json.Items[1].Item = "/" + input.Metadata.Category;
+
+                    var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+                    input.Content.Add(JsonLdKey, jsonLd);
+                }
 
                 yield return input;
             }
+
+            _logger.Information("End");
         }
 
         sealed class JsonLd

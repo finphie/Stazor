@@ -19,22 +19,26 @@ namespace Stazor.Themes
     /// </summary>
     public sealed class Blog : ITheme
     {
-        static readonly string TemplatePath =
-            Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.FullName, "Layouts/Page.html");
+        readonly IStazorLoggerFactory _loggerFactory;
+        readonly StazorSettings _settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blog"/> class.
         /// </summary>
-        /// <param name="path">The path of the markdown file.</param>
-        public Blog(string path)
+        public Blog(IStazorLoggerFactory loggerFactory, StazorSettings settings)
         {
-            Pipeline.Add(new ReadFiles(path, "*.md", TemplatePath));
-            Pipeline.Add(new Markdown(ReadFiles.Key));
-            Pipeline.Add(new Sort());
-            Pipeline.Add(Viewport.Default);
-            Pipeline.Add(new StyleSheet("style.css"));
-            Pipeline.Add(new Favicon("/favicon.svg"));
-            Pipeline.Add(new Breadcrumb());
+            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+
+            Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), _settings.ReadFiles));
+            Pipeline.Add(new Markdown(CreateLogger<Markdown>(), _settings.Markdown));
+            Pipeline.Add(new Sort(CreateLogger<Sort>()));
+            Pipeline.Add(new Viewport(CreateLogger<Viewport>(), _settings.Viewport));
+            Pipeline.Add(new StyleSheet(CreateLogger<StyleSheet>(), _settings.StyleSheet));
+            Pipeline.Add(new Favicon(CreateLogger<Favicon>(), _settings.Favicon));
+            Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
+
+            IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
         }
 
         /// <inheritdoc/>
