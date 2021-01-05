@@ -180,7 +180,6 @@ namespace Stazor.Tests.Engines.Simple
 
         static byte[] GetBytes(string value) => Encoding.UTF8.GetBytes(value);
 
-        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "record")]
         public record Block(object Type, string Value);
     }
 }
