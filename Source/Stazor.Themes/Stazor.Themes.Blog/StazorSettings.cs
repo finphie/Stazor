@@ -13,12 +13,6 @@ namespace Stazor.Themes
 
         public MarkdownSettings Markdown { get; init; } = new();
 
-        public ViewportSettings Viewport { get; init; } = new();
-
-        public StyleSheetSettings StyleSheet { get; init; } = new();
-
-        public FaviconSettings Favicon { get; init; } = new();
-
         /// <inheritdoc/>
         public override void Validate()
         {
@@ -26,9 +20,6 @@ namespace Stazor.Themes
             Breadcrumb.Validate();
             ReadFiles.Validate();
             Markdown.Validate();
-            Viewport.Validate();
-            StyleSheet.Validate();
-            Favicon.Validate();
         }
     }
 }

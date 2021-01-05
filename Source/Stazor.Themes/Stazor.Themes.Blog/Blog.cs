@@ -31,9 +31,6 @@ namespace Stazor.Themes
             Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), _settings.ReadFiles));
             Pipeline.Add(new Markdown(CreateLogger<Markdown>(), _settings.Markdown));
             Pipeline.Add(new Sort(CreateLogger<Sort>()));
-            Pipeline.Add(new Viewport(CreateLogger<Viewport>(), _settings.Viewport));
-            Pipeline.Add(new StyleSheet(CreateLogger<StyleSheet>(), _settings.StyleSheet));
-            Pipeline.Add(new Favicon(CreateLogger<Favicon>(), _settings.Favicon));
             Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
 
             IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();

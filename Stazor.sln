@@ -25,12 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{88
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Breadcrumb", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj", "{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Favicon", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Favicon\Stazor.Plugins.Metadata.Favicon.csproj", "{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.StyleSheet", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.StyleSheet\Stazor.Plugins.Metadata.StyleSheet.csproj", "{604745C8-AFB2-43B4-9A67-33E34D80FAED}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Viewport", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Viewport\Stazor.Plugins.Metadata.Viewport.csproj", "{01853244-7173-485E-9E14-ACB383058F1A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.Simple", "Source\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
@@ -50,7 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contents", "Contents", "{DC15BA35-40C1-4851-BF77-032E40BFFA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stazor.Plugins.Contents.Sort", "Source\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj", "{D788F003-37B4-4146-8985-E779BC137BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Contents.Sort", "Source\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj", "{D788F003-37B4-4146-8985-E779BC137BC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,18 +76,6 @@ Global
 		{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{604745C8-AFB2-43B4-9A67-33E34D80FAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{604745C8-AFB2-43B4-9A67-33E34D80FAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{604745C8-AFB2-43B4-9A67-33E34D80FAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{604745C8-AFB2-43B4-9A67-33E34D80FAED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01853244-7173-485E-9E14-ACB383058F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01853244-7173-485E-9E14-ACB383058F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01853244-7173-485E-9E14-ACB383058F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -122,9 +104,6 @@ Global
 		{3696F9E8-7104-4017-8D20-ED77867092B1} = {44A7B78A-6560-4764-86AD-20C1C3E7B733}
 		{88A7B2DC-144B-463B-B63D-1CAFB24384E3} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{2FAF6DE8-3E95-461F-84C3-8B2017D66E34} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
-		{8B600B5C-D118-4CCB-896F-1E2CE48AB9ED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
-		{604745C8-AFB2-43B4-9A67-33E34D80FAED} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
-		{01853244-7173-485E-9E14-ACB383058F1A} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{3C1DE013-F52E-4183-9FDF-78DC0B0A3874} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
 		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11} = {6E4A3309-3DAE-456C-B886-1264AC76AF80}
