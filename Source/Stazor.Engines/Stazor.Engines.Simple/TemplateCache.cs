@@ -65,6 +65,7 @@ namespace Stazor.Engines.Simple
                         content.TryGetValue(value.ToArray(), out var x);
                         bufferWriter.Write(x);
                         break;
+                    case BlockType.None:
                     default:
                         throw new InvalidEnumArgumentException(nameof(block.Type), (int)block.Type, typeof(BlockType));
                 }

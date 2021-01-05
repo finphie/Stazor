@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -23,10 +22,51 @@ namespace Stazor
     /// <summary>
     /// The Main class of the application.
     /// </summary>
-    class Program
+    static class Program
     {
-        [SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "Entry-point")]
+        [ModuleInitializer]
+        public static void RegisterLogLevel()
+        {
+            Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
+            {
+                // ログレベルを表す4文字のUTF-8文字列
+#pragma warning disable IDE0072 // 欠落しているケースの追加
+                var value = logLevel switch
+#pragma warning restore IDE0072 // 欠落しているケースの追加
+                {
+                    // trce
+                    LogLevel.Trace => 0x65637274,
+
+                    // dbug
+                    LogLevel.Debug => 0x67756264,
+
+                    // info
+                    LogLevel.Information => 0x6f666e69,
+
+                    // warn
+                    LogLevel.Warning => 0x6e726177,
+
+                    // fail
+                    LogLevel.Error => 0x6c696166,
+
+                    // crit
+                    LogLevel.Critical => 0x74697263,
+
+                    // LogLevel.Noneや未知のログレベルの場合
+                    _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
+                };
+
+                ref var destinationStart = ref MemoryMarshal.GetReference(destination);
+                Unsafe.WriteUnaligned(ref destinationStart, value);
+                written = 4;
+
+                return true;
+            });
+        }
+
+#pragma warning disable IDE1006 // 命名スタイル
         static async Task Main(string[] args)
+#pragma warning restore IDE1006 // 命名スタイル
         {
             await Host.CreateDefaultBuilder(args)
                 .ConfigureServices(static (content, services) =>
@@ -58,44 +98,6 @@ namespace Stazor
                 })
                 .RunConsoleAppFrameworkAsync<BuildCommand>(args)
                 .ConfigureAwait(false);
-        }
-
-        [ModuleInitializer]
-        public static void RegisterLogLevel()
-        {
-            Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
-            {
-                // ログレベルを表す4文字のUTF-8文字列
-                var value = logLevel switch
-                {
-                    // trce
-                    LogLevel.Trace => 0x65637274,
-
-                    // dbug
-                    LogLevel.Debug => 0x67756264,
-
-                    // info
-                    LogLevel.Information => 0x6f666e69,
-
-                    // warn
-                    LogLevel.Warning => 0x6e726177,
-
-                    // fail
-                    LogLevel.Error => 0x6c696166,
-
-                    // crit
-                    LogLevel.Critical => 0x74697263,
-
-                    // LogLevel.Noneや未知のログレベルの場合
-                    _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
-                };
-
-                ref var destinationStart = ref MemoryMarshal.GetReference(destination);
-                Unsafe.WriteUnaligned(ref destinationStart, value);
-                written = 4;
-
-                return true;
-            });
         }
     }
 }
