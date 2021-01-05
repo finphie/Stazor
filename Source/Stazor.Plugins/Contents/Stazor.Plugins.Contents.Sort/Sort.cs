@@ -13,9 +13,7 @@ namespace Stazor.Plugins.Contents
         readonly IStazorLogger _logger;
 
         public Sort(IStazorLogger logger)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
+            => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         /// <inheritdoc/>
         public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)

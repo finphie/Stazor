@@ -14,9 +14,6 @@ namespace Stazor.Plugins.Metadata
     /// </summary>
     public sealed class Breadcrumb : IPlugin
     {
-        readonly IStazorLogger _logger;
-        readonly BreadcrumbSettings _settings;
-
         /// <summary>
         /// The content key.
         /// </summary>
@@ -32,6 +29,9 @@ namespace Stazor.Plugins.Metadata
         {
             0x4A, 0x73, 0x6F, 0x6E, 0x4C, 0x64
         };
+
+        readonly IStazorLogger _logger;
+        readonly BreadcrumbSettings _settings;
 
         public Breadcrumb(IStazorLogger logger, BreadcrumbSettings settings)
         {
