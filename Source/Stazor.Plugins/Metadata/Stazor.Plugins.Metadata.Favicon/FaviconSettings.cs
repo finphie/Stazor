@@ -5,8 +5,11 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed record FaviconSettings : IStazorSettings, IValidatable
+    public sealed record FaviconSettings : IStazorKey, IValidatable
     {
+        /// <inheritdoc/>
+        public string Key { get; init; } = nameof(Favicon);
+
         /// <summary>
         /// The favicon url.
         /// </summary>
@@ -16,6 +19,11 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public void Validate()
         {
+            if (string.IsNullOrWhiteSpace(Key))
+            {
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
+            }
+
             if (string.IsNullOrWhiteSpace(FilePath))
             {
                 ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(FilePath));

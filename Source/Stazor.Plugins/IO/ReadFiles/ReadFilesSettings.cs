@@ -5,8 +5,11 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.IO
 {
-    public sealed record ReadFilesSettings : IStazorSettings, IValidatable
+    public sealed record ReadFilesSettings : IStazorKey, IValidatable
     {
+        /// <inheritdoc/>
+        public string Key { get; init; } = nameof(ReadFiles);
+
         /// <summary>
         /// The relative or absolute path to the directory to search.
         /// </summary>
@@ -27,6 +30,11 @@ namespace Stazor.Plugins.IO
         /// <inheritdoc/>
         public void Validate()
         {
+            if (string.IsNullOrWhiteSpace(Key))
+            {
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
+            }
+
             if (string.IsNullOrWhiteSpace(Path))
             {
                 ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Path));

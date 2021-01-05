@@ -3,10 +3,8 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Core
 {
-    public abstract record StazorBaseSettings : IStazorSettings, IValidatable
+    public abstract record StazorBaseSettings : IValidatable
     {
-        public const string Key = nameof(Stazor);
-
         /// <summary>
         /// サイトタイトル
         /// </summary>

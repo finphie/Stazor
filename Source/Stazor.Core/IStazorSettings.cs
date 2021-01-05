@@ -1,6 +1,7 @@
 ﻿namespace Stazor.Core
 {
-    public interface IStazorSettings
+    public interface IStazorKey
     {
+        string Key { get; init; }
     }
 }

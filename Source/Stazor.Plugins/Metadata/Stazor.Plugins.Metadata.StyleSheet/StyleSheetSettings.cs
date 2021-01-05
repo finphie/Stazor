@@ -4,8 +4,11 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed record StyleSheetSettings : IStazorSettings, IValidatable
+    public sealed record StyleSheetSettings : IStazorKey, IValidatable
     {
+        /// <inheritdoc/>
+        public string Key { get; init; } = nameof(StyleSheet);
+
         /// <summary>
         /// The CSS file url.
         /// </summary>
@@ -15,6 +18,11 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public void Validate()
         {
+            if (string.IsNullOrWhiteSpace(Key))
+            {
+                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
+            }
+
             // TODO: ファイル存在チェック
             if (string.IsNullOrWhiteSpace(Href))
             {

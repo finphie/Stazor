@@ -80,7 +80,7 @@ namespace Stazor
                     var type = types.First(static x => typeof(StazorBaseSettings).IsAssignableFrom(x));
                     var themeType = types.First(static x => typeof(ITheme).IsAssignableFrom(x));
 
-                    services.Configure(type, content.Configuration.GetSection(StazorBaseSettings.Key));
+                    services.Configure(type, content.Configuration.GetSection(nameof(Stazor)));
                     services.AddSingleton(typeof(ITheme), themeType);
                     services.AddSingleton<IStazorLoggerFactory, StazorLoggerFactory>();
                     services.AddSingleton<IStazorLogger<BuildCommand>, StazorLogger<BuildCommand>>();
