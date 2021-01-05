@@ -13,12 +13,12 @@ using Stazor.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Stazor.Plugins.Renderer
+namespace Stazor.Plugins.IO
 {
     /// <summary>
     /// Parses markdown and renders it to HTML.
     /// </summary>
-    public sealed class Markdown : IPlugin
+    public sealed class ReadMarkdownFiles : IPlugin
     {
         /// <summary>
         /// The content key.
@@ -35,25 +35,29 @@ namespace Stazor.Plugins.Renderer
             .Build();
 
         readonly IStazorLogger _logger;
-        readonly MarkdownSettings _settings;
-        readonly byte[] _inputKey;
+        readonly ReadMarkdownFilesSettings _settings;
+
+        readonly IEnumerable<string> _files;
         readonly HtmlRenderer _renderer;
         readonly StringWriter _writer;
         readonly IDeserializer _yamlDeserializer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Markdown"/> class.
+        /// Initializes a new instance of the <see cref="ReadMarkdownFiles"/> class.
         /// </summary>
-        public Markdown(IStazorLogger logger, MarkdownSettings settings)
+        public ReadMarkdownFiles(IStazorLogger logger, ReadMarkdownFilesSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            _inputKey = Encoding.UTF8.GetBytes(_settings.InputKey!);
+            _files = Directory.EnumerateFiles(_settings.Path, "*.md");
+
+            // Markdown関連の設定
             _writer = new();
             _renderer = new(_writer);
             Pipeline.Setup(_renderer);
 
+            // YAML関連の設定
             _yamlDeserializer = new DeserializerBuilder()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .WithNodeTypeResolver(SortedSetResolver.Default)
@@ -69,13 +73,18 @@ namespace Stazor.Plugins.Renderer
             await foreach (var input in inputs.ConfigureAwait(false))
 #pragma warning restore CA1508 // 使用されない条件付きコードを回避する
             {
-                if (!input.Content.TryGetValue(_inputKey, out var value))
-                {
-                    throw new ArgumentException(nameof(_inputKey));
-                }
+                yield return input;
+            }
 
-                var data = Encoding.UTF8.GetString(value);
+            foreach (var file in _files)
+            {
+                // ファイル読み込み
+                var data = File.ReadAllText(file);
+
+                // Markdown
                 var markdown = Markdig.Markdown.Parse(data, Pipeline);
+
+                // YAML
                 var title = markdown.Descendants<HeadingBlock>()
                     .First(x => x.Level == 1)
                     .Inline
@@ -84,29 +93,33 @@ namespace Stazor.Plugins.Renderer
                     .Content;
                 var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
+                // ドキュメント作成
+                var document = DocumentFactory.GetDocument(_settings.TemplateFilePath);
+
                 if (yaml is not null)
                 {
                     var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
                     var metadata = _yamlDeserializer.Deserialize<Metadata>(yamlString);
 
-                    input.Metadata.Title = metadata.Title;
-                    input.Metadata.PublishedDate = metadata.PublishedDate;
-                    input.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
+                    document.Metadata.Title = metadata.Title;
+                    document.Metadata.PublishedDate = metadata.PublishedDate;
+                    document.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
                         ? metadata.ModifiedDate
                         : metadata.PublishedDate;
-                    input.Metadata.Category = metadata.Category;
-                    input.Metadata.Tags = metadata.Tags;
+                    document.Metadata.Category = metadata.Category;
+                    document.Metadata.Tags = metadata.Tags;
                 }
 
-                input.Metadata.Title = title.ToString();
+                document.Metadata.Title = title.ToString();
 
+                // MarkdownからHTMLに変換
                 _renderer.Render(markdown);
                 _writer.Flush();
 
-                input.Content.Add(Key, Encoding.UTF8.GetBytes(_writer.ToString()));
+                document.Content.Add(Key, Encoding.UTF8.GetBytes(_writer.ToString()));
                 _writer.GetStringBuilder().Clear();
 
-                yield return input;
+                yield return document;
             }
 
             _logger.Information("End");

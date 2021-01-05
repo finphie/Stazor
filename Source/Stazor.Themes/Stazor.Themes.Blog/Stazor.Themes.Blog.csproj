@@ -9,9 +9,8 @@
     <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" Private="false" ExcludeAssets="runtime" />
     <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj" />
-    <ProjectReference Include="..\..\Stazor.Plugins\IO\ReadFiles\Stazor.Plugins.IO.ReadFiles.csproj" />
+    <ProjectReference Include="..\..\Stazor.Plugins\IO\Stazor.Plugins.IO.Markdown\Stazor.Plugins.IO.ReadMarkdownFiles.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj" />
-    <ProjectReference Include="..\..\Stazor.Plugins\Renderer\Stazor.Plugins.Renderer.Markdown\Stazor.Plugins.Renderer.Markdown.csproj" />
   </ItemGroup>
 
   <ItemGroup>

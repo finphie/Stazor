@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace Stazor.Plugins.Renderer
+namespace Stazor.Plugins.IO
 {
     /// <summary>
     /// SortedSet resolver.

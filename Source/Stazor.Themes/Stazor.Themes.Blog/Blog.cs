@@ -8,7 +8,6 @@ using Stazor.Engines.Simple;
 using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
-using Stazor.Plugins.Renderer;
 
 namespace Stazor.Themes
 {
@@ -28,8 +27,7 @@ namespace Stazor.Themes
             _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline.Add(new ReadFiles(CreateLogger<ReadFiles>(), _settings.ReadFiles));
-            Pipeline.Add(new Markdown(CreateLogger<Markdown>(), _settings.Markdown));
+            Pipeline.Add(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
             Pipeline.Add(new Sort(CreateLogger<Sort>()));
             Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
 
