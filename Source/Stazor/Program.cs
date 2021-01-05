@@ -66,7 +66,9 @@ namespace Stazor
             Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
             {
                 // ログレベルを表す4文字のUTF-8文字列
+#pragma warning disable IDE0072 // 欠落しているケースの追加
                 var value = logLevel switch
+#pragma warning restore IDE0072 // 欠落しているケースの追加
                 {
                     // trce
                     LogLevel.Trace => 0x65637274,
