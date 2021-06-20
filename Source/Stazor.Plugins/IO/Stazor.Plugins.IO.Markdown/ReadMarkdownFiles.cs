@@ -20,14 +20,6 @@ namespace Stazor.Plugins.IO
     /// </summary>
     public sealed class ReadMarkdownFiles : IPlugin
     {
-        /// <summary>
-        /// The content key.
-        /// </summary>
-        public static readonly byte[] Key = new byte[]
-        {
-            0x4D, 0x61, 0x72, 0x6B, 0x64, 0x6F, 0x77, 0x6E
-        };
-
         static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
             .UseAutoLinks()
             .UsePipeTables()
@@ -116,7 +108,7 @@ namespace Stazor.Plugins.IO
                 _renderer.Render(markdown);
                 _writer.Flush();
 
-                document.Content.Add(Key, Encoding.UTF8.GetBytes(_writer.ToString()));
+                document.Context.Add(_settings.Key, Encoding.UTF8.GetBytes(_writer.ToString()));
                 _writer.GetStringBuilder().Clear();
 
                 yield return document;

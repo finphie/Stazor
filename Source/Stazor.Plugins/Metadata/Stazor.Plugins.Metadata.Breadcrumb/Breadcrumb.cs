@@ -14,22 +14,6 @@ namespace Stazor.Plugins.Metadata
     /// </summary>
     public sealed class Breadcrumb : IPlugin
     {
-        /// <summary>
-        /// The content key.
-        /// </summary>
-        public static readonly byte[] Key = new byte[]
-        {
-            0x42, 0x72, 0x65, 0x61, 0x64, 0x63, 0x72, 0x75, 0x6D, 0x62
-        };
-
-        /// <summary>
-        /// JSON-LD key.
-        /// </summary>
-        public static readonly byte[] JsonLdKey = new byte[]
-        {
-            0x4A, 0x73, 0x6F, 0x6E, 0x4C, 0x64
-        };
-
         readonly IStazorLogger _logger;
         readonly BreadcrumbSettings _settings;
 
@@ -65,7 +49,7 @@ namespace Stazor.Plugins.Metadata
                 builder.Append("</ol>");
                 builder.Append("</nav>");
 
-                input.Content.Add(Key, builder.AsSpan().ToArray());
+                input.Context.Add(_settings.Key, builder.AsSpan().ToArray());
 
                 if (_settings.JsonLd)
                 {
@@ -92,7 +76,7 @@ namespace Stazor.Plugins.Metadata
                     json.Items[1].Item = "/" + input.Metadata.Category;
 
                     var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-                    input.Content.Add(JsonLdKey, jsonLd);
+                    input.Context.Add(_settings.JsonLdKey, jsonLd);
                 }
 
                 yield return input;

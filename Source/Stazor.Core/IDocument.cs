@@ -1,34 +1,32 @@
-﻿using System.Collections.Generic;
-
-namespace Stazor.Core
+﻿namespace Stazor.Core
 {
     /// <summary>
-    /// A document consists of a set of content and metadata attributes.
+    /// ドキュメントは、テンプレートとコンテキスト、メタデータで構成されます。
     /// </summary>
     public interface IDocument
     {
         /// <summary>
-        /// Gets the content associated with this document.
+        /// テンプレートのパスを取得します。
         /// </summary>
         /// <value>
-        /// The content.
-        /// </value>
-        Dictionary<byte[], byte[]> Content { get; }
-
-        /// <summary>
-        /// Gets the template path associated with this document.
-        /// </summary>
-        /// <value>
-        /// The template path.
+        /// テンプレートパス
         /// </value>
         string TemplatePath { get; init; }
 
         /// <summary>
-        /// Gets the metadata associated with this document.
+        /// コンテキストを取得します。
         /// </summary>
         /// <value>
-        /// The metadata.
+        /// コンテキスト
         /// </value>
-        IMetadata Metadata { get; }
+        IContext Context { get; init; }
+
+        /// <summary>
+        /// メタデータを取得します。
+        /// </summary>
+        /// <value>
+        /// メタデータ
+        /// </value>
+        IMetadata Metadata { get; init; }
     }
 }

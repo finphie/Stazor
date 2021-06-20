@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using SimpleTextTemplate;
 using Stazor.Core;
 using Stazor.Engine;
 
@@ -18,7 +19,7 @@ namespace Stazor.Engines.Simple
         /// </summary>
         public static readonly SimpleEngine Default = new();
 
-        readonly Dictionary<string, TemplateCache> _table = new();
+        readonly Dictionary<string, Template> _table = new();
 
         SimpleEngine()
         {
@@ -30,10 +31,8 @@ namespace Stazor.Engines.Simple
         /// <inheritdoc/>
         public string Description => "Simple templates";
 
-#pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         /// <inheritdoc/>
-        public async ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
-#pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
+        public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
         {
             if (document is null)
             {
@@ -44,15 +43,17 @@ namespace Stazor.Engines.Simple
 
             if (_table.TryGetValue(path, out var value))
             {
-                value.RenderTo(bufferWriter, document.Content);
-                return;
+                value.RenderTo(bufferWriter, document.Context);
+                return ValueTask.CompletedTask;
             }
 
             var file = File.ReadAllBytes(document.TemplatePath);
-            var cache = new TemplateCache(file);
-            _table.Add(path, cache);
+            var template = Template.Parse(file);
+            _table.Add(path, template);
 
-            cache.RenderTo(bufferWriter, document.Content);
+            template.RenderTo(bufferWriter, document.Context);
+
+            return ValueTask.CompletedTask;
         }
     }
 }

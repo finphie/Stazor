@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Stazor.Core.Helpers
 {
-    public static class ThrowHelper
+    static class ThrowHelper
     {
         [DebuggerHidden]
         [DoesNotReturn]
@@ -21,5 +21,14 @@ namespace Stazor.Core.Helpers
         [DoesNotReturn]
         public static void ThrowFileNotFoundException(string fileName)
             => throw new FileNotFoundException("File does not exist", fileName);
+
+        /// <summary>
+        /// 新しい<see cref="ArgumentNullException"/>例外をスローします。
+        /// </summary>
+        /// <param name="paramName">引数名</param>
+        [DebuggerHidden]
+        [DoesNotReturn]
+        public static void ThrowArgumentNullException(string paramName)
+            => throw new ArgumentNullException(paramName);
     }
 }

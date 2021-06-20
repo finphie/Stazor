@@ -8,6 +8,8 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public string Key { get; init; } = nameof(Breadcrumb);
 
+        public string JsonLdKey { get; init; } = "JsonLd";
+
         public bool JsonLd { get; init; }
 
         /// <inheritdoc/>
