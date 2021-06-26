@@ -5,6 +5,9 @@ using Stazor.Core;
 
 namespace Stazor.Extensions
 {
+    /// <summary>
+    /// <see cref="IServiceCollection"/>の拡張メソッド
+    /// </summary>
     static class ServiceCollectionExtensions
     {
         public static void Configure(this IServiceCollection services, Type type, IConfiguration configuration)
