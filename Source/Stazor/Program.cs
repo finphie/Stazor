@@ -24,6 +24,9 @@ namespace Stazor
     /// </summary>
     static class Program
     {
+        /// <summary>
+        /// ログレベルの解析メソッドを登録
+        /// </summary>
         [ModuleInitializer]
         public static void RegisterLogLevel()
         {
