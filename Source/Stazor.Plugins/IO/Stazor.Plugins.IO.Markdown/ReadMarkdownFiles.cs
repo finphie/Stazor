@@ -87,12 +87,12 @@ namespace Stazor.Plugins.IO
                 var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
                 // ドキュメント作成
-                var document = DocumentFactory.GetDocument(_settings.TemplateFilePath);
+                var document = Document.GetDocument(_settings.TemplateFilePath);
 
                 if (yaml is not null)
                 {
                     var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-                    var metadata = _yamlDeserializer.Deserialize<Metadata>(yamlString);
+                    var metadata = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
 
                     document.Metadata.Title = metadata.Title;
                     document.Metadata.PublishedDate = metadata.PublishedDate;

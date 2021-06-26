@@ -1,10 +1,16 @@
 ﻿namespace Stazor.Core
 {
     /// <summary>
-    /// ドキュメント
+    /// Creates a new instance of the <see cref="IDocument"/>.
     /// </summary>
-    /// <param name="TemplatePath">テンプレートパス</param>
-    /// <param name="Context">コンテキスト</param>
-    /// <param name="Metadata">メタデータ</param>
-    public sealed record Document(string TemplatePath, IContext Context, IMetadata Metadata) : IDocument;
+    public static class Document
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref="StazorDocument"/> class.
+        /// </summary>
+        /// <param name="templatePath">The relative or absolute path to the template directory.</param>
+        /// <returns>The document instance.</returns>
+        public static IDocument GetDocument(string templatePath, IContext context, IMetadata metadata)
+            => new StazorDocument(templatePath, context, metadata);
+    }
 }

@@ -7,8 +7,7 @@ namespace Stazor.Core
     /// <summary>
     /// The document metadata.
     /// </summary>
-    [SuppressMessage("Naming", "CA1724:型名は名前空間と同一にすることはできません", Justification = "Content metadata")]
-    public sealed class Metadata : IMetadata
+    public sealed class StazorMetadata : IMetadata
     {
         /// <inheritdoc/>
         [AllowNull]
