@@ -3,7 +3,7 @@
     /// <summary>
     /// ドキュメントは、テンプレートとコンテキスト、メタデータで構成されます。
     /// </summary>
-    public interface IDocument
+    public interface IStazorDocument
     {
         /// <summary>
         /// テンプレートのパスを取得します。
@@ -19,7 +19,7 @@
         /// <value>
         /// コンテキスト
         /// </value>
-        IContext Context { get; init; }
+        IStazorContext Context { get; init; }
 
         /// <summary>
         /// メタデータを取得します。
@@ -27,6 +27,6 @@
         /// <value>
         /// メタデータ
         /// </value>
-        IMetadata Metadata { get; init; }
+        IStazorMetadata Metadata { get; init; }
     }
 }

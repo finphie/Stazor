@@ -31,6 +31,6 @@ namespace Stazor.Engine
         /// <param name="bufferWriter">The target writer.</param>
         /// <param name="document">The document.</param>
         /// <returns>A <see cref="ValueTask"/> for the asynchronous operation.</returns>
-        ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document);
+        ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document);
     }
 }

@@ -1,11 +1,12 @@
-﻿using Utf8Utility;
+﻿using SimpleTextTemplate.Abstractions;
+using Utf8Utility;
 
 namespace Stazor.Core
 {
     /// <summary>
     /// コンテキスト
     /// </summary>
-    public interface IContext : SimpleTextTemplate.Abstractions.IContext
+    public interface IStazorContext : IContext
     {
         /// <summary>
         /// 要素を追加します。

@@ -25,7 +25,7 @@ namespace Stazor.Plugins.Metadata
         }
 
         /// <inheritdoc/>
-        public async IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs)
+        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync(IAsyncEnumerable<IStazorDocument> inputs)
         {
             _logger.Information("Start");
 

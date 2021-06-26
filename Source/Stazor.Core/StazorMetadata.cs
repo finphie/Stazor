@@ -7,7 +7,7 @@ namespace Stazor.Core
     /// <summary>
     /// The document metadata.
     /// </summary>
-    public sealed class StazorMetadata : IMetadata
+    public sealed class StazorMetadata : IStazorMetadata
     {
         /// <inheritdoc/>
         [AllowNull]

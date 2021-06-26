@@ -12,6 +12,6 @@ namespace Stazor.Core
         /// </summary>
         /// <param name="inputs">The document sequence.</param>
         /// <returns>Returns the document sequence.</returns>
-        IAsyncEnumerable<IDocument> ExecuteAsync(IAsyncEnumerable<IDocument> inputs);
+        IAsyncEnumerable<IStazorDocument> ExecuteAsync(IAsyncEnumerable<IStazorDocument> inputs);
     }
 }

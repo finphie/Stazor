@@ -32,7 +32,7 @@ namespace Stazor.Engines.Simple
         public string Description => "Simple templates";
 
         /// <inheritdoc/>
-        public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IDocument document)
+        public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document)
         {
             if (document is null)
             {

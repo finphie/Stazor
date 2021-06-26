@@ -1,7 +1,7 @@
 ﻿namespace Stazor.Core
 {
     /// <summary>
-    /// Creates a new instance of the <see cref="IDocument"/>.
+    /// Creates a new instance of the <see cref="IStazorDocument"/>.
     /// </summary>
     public static class Document
     {
@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="templatePath">The relative or absolute path to the template directory.</param>
         /// <returns>The document instance.</returns>
-        public static IDocument GetDocument(string templatePath, IContext context, IMetadata metadata)
+        public static IStazorDocument GetDocument(string templatePath, IStazorContext context, IStazorMetadata metadata)
             => new StazorDocument(templatePath, context, metadata);
     }
 }

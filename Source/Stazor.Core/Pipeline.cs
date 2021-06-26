@@ -33,9 +33,9 @@ namespace Stazor.Core
         /// Executes the job.
         /// </summary>
         /// <returns>Returns the document sequence.</returns>
-        public async IAsyncEnumerable<IDocument> ExecuteAsync()
+        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync()
         {
-            var inputs = AsyncEnumerableHelpers.Empty<IDocument>();
+            var inputs = AsyncEnumerableHelpers.Empty<IStazorDocument>();
 
             foreach (var plugin in _plugins)
             {

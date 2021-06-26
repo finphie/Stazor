@@ -8,7 +8,7 @@ namespace Stazor.Core
     /// <summary>
     /// Dictionary型コンテキスト
     /// </summary>
-    public sealed class StazorContext : IContext
+    public sealed class StazorContext : IStazorContext
     {
         readonly Utf8StringDictionary<Utf8String> _symbols;
 

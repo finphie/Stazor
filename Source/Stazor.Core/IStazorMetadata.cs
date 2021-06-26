@@ -6,7 +6,7 @@ namespace Stazor.Core
     /// <summary>
     /// The document metadata.
     /// </summary>
-    public interface IMetadata
+    public interface IStazorMetadata
     {
         /// <summary>
         /// Gets or sets the title.
