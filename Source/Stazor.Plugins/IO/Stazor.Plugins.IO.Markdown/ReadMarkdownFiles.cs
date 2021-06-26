@@ -87,7 +87,7 @@ namespace Stazor.Plugins.IO
                 var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
                 // ドキュメント作成
-                var document = Document.GetDocument(_settings.TemplateFilePath);
+                var document = Document.Create(_settings.TemplateFilePath);
 
                 if (yaml is not null)
                 {

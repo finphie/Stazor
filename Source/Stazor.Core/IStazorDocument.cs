@@ -1,7 +1,7 @@
 ﻿namespace Stazor.Core
 {
     /// <summary>
-    /// ドキュメントは、テンプレートとコンテキスト、メタデータで構成されます。
+    /// ドキュメントは、テンプレートとコンテキスト及びメタデータで構成されます。
     /// </summary>
     public interface IStazorDocument
     {

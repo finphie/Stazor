@@ -8,11 +8,11 @@ namespace Stazor.Core
     /// <summary>
     /// Dictionary型コンテキスト
     /// </summary>
-    public sealed class StazorContext : IStazorContext
+    sealed class StazorContext : IStazorContext
     {
-        readonly Utf8StringDictionary<Utf8String> _symbols;
+        readonly IUtf8StringDictionary<Utf8String> _symbols;
 
-        public StazorContext(Utf8StringDictionary<Utf8String> symbols)
+        public StazorContext(IUtf8StringDictionary<Utf8String> symbols)
         {
             if (symbols is null)
             {

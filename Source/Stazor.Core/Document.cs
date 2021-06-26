@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="templatePath">The relative or absolute path to the template directory.</param>
         /// <returns>The document instance.</returns>
-        public static IStazorDocument GetDocument(string templatePath, IStazorContext context, IStazorMetadata metadata)
-            => new StazorDocument(templatePath, context, metadata);
+        public static IStazorDocument Create(string templatePath)
+            => new StazorDocument(templatePath, Context.Create(), Metadata.Create());
     }
 }
