@@ -1,23 +1,24 @@
 ﻿using Stazor.Core;
-using Stazor.Core.Helpers;
+using Stazor.Plugins.Metadata.Helpers;
+using Utf8Utility;
 
 namespace Stazor.Plugins.Metadata
 {
     public sealed record BreadcrumbSettings : IStazorKey, IValidatable
     {
         /// <inheritdoc/>
-        public string Key { get; init; } = nameof(Breadcrumb);
+        public Utf8String Key { get; init; }
 
-        public string JsonLdKey { get; init; } = "JsonLd";
+        public Utf8String JsonLdKey { get; init; }
 
         public bool JsonLd { get; init; }
 
         /// <inheritdoc/>
         public void Validate()
         {
-            if (string.IsNullOrWhiteSpace(Key))
+            if (Key == Utf8String.Empty)
             {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
+                ThrowHelper.ThrowArgumentNullException(nameof(Key));
             }
         }
     }

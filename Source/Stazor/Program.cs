@@ -64,9 +64,7 @@ namespace Stazor
             });
         }
 
-#pragma warning disable IDE1006 // 命名スタイル
         static async Task Main(string[] args)
-#pragma warning restore IDE1006 // 命名スタイル
         {
             await Host.CreateDefaultBuilder(args)
                 .ConfigureServices(static (content, services) =>
@@ -77,8 +75,8 @@ namespace Stazor
                     var loadContext = new LoadContext(themePath);
                     var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(themePath)));
                     var types = assembly.GetTypes();
-                    var type = types.First(static x => typeof(StazorBaseSettings).IsAssignableFrom(x));
-                    var themeType = types.First(static x => typeof(ITheme).IsAssignableFrom(x));
+                    var type = types.First(typeof(StazorBaseSettings).IsAssignableFrom);
+                    var themeType = types.First(typeof(ITheme).IsAssignableFrom);
 
                     services.Configure(type, content.Configuration.GetSection(nameof(Stazor)));
                     services.AddSingleton(typeof(ITheme), themeType);

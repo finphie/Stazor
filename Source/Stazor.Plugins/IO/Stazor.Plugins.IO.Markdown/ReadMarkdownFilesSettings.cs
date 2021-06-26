@@ -1,19 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Stazor.Core;
-using Stazor.Core.Helpers;
+using Stazor.Plugins.IO.Helpers;
+using Utf8Utility;
 
 namespace Stazor.Plugins.IO
 {
     public sealed record ReadMarkdownFilesSettings : IStazorKey, IValidatable
     {
         /// <inheritdoc/>
-        public string Key { get; init; } = nameof(ReadMarkdownFiles);
+        public Utf8String Key { get; init; }
 
         /// <summary>
         /// Markdownが存在するフォルダのパスを取得、設定します。
         /// </summary>
-        public string Path { get; init; } = ".";
+        public string Path { get; init; }
 
         /// <summary>
         /// HTMLテンプレートファイルのパスを取得、設定します。
@@ -24,9 +25,9 @@ namespace Stazor.Plugins.IO
         /// <inheritdoc/>
         public void Validate()
         {
-            if (string.IsNullOrWhiteSpace(Key))
+            if (Key == Utf8String.Empty)
             {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
+                ThrowHelper.ThrowArgumentNullException(nameof(Key));
             }
 
             if (string.IsNullOrWhiteSpace(Path))

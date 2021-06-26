@@ -1,7 +1,9 @@
-﻿namespace Stazor.Core
+﻿using Utf8Utility;
+
+namespace Stazor.Core
 {
     public interface IStazorKey
     {
-        string Key { get; init; }
+        Utf8String Key { get; init; }
     }
 }

@@ -6,6 +6,7 @@ using Cysharp.Text;
 using Stazor.Core;
 using Utf8Json;
 using Utf8Json.Resolvers;
+using Utf8Utility;
 
 namespace Stazor.Plugins.Metadata
 {
@@ -49,7 +50,7 @@ namespace Stazor.Plugins.Metadata
                 builder.Append("</ol>");
                 builder.Append("</nav>");
 
-                input.Context.Add(_settings.Key, builder.AsSpan().ToArray());
+                input.Context.Add(_settings.Key, new Utf8String(builder.AsSpan().ToArray()));
 
                 if (_settings.JsonLd)
                 {
@@ -76,7 +77,7 @@ namespace Stazor.Plugins.Metadata
                     json.Items[1].Item = "/" + input.Metadata.Category;
 
                     var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-                    input.Context.Add(_settings.JsonLdKey, jsonLd);
+                    input.Context.Add(_settings.JsonLdKey, new Utf8String(jsonLd));
                 }
 
                 yield return input;

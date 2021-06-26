@@ -10,6 +10,7 @@ using Markdig.Renderers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Stazor.Core;
+using Utf8Utility;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -108,7 +109,7 @@ namespace Stazor.Plugins.IO
                 _renderer.Render(markdown);
                 _writer.Flush();
 
-                document.Context.Add(_settings.Key, Encoding.UTF8.GetBytes(_writer.ToString()));
+                document.Context.Add(_settings.Key, (Utf8String)_writer.ToString());
                 _writer.GetStringBuilder().Clear();
 
                 yield return document;

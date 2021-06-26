@@ -30,5 +30,8 @@ namespace Stazor.Core.Helpers
         [DoesNotReturn]
         public static void ThrowArgumentNullException(string paramName)
             => throw new ArgumentNullException(paramName);
+
+        public static void ThrowAddingDuplicateWithKeyArgumentException<T>(T key)
+            => throw new ArgumentException($"An item with the same key has already been added. Key: {key}");
     }
 }
