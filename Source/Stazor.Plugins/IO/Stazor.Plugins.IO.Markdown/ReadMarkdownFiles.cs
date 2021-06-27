@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Markdig;
 using Markdig.Extensions.Yaml;
@@ -19,7 +18,7 @@ namespace Stazor.Plugins.IO
     /// <summary>
     /// Parses markdown and renders it to HTML.
     /// </summary>
-    public sealed class ReadMarkdownFiles : IPlugin
+    public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     {
         static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
             .UseAutoLinks()
@@ -58,16 +57,11 @@ namespace Stazor.Plugins.IO
         }
 
         /// <inheritdoc/>
-        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync(IAsyncEnumerable<IStazorDocument> inputs)
+        public ValueTask<IDocumentList> CreateDocumentsAsync()
         {
             _logger.Information("Start");
 
-#pragma warning disable CA1508 // 使用されない条件付きコードを回避する
-            await foreach (var input in inputs.ConfigureAwait(false))
-#pragma warning restore CA1508 // 使用されない条件付きコードを回避する
-            {
-                yield return input;
-            }
+            IDocumentList documents = new DocumentList();
 
             foreach (var file in _files)
             {
@@ -75,7 +69,7 @@ namespace Stazor.Plugins.IO
                 var data = File.ReadAllText(file);
 
                 // Markdown
-                var markdown = Markdig.Markdown.Parse(data, Pipeline);
+                var markdown = Markdown.Parse(data, Pipeline);
 
                 // YAML
                 var title = markdown.Descendants<HeadingBlock>()
@@ -112,10 +106,12 @@ namespace Stazor.Plugins.IO
                 document.Context.Add(_settings.Key, (Utf8String)_writer.ToString());
                 _writer.GetStringBuilder().Clear();
 
-                yield return document;
+                documents.Add(document);
             }
 
             _logger.Information("End");
+
+            return ValueTask.FromResult(documents);
         }
     }
 }

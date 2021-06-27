@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Cysharp.Text;
@@ -13,7 +12,7 @@ namespace Stazor.Plugins.Metadata
     /// <summary>
     /// Create a Breadcrumb Navigation.
     /// </summary>
-    public sealed class Breadcrumb : IPlugin
+    public sealed class Breadcrumb : IEditDocumentPlugin
     {
         readonly IStazorLogger _logger;
         readonly BreadcrumbSettings _settings;
@@ -25,7 +24,7 @@ namespace Stazor.Plugins.Metadata
         }
 
         /// <inheritdoc/>
-        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync(IAsyncEnumerable<IStazorDocument> inputs)
+        public ValueTask ExecuteAsync(IStazorDocument document)
         {
             _logger.Information("Start");
 
@@ -36,54 +35,49 @@ namespace Stazor.Plugins.Metadata
 
             var length = builder.Length;
 
-#pragma warning disable CA1508 // 使用されない条件付きコードを回避する
-            await foreach (var input in inputs.ConfigureAwait(false))
-#pragma warning restore CA1508 // 使用されない条件付きコードを回避する
+            builder.Append(document.Metadata.Category);
+            builder.Append("\">");
+            builder.Append(document.Metadata.Category);
+            builder.Append("</a>");
+            builder.Append("<li>");
+            builder.Append(document.Metadata.Title);
+
+            builder.Append("</ol>");
+            builder.Append("</nav>");
+
+            document.Context.Add(_settings.Key, new Utf8String(builder.AsSpan().ToArray()));
+
+            if (_settings.JsonLd)
             {
-                builder.Append(input.Metadata.Category);
-                builder.Append("\">");
-                builder.Append(input.Metadata.Category);
-                builder.Append("</a>");
-                builder.Append("<li>");
-                builder.Append(input.Metadata.Title);
+                builder.Advance(-length);
 
-                builder.Append("</ol>");
-                builder.Append("</nav>");
-
-                input.Context.Add(_settings.Key, new Utf8String(builder.AsSpan().ToArray()));
-
-                if (_settings.JsonLd)
+                // TODO: JSON-LD 高速化
+                var json = new JsonLd
                 {
-                    builder.Advance(-length);
+                    Context = "https://schema.org",
+                    Type = "BreadcrumbList",
+                    Items = new JsonLd.ItemListElement[2]
+                };
 
-                    // TODO: JSON-LD 高速化
-                    var json = new JsonLd
-                    {
-                        Context = "https://schema.org",
-                        Type = "BreadcrumbList",
-                        Items = new JsonLd.ItemListElement[2]
-                    };
-
-                    for (var i = 0; i < json.Items.Length; i++)
-                    {
-                        json.Items[i] = new();
-                        json.Items[i].Type = "ListItem";
-                        json.Items[i].Position = i + 1;
-                    }
-
-                    json.Items[0].Name = "ホーム";
-                    json.Items[1].Name = input.Metadata.Category!;
-                    json.Items[0].Item = "/";
-                    json.Items[1].Item = "/" + input.Metadata.Category;
-
-                    var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-                    input.Context.Add(_settings.JsonLdKey, new Utf8String(jsonLd));
+                for (var i = 0; i < json.Items.Length; i++)
+                {
+                    json.Items[i] = new();
+                    json.Items[i].Type = "ListItem";
+                    json.Items[i].Position = i + 1;
                 }
 
-                yield return input;
+                json.Items[0].Name = "ホーム";
+                json.Items[1].Name = document.Metadata.Category!;
+                json.Items[0].Item = "/";
+                json.Items[1].Item = "/" + document.Metadata.Category;
+
+                var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+                document.Context.Add(_settings.JsonLdKey, new Utf8String(jsonLd));
             }
 
             _logger.Information("End");
+
+            return ValueTask.CompletedTask;
         }
 
         sealed class JsonLd

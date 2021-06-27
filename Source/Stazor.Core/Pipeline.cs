@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Stazor.Core.Helpers;
 
 namespace Stazor.Core
 {
@@ -8,26 +7,27 @@ namespace Stazor.Core
     /// </summary>
     public sealed class Pipeline
     {
-        readonly List<IPlugin> _plugins;
+        readonly INewDocumentsPlugin _newDocumentsPlugin;
+        readonly List<IEditDocumentPlugin> _editDocumentPlugins;
+        readonly List<IPostProcessingPlugin> _postProcessingPlugins;
+
+        readonly IDocumentList _documents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
-        public Pipeline()
-            => _plugins = new List<IPlugin>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pipeline"/> class.
-        /// </summary>
-        /// <param name="plugins">The list of plugins.</param>
-        public Pipeline(IEnumerable<IPlugin> plugins)
-            => _plugins = new List<IPlugin>(plugins);
+        public Pipeline(INewDocumentsPlugin newDocumentsPlugin)
+        {
+            _newDocumentsPlugin = newDocumentsPlugin;
+            _editDocumentPlugins = new();
+            _postProcessingPlugins = new();
+        }
 
         /// <summary>
         /// Adds an object to the end of the pipeline.
         /// </summary>
         /// <param name="plugin">The object to be added to the end of the pipeline.</param>
-        public void Add(IPlugin plugin) => _plugins.Add(plugin);
+        public void Add(IEditDocumentPlugin plugin) => _editDocumentPlugins.Add(plugin);
 
         /// <summary>
         /// Executes the job.
@@ -35,16 +35,20 @@ namespace Stazor.Core
         /// <returns>Returns the document sequence.</returns>
         public async IAsyncEnumerable<IStazorDocument> ExecuteAsync()
         {
-            var inputs = AsyncEnumerableHelpers.Empty<IStazorDocument>();
+            var documents = await _newDocumentsPlugin.CreateDocumentsAsync().ConfigureAwait(false);
 
-            foreach (var plugin in _plugins)
+            // TODO: 並列化
+            for (var i = 0; i < documents.Length; i++)
             {
-                inputs = plugin.ExecuteAsync(inputs);
+                foreach (var plugin in _editDocumentPlugins)
+                {
+                    await plugin.ExecuteAsync(documents[i]).ConfigureAwait(false);
+                }
             }
 
-            await foreach (var input in inputs)
+            foreach (var plugin in _postProcessingPlugins)
             {
-                yield return input;
+                await plugin.AfterExecuteAsync(documents).ConfigureAwait(false);
             }
         }
     }
