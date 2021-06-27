@@ -7,6 +7,6 @@ namespace Stazor.Core
     /// </summary>
     public interface IPostProcessingPlugin : IPlugin
     {
-        ValueTask AfterExecute(IDocumentList documents);
+        ValueTask AfterExecuteAsync(IDocumentList documents);
     }
 }
