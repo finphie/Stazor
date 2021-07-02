@@ -27,8 +27,8 @@ namespace Stazor.Themes
             _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline.Add(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
-            Pipeline.Add(new Sort(CreateLogger<Sort>()));
+            Pipeline = new(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
+            //Pipeline.Add(new Sort(CreateLogger<Sort>()));
             Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
 
             IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
@@ -38,17 +38,18 @@ namespace Stazor.Themes
         public IEngine Engine => SimpleEngine.Default;
 
         /// <inheritdoc/>
-        public Pipeline Pipeline { get; } = new();
+        public Pipeline Pipeline { get; }
 
         /// <inheritdoc/>
         public async ValueTask ExecuteAsync()
         {
             var buffer = new ArrayBufferWriter<byte>();
+            var documents = await Pipeline.ExecuteAsync().ConfigureAwait(false);
 
             // var count = 0;
-            await foreach (var document in Pipeline.ExecuteAsync().ConfigureAwait(false))
+            for (var i = 0; i < documents.Length; i++)
             {
-                await Engine.ExecuteAsync(buffer, document).ConfigureAwait(false);
+                await Engine.ExecuteAsync(buffer, documents[i]).ConfigureAwait(false);
 
                 Console.WriteLine(Encoding.UTF8.GetString(buffer.WrittenSpan));
 
