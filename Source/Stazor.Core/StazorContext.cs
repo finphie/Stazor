@@ -25,7 +25,7 @@ namespace Stazor.Core
         /// <inheritdoc/>
         public void Add(Utf8String key, Utf8String value)
         {
-            if (_symbols.TryAdd(key, value))
+            if (!_symbols.TryAdd(key, value))
             {
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
             }
