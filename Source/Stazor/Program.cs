@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using ConsoleAppFramework;
 using Cysharp.Text;
+using McMaster.NETCore.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -75,16 +76,23 @@ namespace Stazor
                     var themePath = content.Configuration["themePath"];
                     var themeName = content.Configuration["themeName"];
 
-                    var loadContext = new LoadContext(themePath);
-                    var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(themePath)));
-                    var types = assembly.GetTypes();
-                    var type = types.First(typeof(StazorBaseSettings).IsAssignableFrom);
-                    var themeType = types.First(typeof(ITheme).IsAssignableFrom);
+                    //var loadContext = new LoadContext(themePath);
+                    //var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(themePath)));
+                    //var types = assembly.GetTypes();
+                    //var type = types.First(x => x.BaseType == typeof(StazorBaseSettings));
+                    //var themeType = types.First(typeof(ITheme).IsAssignableFrom);
 
-                    services.Configure(type, content.Configuration.GetSection(nameof(Stazor)));
+                    var plugin = PluginLoader.CreateFromAssemblyFile(themePath, new[] { typeof(StazorBaseSettings) });
+                    var types = plugin.LoadDefaultAssembly().GetTypes();
+                    var pluginType = types.First(t => typeof(StazorBaseSettings).IsAssignableFrom(t) && !t.IsAbstract);
+                    var themeType = types.First(typeof(ITheme).IsAssignableFrom);
+                    services.Configure(pluginType, content.Configuration.GetSection(nameof(Stazor)));
+
+                    //services.Configure(type, content.Configuration.GetSection(nameof(Stazor)));
                     services.AddSingleton(typeof(ITheme), themeType);
                     services.AddSingleton<IStazorLoggerFactory, StazorLoggerFactory>();
                     services.AddSingleton<IStazorLogger<BuildCommand>, StazorLogger<BuildCommand>>();
+                    // services.AddPluginFromAssemblyFile
                 })
                 .ConfigureLogging(static logging =>
                 {
