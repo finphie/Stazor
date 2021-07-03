@@ -7,9 +7,5 @@ namespace Stazor.Core
     /// </summary>
     public interface IStazorKey
     {
-        /// <summary>
-        /// コンテキストのキー
-        /// </summary>
-        Utf8String Key { get; init; }
     }
 }

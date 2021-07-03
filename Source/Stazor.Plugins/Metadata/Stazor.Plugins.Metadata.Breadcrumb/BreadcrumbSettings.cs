@@ -7,11 +7,11 @@ namespace Stazor.Plugins.Metadata
     public sealed record BreadcrumbSettings : IStazorKey, IValidatable
     {
         /// <inheritdoc/>
-        public Utf8String Key { get; init; }
+        public Utf8String Key = (Utf8String)nameof(Breadcrumb);
 
-        public Utf8String JsonLdKey { get; init; }
+        public Utf8String JsonLdKey = (Utf8String)"JsonLd";
 
-        public bool JsonLd { get; init; }
+        public bool JsonLd { get; set; }
 
         /// <inheritdoc/>
         public void Validate()

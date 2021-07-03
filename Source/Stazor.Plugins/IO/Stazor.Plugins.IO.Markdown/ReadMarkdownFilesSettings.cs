@@ -9,12 +9,12 @@ namespace Stazor.Plugins.IO
     public sealed record ReadMarkdownFilesSettings : IStazorKey, IValidatable
     {
         /// <inheritdoc/>
-        public Utf8String Key { get; init; }
+        public Utf8String Key = (Utf8String)"Markdown";
 
         /// <summary>
         /// Markdownが存在するフォルダのパスを取得、設定します。
         /// </summary>
-        public string Path { get; init; }
+        public string Path { get; set; }
 
         /// <summary>
         /// HTMLテンプレートファイルのパスを取得、設定します。
