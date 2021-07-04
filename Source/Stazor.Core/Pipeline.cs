@@ -48,7 +48,7 @@ namespace Stazor.Core
             //    list.Add(document);
             //}
 
-            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, filePaths.Length, new Assigner(documents, filePaths, _newDocumentsPlugin, _editDocumentPlugins));
+            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, filePaths.Length, new DocumentCreator(documents, filePaths, _newDocumentsPlugin, _editDocumentPlugins));
 
             sw.Stop();
             System.Console.WriteLine(sw.Elapsed);
@@ -62,7 +62,7 @@ namespace Stazor.Core
         }
     }
 
-    readonly struct Assigner : Microsoft.Toolkit.HighPerformance.Helpers.IAction
+    readonly struct DocumentCreator : Microsoft.Toolkit.HighPerformance.Helpers.IAction
     {
         readonly IStazorDocument[] _documents;
         readonly string[] _filePaths;
@@ -70,7 +70,7 @@ namespace Stazor.Core
         readonly INewDocumentsPlugin _newDocumentsPlugin;
         readonly List<IEditDocumentPlugin> _editDocumentPlugins;
 
-        public Assigner(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, List<IEditDocumentPlugin> editDocumentPlugins)
+        public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, List<IEditDocumentPlugin> editDocumentPlugins)
         {
             _documents = documents;
             _filePaths = filePaths;
