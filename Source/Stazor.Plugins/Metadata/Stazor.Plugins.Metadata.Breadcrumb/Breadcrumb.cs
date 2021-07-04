@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using Cysharp.Text;
 using Stazor.Core;
 using Utf8Json;
@@ -24,7 +23,7 @@ namespace Stazor.Plugins.Metadata
         }
 
         /// <inheritdoc/>
-        public ValueTask ExecuteAsync(IStazorDocument document)
+        public void Execute(IStazorDocument document)
         {
             _logger.Debug("Start");
 
@@ -76,8 +75,6 @@ namespace Stazor.Plugins.Metadata
             }
 
             _logger.Debug("End");
-
-            return ValueTask.CompletedTask;
         }
 
         sealed class JsonLd

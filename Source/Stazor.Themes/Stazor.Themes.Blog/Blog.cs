@@ -46,7 +46,7 @@ namespace Stazor.Themes
         {
             var filePaths = Directory.GetFiles(_settings.ContentPath, "*.md");
             var buffer = new ArrayBufferWriter<byte>();
-            var documents = await Pipeline.ExecuteAsync(filePaths).ConfigureAwait(false);
+            var documents = Pipeline.Execute(filePaths);
 
             var i = 0;
             for (i = 0; i < documents.Length; i++)

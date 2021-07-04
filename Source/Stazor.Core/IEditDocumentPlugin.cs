@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace Stazor.Core
+﻿namespace Stazor.Core
 {
     /// <summary>
     /// ドキュメント編集用プラグイン
     /// </summary>
     public interface IEditDocumentPlugin : IPlugin
     {
-        ValueTask ExecuteAsync(IStazorDocument document);
+        void Execute(IStazorDocument document);
     }
 }

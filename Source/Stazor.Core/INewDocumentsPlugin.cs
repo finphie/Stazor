@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace Stazor.Core
+﻿namespace Stazor.Core
 {
     /// <summary>
     /// ドキュメント新規作成用プラグイン
     /// </summary>
     public interface INewDocumentsPlugin : IPlugin
     {
-        ValueTask<IStazorDocument> CreateDocumentAsync(string filePath);
+        IStazorDocument CreateDocument(string filePath);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Renderers;
@@ -29,8 +27,6 @@ namespace Stazor.Plugins.IO
         readonly IStazorLogger _logger;
         readonly ReadMarkdownFilesSettings _settings;
 
-        //readonly HtmlRenderer _renderer;
-        //readonly StringWriter _writer;
         readonly IDeserializer _yamlDeserializer;
 
         /// <summary>
@@ -54,7 +50,7 @@ namespace Stazor.Plugins.IO
         }
 
         /// <inheritdoc/>
-        public ValueTask<IStazorDocument> CreateDocumentAsync(string filePath)
+        public IStazorDocument CreateDocument(string filePath)
         {
             _logger.Debug("Start");
 
@@ -110,7 +106,7 @@ namespace Stazor.Plugins.IO
 
             _logger.Debug("End");
 
-            return ValueTask.FromResult(document);
+            return document;
         }
     }
 }
