@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Stazor.Core;
@@ -46,17 +47,20 @@ namespace Stazor.Themes
             var buffer = new ArrayBufferWriter<byte>();
             var documents = await Pipeline.ExecuteAsync().ConfigureAwait(false);
 
-            // var count = 0;
-            for (var i = 0; i < documents.Length; i++)
+            var i = 0;
+            for (i = 0; i < documents.Length; i++)
             {
                 await Engine.ExecuteAsync(buffer, documents[i]).ConfigureAwait(false);
 
-                Console.WriteLine(Encoding.UTF8.GetString(buffer.WrittenSpan));
+                Console.Write(Encoding.UTF8.GetString(buffer.WrittenSpan).Length + ",");
 
-                // using var fs = new FileStream($"{count++}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
-                // fs.Write(buffer.WrittenSpan);
+                //using var fs = new FileStream($"g/{i}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
+                //fs.Write(buffer.WrittenSpan);
                 buffer.Clear();
             }
+
+            Console.WriteLine();
+            Console.WriteLine(i);
         }
     }
 }

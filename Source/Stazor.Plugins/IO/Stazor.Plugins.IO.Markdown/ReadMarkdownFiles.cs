@@ -59,7 +59,7 @@ namespace Stazor.Plugins.IO
         /// <inheritdoc/>
         public ValueTask<IDocumentList> CreateDocumentsAsync()
         {
-            _logger.Information("Start");
+            _logger.Debug("Start");
 
             IDocumentList documents = new DocumentList();
 
@@ -109,7 +109,7 @@ namespace Stazor.Plugins.IO
                 documents.Add(document);
             }
 
-            _logger.Information("End");
+            _logger.Debug("End");
 
             return ValueTask.FromResult(documents);
         }

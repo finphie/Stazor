@@ -26,7 +26,7 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public ValueTask ExecuteAsync(IStazorDocument document)
         {
-            _logger.Information("Start");
+            _logger.Debug("Start");
 
             using var builder = ZString.CreateUtf8StringBuilder(true);
 
@@ -75,7 +75,7 @@ namespace Stazor.Plugins.Metadata
                 document.Context.Add(_settings.JsonLdKey, new Utf8String(jsonLd));
             }
 
-            _logger.Information("End");
+            _logger.Debug("End");
 
             return ValueTask.CompletedTask;
         }

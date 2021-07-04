@@ -18,5 +18,8 @@ namespace Stazor.Core
         {
             _documents.Add(document);
         }
+
+        public IStazorDocument[] ToArray()
+            => _documents.ToArray();
     }
 }

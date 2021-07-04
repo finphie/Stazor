@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Stazor.Core
 {
@@ -33,22 +34,68 @@ namespace Stazor.Core
         /// Executes the job.
         /// </summary>
         /// <returns>Returns the document sequence.</returns>
-        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync()
+        public async ValueTask<IDocumentList> ExecuteAsync()
         {
+            //Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach<IStazorDocument, A>(new IStazorDocument[10]);
+            //Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach(new IStazorDocument[10], new A());
             var documents = await _newDocumentsPlugin.CreateDocumentsAsync().ConfigureAwait(false);
+            var ds = documents.ToArray();
+            var ps = _editDocumentPlugins.ToArray();
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
 
             // TODO: 並列化
-            for (var i = 0; i < documents.Length; i++)
+            //for (var i = 0; i < ds.Length; i++)
+            //{
+            //    foreach (var plugin in _editDocumentPlugins)
+            //    {
+            //        await plugin.ExecuteAsync(ds[i]).ConfigureAwait(false);
+            //    }
+            //}
+
+            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach<IStazorDocument, A>(ds, new A(ps));
+            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, )
+
+            sw.Stop();
+            System.Console.WriteLine(sw.Elapsed);
+
+            //foreach (var plugin in _postProcessingPlugins)
+            //{
+            //    await plugin.AfterExecuteAsync(documents).ConfigureAwait(false);
+            //}
+
+            var a = new DocumentList();
+            foreach (var b in ds)
             {
-                foreach (var plugin in _editDocumentPlugins)
-                {
-                    await plugin.ExecuteAsync(documents[i]).ConfigureAwait(false);
-                }
+                a.Add(b);
             }
 
-            foreach (var plugin in _postProcessingPlugins)
+            return a;
+        }
+    }
+
+
+
+    public readonly struct A : Microsoft.Toolkit.HighPerformance.Helpers.IRefAction<IStazorDocument>
+    {
+        readonly IEditDocumentPlugin[] _editDocumentPlugins;
+
+        public A(IEditDocumentPlugin[] editDocumentPlugins) => _editDocumentPlugins = editDocumentPlugins;
+
+        public void Invoke(ref IStazorDocument item)
+        {
+            foreach (var plugin in _editDocumentPlugins)
             {
-                await plugin.AfterExecuteAsync(documents).ConfigureAwait(false);
+                var x = plugin.ExecuteAsync(item);
+
+                if (x.IsCompleted)
+                {
+                    x.GetAwaiter().GetResult();
+                }
+                else
+                {
+                    throw new System.InvalidOperationException();
+                }
             }
         }
     }

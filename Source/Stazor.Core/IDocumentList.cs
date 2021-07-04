@@ -7,5 +7,7 @@
         IStazorDocument this[int index] { get; set; }
 
         void Add(IStazorDocument document);
+
+        IStazorDocument[] ToArray();
     }
 }
