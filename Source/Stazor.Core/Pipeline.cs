@@ -62,7 +62,7 @@ namespace Stazor.Core
         }
     }
 
-    public readonly struct Assigner : Microsoft.Toolkit.HighPerformance.Helpers.IAction
+    readonly struct Assigner : Microsoft.Toolkit.HighPerformance.Helpers.IAction
     {
         readonly IStazorDocument[] _documents;
         readonly string[] _filePaths;
