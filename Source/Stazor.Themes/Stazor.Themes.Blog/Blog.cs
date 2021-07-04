@@ -44,8 +44,9 @@ namespace Stazor.Themes
         /// <inheritdoc/>
         public async ValueTask ExecuteAsync()
         {
+            var filePaths = Directory.GetFiles(_settings.ContentPath, "*.md");
             var buffer = new ArrayBufferWriter<byte>();
-            var documents = await Pipeline.ExecuteAsync().ConfigureAwait(false);
+            var documents = await Pipeline.ExecuteAsync(filePaths).ConfigureAwait(false);
 
             var i = 0;
             for (i = 0; i < documents.Length; i++)

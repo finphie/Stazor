@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Stazor.Core
@@ -34,27 +36,26 @@ namespace Stazor.Core
         /// Executes the job.
         /// </summary>
         /// <returns>Returns the document sequence.</returns>
-        public async ValueTask<IDocumentList> ExecuteAsync()
+        public async ValueTask<IDocumentList> ExecuteAsync(string[] filePaths)
         {
-            //Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach<IStazorDocument, A>(new IStazorDocument[10]);
-            //Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach(new IStazorDocument[10], new A());
-            var documents = await _newDocumentsPlugin.CreateDocumentsAsync().ConfigureAwait(false);
-            var ds = documents.ToArray();
-            var ps = _editDocumentPlugins.ToArray();
-
+            var documents = new StazorDocument[filePaths.Length];
+            var list = new DocumentList();
             var sw = System.Diagnostics.Stopwatch.StartNew();
 
-            // TODO: 並列化
-            //for (var i = 0; i < ds.Length; i++)
+            //foreach (var filePath in filePaths)
             //{
+            //    var document = await _newDocumentsPlugin.CreateDocumentAsync(filePath).ConfigureAwait(false);
+
             //    foreach (var plugin in _editDocumentPlugins)
             //    {
-            //        await plugin.ExecuteAsync(ds[i]).ConfigureAwait(false);
+            //        await plugin.ExecuteAsync(document).ConfigureAwait(false);
             //    }
+
+            //    list.Add(document);
             //}
 
-            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach<IStazorDocument, A>(ds, new A(ps));
-            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, )
+            //Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.ForEach<IStazorDocument, A>(ds, new A(ps));
+            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, filePaths.Length, new Assigner(documents, filePaths, _newDocumentsPlugin, _editDocumentPlugins));
 
             sw.Stop();
             System.Console.WriteLine(sw.Elapsed);
@@ -64,39 +65,54 @@ namespace Stazor.Core
             //    await plugin.AfterExecuteAsync(documents).ConfigureAwait(false);
             //}
 
-            var a = new DocumentList();
-            foreach (var b in ds)
+            foreach (var x in documents)
             {
-                a.Add(b);
+                list.Add(x);
             }
 
-            return a;
+            return list;
         }
     }
 
-
-
-    public readonly struct A : Microsoft.Toolkit.HighPerformance.Helpers.IRefAction<IStazorDocument>
+    public readonly struct Assigner : Microsoft.Toolkit.HighPerformance.Helpers.IAction
     {
-        readonly IEditDocumentPlugin[] _editDocumentPlugins;
+        readonly IStazorDocument[] _documents;
+        readonly string[] _filePaths;
 
-        public A(IEditDocumentPlugin[] editDocumentPlugins) => _editDocumentPlugins = editDocumentPlugins;
+        readonly INewDocumentsPlugin _newDocumentsPlugin;
+        readonly List<IEditDocumentPlugin> _editDocumentPlugins;
 
-        public void Invoke(ref IStazorDocument item)
+        public Assigner(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, List<IEditDocumentPlugin> editDocumentPlugins)
         {
+            _documents = documents;
+            _filePaths = filePaths;
+
+            _newDocumentsPlugin = newDocumentsPlugin;
+            _editDocumentPlugins = editDocumentPlugins;
+        }
+
+        public void Invoke(int i)
+        {
+            var documentTask = _newDocumentsPlugin.CreateDocumentAsync(_filePaths[i]);
+            if (!documentTask.IsCompleted)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var document = documentTask.GetAwaiter().GetResult();
+
             foreach (var plugin in _editDocumentPlugins)
             {
-                var x = plugin.ExecuteAsync(item);
+                var pluginTask = plugin.ExecuteAsync(document);
+                if (!pluginTask.IsCompleted)
+                {
+                    throw new InvalidOperationException();
+                }
 
-                if (x.IsCompleted)
-                {
-                    x.GetAwaiter().GetResult();
-                }
-                else
-                {
-                    throw new System.InvalidOperationException();
-                }
+                pluginTask.GetAwaiter().GetResult();
             }
+
+            _documents[i] = document;
         }
     }
 }

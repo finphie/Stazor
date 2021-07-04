@@ -11,6 +11,8 @@ namespace Stazor.Themes
 
         public ReadMarkdownFilesSettings Markdown { get; set; } = new();
 
+        public string ContentPath { get; set; }
+
         /// <inheritdoc/>
         public override void Validate()
         {

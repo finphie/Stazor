@@ -7,6 +7,6 @@ namespace Stazor.Core
     /// </summary>
     public interface INewDocumentsPlugin : IPlugin
     {
-        ValueTask<IDocumentList> CreateDocumentsAsync();
+        ValueTask<IStazorDocument> CreateDocumentAsync(string filePath);
     }
 }
