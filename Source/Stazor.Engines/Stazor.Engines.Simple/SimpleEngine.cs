@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleTextTemplate;
 using Stazor.Core;
-using Stazor.Engine;
 
 namespace Stazor.Engines.Simple
 {

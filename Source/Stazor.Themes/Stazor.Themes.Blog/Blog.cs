@@ -4,8 +4,10 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Stazor.Core;
-using Stazor.Engine;
+using Stazor.Engines;
 using Stazor.Engines.Simple;
+using Stazor.Logging;
+using Stazor.Plugins;
 using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
@@ -28,7 +30,7 @@ namespace Stazor.Themes
             _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            Pipeline = new(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
+            Pipeline = new Pipeline(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
             //Pipeline.Add(new Sort(CreateLogger<Sort>()));
             Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
 
@@ -39,7 +41,7 @@ namespace Stazor.Themes
         public IEngine Engine => SimpleEngine.Default;
 
         /// <inheritdoc/>
-        public Pipeline Pipeline { get; }
+        public IPipeline Pipeline { get; }
 
         /// <inheritdoc/>
         public async ValueTask ExecuteAsync()

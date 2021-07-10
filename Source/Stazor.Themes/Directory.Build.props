@@ -1,0 +1,9 @@
+<Project>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' != 'Stazor.Themes.Abstractions'">
+    <ProjectReference Include="..\Stazor.Themes.Abstractions\Stazor.Themes.Abstractions.csproj" />
+  </ItemGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+</Project>
