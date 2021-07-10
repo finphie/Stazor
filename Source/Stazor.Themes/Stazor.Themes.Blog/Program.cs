@@ -17,6 +17,7 @@ await Host.CreateDefaultBuilder()
         services.Configure<StazorSettings>(content.Configuration.GetSection(nameof(Stazor)));
         services.AddSingleton<IStazorLogger<BuildCommand>, StazorLogger<BuildCommand>>();
         services.AddSingleton<IEngine, Engine>();
+        services.AddSingleton<IPipeline, SimpleBlogPipeline>();
     })
     .ConfigureLogging(static logging => logging.AddStazorLogger())
     .RunConsoleAppFrameworkAsync<BuildCommand>(args)
