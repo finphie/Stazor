@@ -1,4 +1,4 @@
-﻿namespace Stazor.Plugins
+﻿namespace Stazor.Themes
 {
     public interface IPipeline
     {

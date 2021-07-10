@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" />
     <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj" />
     <ProjectReference Include="..\..\Stazor.Logging\Stazor.Logging\Stazor.Logging.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj" />

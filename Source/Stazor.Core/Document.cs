@@ -12,5 +12,8 @@
         /// <returns>The document instance.</returns>
         public static IStazorDocument Create(string templatePath)
             => new StazorDocument(templatePath, Context.Create(), Metadata.Create());
+
+        public static IStazorDocument[] CreateArray(int length)
+            => new StazorDocument[length];
     }
 }

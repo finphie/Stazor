@@ -3,7 +3,7 @@ using Stazor.Core.Helpers;
 
 namespace Stazor.Core
 {
-    public abstract record StazorBaseSettings : IValidatable
+    public abstract record StazorBaseSettings// : IValidatable
     {
         /// <summary>
         /// サイトタイトル

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using SimpleTextTemplate;
-using Stazor.Core;
 
 namespace Stazor.Engines.Simple
 {

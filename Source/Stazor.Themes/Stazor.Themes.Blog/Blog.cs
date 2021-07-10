@@ -3,14 +3,7 @@ using System.Buffers;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Stazor.Core;
 using Stazor.Engines;
-using Stazor.Engines.Simple;
-using Stazor.Logging;
-using Stazor.Plugins;
-using Stazor.Plugins.Contents;
-using Stazor.Plugins.IO;
-using Stazor.Plugins.Metadata;
 
 namespace Stazor.Themes
 {
@@ -19,41 +12,30 @@ namespace Stazor.Themes
     /// </summary>
     public sealed class Blog : ITheme
     {
-        readonly IStazorLoggerFactory _loggerFactory;
+        readonly IEngine _engine;
+        readonly IPipeline _pipeline;
         readonly StazorSettings _settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blog"/> class.
         /// </summary>
-        public Blog(IStazorLoggerFactory loggerFactory, StazorSettings settings)
+        public Blog(IEngine engine, IPipeline pipeline)
         {
-            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-
-            Pipeline = new Pipeline(new ReadMarkdownFiles(CreateLogger<ReadMarkdownFiles>(), _settings.Markdown));
-            //Pipeline.Add(new Sort(CreateLogger<Sort>()));
-            Pipeline.Add(new Breadcrumb(CreateLogger<Breadcrumb>(), _settings.Breadcrumb));
-
-            IStazorLogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
+            _engine = engine;
+            _pipeline = pipeline;
         }
-
-        /// <inheritdoc/>
-        public IEngine Engine => SimpleEngine.Default;
-
-        /// <inheritdoc/>
-        public IPipeline Pipeline { get; }
 
         /// <inheritdoc/>
         public async ValueTask ExecuteAsync()
         {
             var filePaths = Directory.GetFiles(_settings.ContentPath, "*.md");
             var buffer = new ArrayBufferWriter<byte>();
-            var documents = Pipeline.Execute(filePaths);
+            var documents = _pipeline.Execute(filePaths);
 
             var i = 0;
             for (i = 0; i < documents.Length; i++)
             {
-                await Engine.ExecuteAsync(buffer, documents[i]).ConfigureAwait(false);
+                await _engine.ExecuteAsync(buffer, documents[i]).ConfigureAwait(false);
 
                 Console.Write(Encoding.UTF8.GetString(buffer.WrittenSpan).Length + ",");
 

@@ -1,39 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Stazor.Core;
+using Stazor.Logging;
+using Stazor.Plugins;
 
-namespace Stazor.Plugins
+namespace Stazor.Themes
 {
     /// <summary>
     /// The pipeline contains a list of plugins.
     /// </summary>
-    public sealed class Pipeline : IPipeline
+    public abstract class Pipeline : IPipeline
     {
-        readonly INewDocumentsPlugin _newDocumentsPlugin;
-        readonly List<IEditDocumentPlugin> _editDocumentPlugins;
-        readonly List<IPostProcessingPlugin> _postProcessingPlugins;
+        readonly IStazorLogger _logger;
+        readonly IEditDocumentPlugin[] _editDocumentPlugins;
+        readonly IPostProcessingPlugin[] _postProcessingPlugins;
+
+        protected INewDocumentsPlugin _newDocumentsPlugin { get; }
+
+        protected ReadOnlySpan<IEditDocumentPlugin> EditDocumentPlugins => _editDocumentPlugins;
+
+        protected ReadOnlySpan<IPostProcessingPlugin> PostProcessingPlugins => _postProcessingPlugins;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
-        public Pipeline(INewDocumentsPlugin newDocumentsPlugin)
+        public Pipeline(IStazorLogger logger)
         {
-            _newDocumentsPlugin = newDocumentsPlugin;
-            _editDocumentPlugins = new();
-            _postProcessingPlugins = new();
+            _logger = logger;
         }
-
-        /// <summary>
-        /// Adds an object to the end of the pipeline.
-        /// </summary>
-        /// <param name="plugin">The object to be added to the end of the pipeline.</param>
-        public void Add(IEditDocumentPlugin plugin) => _editDocumentPlugins.Add(plugin);
 
         /// <summary>
         /// Executes the job.
         /// </summary>
         /// <returns>Returns the document sequence.</returns>
-        public IStazorDocument[] Execute(string[] filePaths)
+        public virtual IStazorDocument[] Execute(string[] filePaths)
         {
-            var documents = new StazorDocument[filePaths.Length];
+            var documents = Document.CreateArray(filePaths.Length);
             var sw = System.Diagnostics.Stopwatch.StartNew();
 
             //foreach (var filePath in filePaths)
@@ -60,6 +62,13 @@ namespace Stazor.Plugins
 
             return documents;
         }
+
+        protected void Initialize(INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins, IPostProcessingPlugin[] postProcessingPlugins)
+        {
+            Unsafe.AsRef(_newDocumentsPlugin) = newDocumentsPlugin;
+            Unsafe.AsRef(_editDocumentPlugins) = editDocumentPlugins;
+            Unsafe.AsRef(_postProcessingPlugins) = postProcessingPlugins;
+        }
     }
 
     readonly struct DocumentCreator : Microsoft.Toolkit.HighPerformance.Helpers.IAction
@@ -68,9 +77,9 @@ namespace Stazor.Plugins
         readonly string[] _filePaths;
 
         readonly INewDocumentsPlugin _newDocumentsPlugin;
-        readonly List<IEditDocumentPlugin> _editDocumentPlugins;
+        readonly IEditDocumentPlugin[] _editDocumentPlugins;
 
-        public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, List<IEditDocumentPlugin> editDocumentPlugins)
+        public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins)
         {
             _documents = documents;
             _filePaths = filePaths;

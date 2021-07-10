@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using Stazor.Logging;
 
 namespace Stazor.Plugins.Contents
@@ -8,7 +8,7 @@ namespace Stazor.Plugins.Contents
     /// <summary>
     /// Sorts the input documents.
     /// </summary>
-    public sealed class Sort : IPlugin
+    public sealed class Sort : IPostProcessingPlugin
     {
         readonly IStazorLogger _logger;
 
@@ -16,18 +16,35 @@ namespace Stazor.Plugins.Contents
             => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         /// <inheritdoc/>
-        public async IAsyncEnumerable<IStazorDocument> ExecuteAsync(IAsyncEnumerable<IStazorDocument> inputs)
+        public void AfterExecute(IStazorDocument[] documents)
         {
             _logger.Information("Start");
-
-            var documents = await inputs.OrderBy(x => x.Metadata.PublishedDate).ToArrayAsync().ConfigureAwait(false);
-
-            foreach (var document in documents)
-            {
-                yield return document;
-            }
-
+            documents.AsSpan().Sort(new DocumentComparer());
             _logger.Information("End");
+        }
+
+        struct DocumentComparer : IComparer<IStazorDocument>
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public int Compare(IStazorDocument? x, IStazorDocument? y)
+            {
+                if (x is null)
+                {
+                    return y is null ? 0 : -1;
+                }
+
+                if (y is null)
+                {
+                    return 1;
+                }
+
+                if (x.Metadata.PublishedDate == y.Metadata.PublishedDate)
+                {
+                    return 0;
+                }
+
+                return x.Metadata.PublishedDate > y.Metadata.PublishedDate ? -1 : 1;
+            }
         }
     }
 }

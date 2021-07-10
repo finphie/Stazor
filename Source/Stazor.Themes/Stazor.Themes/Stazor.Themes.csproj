@@ -4,4 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" />
+    <ProjectReference Include="..\Stazor.Themes.Abstractions\Stazor.Themes.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
