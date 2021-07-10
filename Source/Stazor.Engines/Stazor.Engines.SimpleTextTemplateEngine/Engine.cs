@@ -5,29 +5,20 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleTextTemplate;
 
-namespace Stazor.Engines.Simple
+namespace Stazor.Engines.SimpleTextTemplateEngine
 {
     /// <summary>
     /// A simple template engine.
     /// </summary>
-    public sealed class SimpleEngine : IEngine
+    public sealed class Engine : IEngine
     {
-        /// <summary>
-        /// Gets a singleton instance of the <see cref="SimpleEngine"/>.
-        /// </summary>
-        public static readonly SimpleEngine Default = new();
-
         readonly Dictionary<string, Template> _table = new();
 
-        SimpleEngine()
-        {
-        }
+        /// <inheritdoc/>
+        public string Name => nameof(SimpleTextTemplateEngine);
 
         /// <inheritdoc/>
-        public string Name => "Simple";
-
-        /// <inheritdoc/>
-        public string Description => "Simple templates";
+        public string Description => "SimpleTextTemplateライブラリを利用したエンジンです。";
 
         /// <inheritdoc/>
         public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document)

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Bre
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.Simple", "Source\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.SimpleTextTemplate", "Source\Stazor.Engines\Stazor.Engines.SimpleTextTemplateEngine\Stazor.Engines.SimpleTextTemplateEngine.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}"
 EndProject
