@@ -9,4 +9,8 @@
     <PackageReference Include="YamlDotNet" Version="11.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" />
+  </ItemGroup>
+
 </Project>

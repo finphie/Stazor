@@ -6,6 +6,7 @@ using Markdig.Extensions.Yaml;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Stazor.Core;
 using Stazor.Logging;
 using Utf8Utility;
 using YamlDotNet.Serialization;
