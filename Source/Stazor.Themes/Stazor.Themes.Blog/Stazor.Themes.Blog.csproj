@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.SimpleTextTemplate.csproj" />
+    <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.SimpleTextTemplateEngine\Stazor.Engines.SimpleTextTemplateEngine.csproj" />
     <ProjectReference Include="..\..\Stazor.Logging\Stazor.Logging\Stazor.Logging.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins.IO.Markdown\Stazor.Plugins.IO.ReadMarkdownFiles.csproj" />
