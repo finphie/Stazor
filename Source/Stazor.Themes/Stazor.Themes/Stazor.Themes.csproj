@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" />
+    <ProjectReference Include="..\..\Stazor.Logging\Stazor.Logging\Stazor.Logging.csproj" />
+    <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins\Stazor.Plugins.csproj" />
     <ProjectReference Include="..\Stazor.Themes.Abstractions\Stazor.Themes.Abstractions.csproj" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ namespace Stazor.Plugins.Contents
     {
         readonly IStazorLogger _logger;
 
-        public Sort(IStazorLogger logger)
+        public Sort(IStazorLogger<Sort> logger)
             => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         /// <inheritdoc/>

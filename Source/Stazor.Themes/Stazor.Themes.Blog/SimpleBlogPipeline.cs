@@ -1,4 +1,6 @@
-﻿using Stazor.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Stazor.Logging;
 using Stazor.Plugins;
 using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
@@ -8,7 +10,7 @@ namespace Stazor.Themes
 {
     sealed class SimpleBlogPipeline : Pipeline
     {
-        public SimpleBlogPipeline(IStazorLogger logger, IPluginProvider pluginProvider)
+        public SimpleBlogPipeline(IStazorLogger<SimpleBlogPipeline> logger, IPluginResolver pluginProvider)
             : base(logger)
         {
             var newDocumentsPlugin = pluginProvider.GetPlugin<ReadMarkdownFiles>();

@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Stazor.Plugins
 {
-    public sealed class PluginProvider : IPluginProvider
+    public sealed class PluginResolver : IPluginResolver
     {
         readonly IServiceProvider _service;
 
-        public PluginProvider(IServiceProvider service)
+        public PluginResolver(IServiceProvider service)
             => _service = service;
 
         /// <inheritdoc/>

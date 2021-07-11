@@ -54,11 +54,8 @@ namespace Stazor.Logging
             });
         }
 
-        public static void AddStazorLogger<T>(this IServiceCollection services)
-        {
-            services.AddSingleton<IStazorLoggerFactory, StazorLoggerFactory>();
-            services.AddSingleton<IStazorLogger<T>, StazorLogger<T>>();
-        }
+        public static void AddStazorLogging<T>(this IServiceCollection services)
+            => services.AddSingleton<IStazorLogger<T>, StazorLogger<T>>();
 
         public static void AddStazorLogger(this ILoggingBuilder logging)
         {

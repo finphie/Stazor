@@ -16,7 +16,7 @@ namespace Stazor.Plugins.Metadata
         readonly IStazorLogger _logger;
         readonly BreadcrumbSettings _settings;
 
-        public Breadcrumb(IStazorLogger logger, BreadcrumbSettings settings)
+        public Breadcrumb(IStazorLogger<Breadcrumb> logger, BreadcrumbSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));

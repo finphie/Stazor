@@ -5,19 +5,36 @@ using Stazor.Commands;
 using Stazor.Engines;
 using Stazor.Engines.SimpleTextTemplateEngine;
 using Stazor.Logging;
+using Stazor.Plugins;
+using Stazor.Plugins.Contents;
+using Stazor.Plugins.IO;
+using Stazor.Plugins.Metadata;
 using Stazor.Themes;
 
 await Host.CreateDefaultBuilder()
     .ConfigureServices(static (content, services) =>
     {
+        // logging
+        services.AddStazorLogging<BuildCommand>();
+        services.AddStazorLogging<SimpleBlogPipeline>();
+
+        // plugin
+        // TODO: 設定値検証
+        services.AddPlugin<ReadMarkdownFiles, ReadMarkdownFilesSettings>(content.Configuration.GetSection(nameof(Stazor)));
+        services.AddPlugin<Breadcrumb, BreadcrumbSettings>(content.Configuration.GetSection(nameof(Stazor)));
+        services.AddPlugin<Sort>();
+
+        // theme
         services.AddSingleton<ITheme, Blog>();
 
-        // services.AddStazorLogger<StazorLogger>
-        // TODO: 設定値検証
-        services.Configure<StazorSettings>(content.Configuration.GetSection(nameof(Stazor)));
-        services.AddSingleton<IStazorLogger<BuildCommand>, StazorLogger<BuildCommand>>();
+        // engine
         services.AddSingleton<IEngine, Engine>();
+
+        // pipeline
         services.AddSingleton<IPipeline, SimpleBlogPipeline>();
+
+        // plugin resolver
+        services.AddSingleton<IPluginResolver, PluginResolver>();
     })
     .ConfigureLogging(static logging => logging.AddStazorLogger())
     .RunConsoleAppFrameworkAsync<BuildCommand>(args)

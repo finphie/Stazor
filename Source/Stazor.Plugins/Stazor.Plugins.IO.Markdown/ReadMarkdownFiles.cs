@@ -33,7 +33,7 @@ namespace Stazor.Plugins.IO
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadMarkdownFiles"/> class.
         /// </summary>
-        public ReadMarkdownFiles(IStazorLogger logger, ReadMarkdownFilesSettings settings)
+        public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
