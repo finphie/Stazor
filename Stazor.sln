@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{23BA20BD-4AEA-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{8B7C60B1-7C0A-49A2-8635-8AD60B985779}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.Blog", "Source\Stazor.Themes\Stazor.Themes.Blog\Stazor.Themes.Blog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.SimpleBlog", "Source\Stazor.Themes\Stazor.Themes.SimpleBlog\Stazor.Themes.SimpleBlog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{88A7B2DC-144B-463B-B63D-1CAFB24384E3}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Bre
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.SimpleTextTemplate", "Source\Stazor.Engines\Stazor.Engines.SimpleTextTemplateEngine\Stazor.Engines.SimpleTextTemplateEngine.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.SimpleTextTemplateEngine", "Source\Stazor.Engines\Stazor.Engines.SimpleTextTemplateEngine\Stazor.Engines.SimpleTextTemplateEngine.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}"
 EndProject

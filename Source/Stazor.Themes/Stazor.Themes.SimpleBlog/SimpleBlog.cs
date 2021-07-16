@@ -10,16 +10,16 @@ namespace Stazor.Themes
     /// <summary>
     /// The simple blog template.
     /// </summary>
-    public sealed class Blog : ITheme
+    public sealed class SimpleBlog : ITheme
     {
         readonly IEngine _engine;
         readonly IPipeline _pipeline;
         readonly SimpleBlogSettings _settings;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Blog"/> class.
+        /// Initializes a new instance of the <see cref="SimpleBlog"/> class.
         /// </summary>
-        public Blog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
+        public SimpleBlog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
         {
             _engine = engine;
             _pipeline = pipeline;
