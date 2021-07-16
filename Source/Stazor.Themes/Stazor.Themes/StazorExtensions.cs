@@ -25,9 +25,18 @@ namespace Stazor.Themes
 
         public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services, IConfiguration configuration)
             where TPlugin : class, IPlugin
-            where TSettings : class, IPluginSettingsKey, new()
+            where TSettings : class, ISettingsKey, new()
         {
             services.AddPlugin<TPlugin>();
+            services.StazorConfigure<TSettings>(configuration);
+        }
+
+        public static void AddTheme<TTheme, TSettings>(this IServiceCollection services, IConfiguration configuration)
+            where TTheme : class, ITheme
+            where TSettings : class, ISettingsKey, new()
+        {
+            services.AddStazorLogging<TTheme>();
+            services.AddSingleton<ITheme, TTheme>();
             services.StazorConfigure<TSettings>(configuration);
         }
     }

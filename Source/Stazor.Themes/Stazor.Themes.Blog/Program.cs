@@ -25,7 +25,7 @@ await Host.CreateDefaultBuilder()
         services.AddPlugin<Sort>();
 
         // theme
-        services.AddSingleton<ITheme, Blog>();
+        services.AddTheme<Blog, SimpleBlogSettings>(content.Configuration.GetSection(SimpleBlogSettings.Key));
 
         // engine
         services.AddSingleton<IEngine, Engine>();
