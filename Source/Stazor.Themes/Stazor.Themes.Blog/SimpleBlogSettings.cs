@@ -2,6 +2,6 @@
 {
     public sealed record SimpleBlogSettings : ThemeBaseSettings, ISettingsKey
     {
-        public static string Key => nameof(Blog);
+        public static string Key => nameof(SimpleBlog);
     }
 }
