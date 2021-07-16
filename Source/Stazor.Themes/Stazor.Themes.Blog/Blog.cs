@@ -14,15 +14,16 @@ namespace Stazor.Themes
     {
         readonly IEngine _engine;
         readonly IPipeline _pipeline;
-        readonly StazorSettings _settings;
+        readonly SimpleBlogSettings _settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Blog"/> class.
         /// </summary>
-        public Blog(IEngine engine, IPipeline pipeline)
+        public Blog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
         {
             _engine = engine;
             _pipeline = pipeline;
+            _settings = settings;
         }
 
         /// <inheritdoc/>
