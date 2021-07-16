@@ -1,7 +1,6 @@
 ﻿using ConsoleAppFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Stazor.Commands;
 using Stazor.Engines;
 using Stazor.Engines.SimpleTextTemplateEngine;
 using Stazor.Logging;
@@ -10,6 +9,7 @@ using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Themes;
+using Stazor.Themes.Commands;
 
 await Host.CreateDefaultBuilder()
     .ConfigureServices(static (content, services) =>
@@ -25,7 +25,7 @@ await Host.CreateDefaultBuilder()
         services.AddPlugin<Sort>();
 
         // theme
-        services.AddTheme<Blog, SimpleBlogSettings>(content.Configuration.GetSection(SimpleBlogSettings.Key));
+        services.AddTheme<SimpleBlog, SimpleBlogSettings>(content.Configuration.GetSection(SimpleBlogSettings.Key));
 
         // engine
         services.AddSingleton<IEngine, Engine>();

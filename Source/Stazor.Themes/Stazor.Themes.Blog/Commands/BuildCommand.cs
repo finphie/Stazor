@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using ConsoleAppFramework;
-using Stazor.Core;
 using Stazor.Logging;
-using Stazor.Themes;
 
-namespace Stazor.Commands
+namespace Stazor.Themes.Commands
 {
     public sealed class BuildCommand : ConsoleAppBase
     {
