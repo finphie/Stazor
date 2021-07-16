@@ -12,10 +12,11 @@ namespace Stazor.Themes
     public abstract class Pipeline : IPipeline
     {
         readonly IStazorLogger _logger;
+        readonly INewDocumentsPlugin _newDocumentsPlugin;
         readonly IEditDocumentPlugin[] _editDocumentPlugins;
         readonly IPostProcessingPlugin[] _postProcessingPlugins;
 
-        protected INewDocumentsPlugin _newDocumentsPlugin { get; }
+        protected INewDocumentsPlugin NewDocumentsPlugin => _newDocumentsPlugin;
 
         protected ReadOnlySpan<IEditDocumentPlugin> EditDocumentPlugins => _editDocumentPlugins;
 
