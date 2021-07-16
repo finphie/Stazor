@@ -25,7 +25,7 @@ namespace Stazor.Themes
 
         public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services, IConfiguration configuration)
             where TPlugin : class, IPlugin
-            where TSettings : class, new()
+            where TSettings : class, IPluginSettingsKey, new()
         {
             services.AddPlugin<TPlugin>();
             services.StazorConfigure<TSettings>(configuration);

@@ -3,10 +3,9 @@ using Utf8Utility;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed record BreadcrumbSettings
+    public sealed record BreadcrumbSettings : IPluginSettingsKey
     {
-        /// <inheritdoc/>
-        public Utf8String Key = (Utf8String)nameof(Breadcrumb);
+        public static string Key => nameof(Breadcrumb);
 
         public Utf8String JsonLdKey = (Utf8String)"JsonLd";
 
@@ -15,7 +14,7 @@ namespace Stazor.Plugins.Metadata
         /// <inheritdoc/>
         public void Validate()
         {
-            if (Key == Utf8String.Empty)
+            if (string.IsNullOrWhiteSpace(Key))
             {
                 ThrowHelper.ThrowArgumentNullException(nameof(Key));
             }
