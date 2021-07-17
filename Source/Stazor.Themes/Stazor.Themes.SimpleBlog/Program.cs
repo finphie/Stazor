@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Stazor.Engines;
-using Stazor.Engines.SimpleTextTemplateEngine;
 using Stazor.Logging;
 using Stazor.Plugins;
 using Stazor.Plugins.Contents;
@@ -28,7 +27,7 @@ await Host.CreateDefaultBuilder()
         services.AddTheme<SimpleBlog, SimpleBlogSettings>(content.Configuration.GetSection(SimpleBlogSettings.Key));
 
         // engine
-        services.AddSingleton<IEngine, Engine>();
+        services.AddSingleton<IEngine, SimpleTextTemplateEngine>();
 
         // pipeline
         services.AddSingleton<IPipeline, SimpleBlogPipeline>();

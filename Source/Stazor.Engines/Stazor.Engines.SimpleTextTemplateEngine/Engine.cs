@@ -5,12 +5,12 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleTextTemplate;
 
-namespace Stazor.Engines.SimpleTextTemplateEngine
+namespace Stazor.Engines
 {
     /// <summary>
     /// A simple template engine.
     /// </summary>
-    public sealed class Engine : IEngine
+    public sealed class SimpleTextTemplateEngine : IEngine
     {
         readonly Dictionary<string, Template> _table = new();
 
