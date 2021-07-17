@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Stazor.Core
 {
     /// <summary>
-    /// The document metadata.
+    /// メタデータ
     /// </summary>
-    public sealed class StazorMetadata : IStazorMetadata
+    public sealed record StazorMetadata : IStazorMetadata
     {
         /// <inheritdoc/>
         [AllowNull]

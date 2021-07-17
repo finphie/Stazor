@@ -12,6 +12,10 @@ namespace Stazor.Core
     {
         readonly IUtf8StringDictionary<Utf8String> _symbols;
 
+        /// <summary>
+        /// <see cref="StazorContext"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="symbols">識別子とUTF-8文字列のペアリスト</param>
         public StazorContext(IUtf8StringDictionary<Utf8String> symbols)
         {
             if (symbols is null)

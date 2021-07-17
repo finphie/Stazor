@@ -4,47 +4,47 @@ using System.Collections.Generic;
 namespace Stazor
 {
     /// <summary>
-    /// The document metadata.
+    /// メタデータ
     /// </summary>
     public interface IStazorMetadata
     {
         /// <summary>
-        /// Gets or sets the title.
+        /// タイトルを取得または設定します。
         /// </summary>
         /// <value>
-        /// The title.
+        /// タイトル
         /// </value>
         string? Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the published date.
+        /// 公開日を取得または設定します。
         /// </summary>
         /// <value>
-        /// The published date.
+        /// 公開日
         /// </value>
         DateTimeOffset PublishedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the modified date.
+        /// 更新日を取得または設定します。
         /// </summary>
         /// <value>
-        /// The modified date.
+        /// 更新日
         /// </value>
         DateTimeOffset ModifiedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the category name.
+        /// カテゴリー名を取得または設定します。
         /// </summary>
         /// <value>
-        /// The category name.
+        /// カテゴリー名
         /// </value>
         string? Category { get; set; }
 
         /// <summary>
-        /// Gets or sets the tags.
+        /// タグ名を取得または設定します。
         /// </summary>
         /// <value>
-        /// The tags.
+        /// タグ
         /// </value>
         IReadOnlySet<string> Tags { get; set; }
     }
