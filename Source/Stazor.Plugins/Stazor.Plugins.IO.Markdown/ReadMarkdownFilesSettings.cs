@@ -4,14 +4,23 @@ using Stazor.Plugins.IO.Helpers;
 
 namespace Stazor.Plugins.IO
 {
+    /// <summary>
+    /// <see cref="ReadMarkdownFiles"/>プラグインの設定クラスです。
+    /// </summary>
     public sealed record ReadMarkdownFilesSettings : ISettingsKey
     {
         public static string Key => nameof(ReadMarkdownFiles);
 
+        /// <summary>
+        /// コンテキストのキーを取得または設定します。
+        /// </summary>
+        /// <value>
+        /// コンテキストのキー
+        /// </value>
         public string ContextKey { get; set; }
 
         /// <summary>
-        /// Markdownが存在するフォルダのパスを取得、設定します。
+        /// Markdownが存在するディレクトリのパスを取得、設定します。
         /// </summary>
         public string Path { get; set; }
 
@@ -21,7 +30,6 @@ namespace Stazor.Plugins.IO
         [DisallowNull]
         public string? TemplateFilePath { get; init; }
 
-        /// <inheritdoc/>
         public void Validate()
         {
             if (string.IsNullOrWhiteSpace(Key))

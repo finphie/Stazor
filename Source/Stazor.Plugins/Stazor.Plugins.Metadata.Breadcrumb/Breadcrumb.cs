@@ -9,7 +9,7 @@ using Utf8Utility;
 namespace Stazor.Plugins.Metadata
 {
     /// <summary>
-    /// Create a Breadcrumb Navigation.
+    /// パンくずリストを作成します。
     /// </summary>
     public sealed class Breadcrumb : IEditDocumentPlugin
     {
@@ -17,6 +17,11 @@ namespace Stazor.Plugins.Metadata
         readonly BreadcrumbSettings _settings;
         readonly Utf8String _contextKey;
 
+        /// <summary>
+        /// <see cref="Breadcrumb"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="logger">ロガー</param>
+        /// <param name="settings">設定</param>
         public Breadcrumb(IStazorLogger<Breadcrumb> logger, BreadcrumbSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

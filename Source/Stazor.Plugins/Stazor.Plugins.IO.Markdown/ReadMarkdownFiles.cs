@@ -15,7 +15,7 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Stazor.Plugins.IO
 {
     /// <summary>
-    /// Parses markdown and renders it to HTML.
+    /// マークダウンファイルを解析してHTMLにレンダリングします。
     /// </summary>
     public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     {
@@ -32,20 +32,16 @@ namespace Stazor.Plugins.IO
         readonly IDeserializer _yamlDeserializer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReadMarkdownFiles"/> class.
+        /// <see cref="ReadMarkdownFiles"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
+        /// <param name="logger">ロガー</param>
+        /// <param name="settings">設定</param>
         public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             _contextKey = new(_settings.ContextKey);
 
-            // Markdown関連の設定
-            //_writer = new();
-            //_renderer = new(_writer);
-            //Pipeline.Setup(_renderer);
-
-            // YAML関連の設定
             _yamlDeserializer = new DeserializerBuilder()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .WithNodeTypeResolver(SortedSetResolver.Default)
@@ -56,12 +52,6 @@ namespace Stazor.Plugins.IO
         public IStazorDocument CreateDocument(string filePath)
         {
             _logger.Debug("Start");
-
-            //var pipeline = new MarkdownPipelineBuilder()
-            //.UseAutoLinks()
-            //.UsePipeTables()
-            //.UseYamlFrontMatter()
-            //.Build();
 
             // ファイル読み込み
             var data = File.ReadAllText(filePath);
@@ -105,7 +95,6 @@ namespace Stazor.Plugins.IO
             writer.Flush();
 
             document.Context.Add(_contextKey, (Utf8String)writer.ToString());
-            //writer.GetStringBuilder().Clear();
 
             _logger.Debug("End");
 

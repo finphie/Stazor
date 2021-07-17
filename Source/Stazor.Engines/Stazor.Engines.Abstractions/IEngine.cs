@@ -4,32 +4,32 @@ using System.Threading.Tasks;
 namespace Stazor.Engines
 {
     /// <summary>
-    /// Represents a template engine.
+    /// テンプレートエンジンを表します。
     /// </summary>
     public interface IEngine
     {
         /// <summary>
-        /// Gets the name associated with the engine.
+        /// エンジン名を取得します。
         /// </summary>
         /// <value>
-        /// The engine name.
+        /// エンジン名
         /// </value>
         string Name { get; }
 
         /// <summary>
-        /// Gets the description associated with the engine.
+        /// エンジンの説明を取得します。
         /// </summary>
         /// <value>
-        /// The engine description.
+        /// エンジンの説明
         /// </value>
         string Description { get; }
 
         /// <summary>
-        /// Executes the job.
+        /// ジョブを実行します。
         /// </summary>
-        /// <param name="bufferWriter">The target writer.</param>
-        /// <param name="document">The document.</param>
-        /// <returns>A <see cref="ValueTask"/> for the asynchronous operation.</returns>
+        /// <param name="bufferWriter">ターゲットのwriter</param>
+        /// <param name="document">ドキュメント</param>
+        /// <returns>ジョブを表すタスク</returns>
         ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document);
     }
 }

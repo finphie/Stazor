@@ -8,7 +8,7 @@ using SimpleTextTemplate;
 namespace Stazor.Engines
 {
     /// <summary>
-    /// A simple template engine.
+    /// シンプルなテンプレートエンジン
     /// </summary>
     public sealed class SimpleTextTemplateEngine : IEngine
     {

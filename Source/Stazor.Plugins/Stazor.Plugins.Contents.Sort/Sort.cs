@@ -6,7 +6,7 @@ using Stazor.Logging;
 namespace Stazor.Plugins.Contents
 {
     /// <summary>
-    /// Sorts the input documents.
+    /// ドキュメントをソートします。
     /// </summary>
     public sealed class Sort : IPostProcessingPlugin
     {
@@ -14,6 +14,10 @@ namespace Stazor.Plugins.Contents
 
         readonly IStazorLogger _logger;
 
+        /// <summary>
+        /// <see cref="Sort"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="logger">ロガー</param>
         public Sort(IStazorLogger<Sort> logger)
             => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
@@ -21,8 +25,10 @@ namespace Stazor.Plugins.Contents
         public void AfterExecute(IStazorDocument[] documents)
         {
             _logger.Information("Start");
+
             // TODO: ソート処理を自前で実装する。
             Array.Sort(documents, Comparer);
+
             _logger.Information("End");
         }
 
