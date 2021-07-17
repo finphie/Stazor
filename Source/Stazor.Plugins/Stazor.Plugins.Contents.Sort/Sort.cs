@@ -10,6 +10,8 @@ namespace Stazor.Plugins.Contents
     /// </summary>
     public sealed class Sort : IPostProcessingPlugin
     {
+        static readonly DocumentComparer Comparer = new();
+
         readonly IStazorLogger _logger;
 
         public Sort(IStazorLogger<Sort> logger)
@@ -19,11 +21,12 @@ namespace Stazor.Plugins.Contents
         public void AfterExecute(IStazorDocument[] documents)
         {
             _logger.Information("Start");
-            documents.AsSpan().Sort(new DocumentComparer());
+            // TODO: ソート処理を自前で実装する。
+            Array.Sort(documents, Comparer);
             _logger.Information("End");
         }
 
-        struct DocumentComparer : IComparer<IStazorDocument>
+        sealed class DocumentComparer : IComparer<IStazorDocument>
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public int Compare(IStazorDocument? x, IStazorDocument? y)
