@@ -3,9 +3,11 @@ using Utf8Utility;
 
 namespace Stazor.Plugins.Metadata
 {
-    public sealed record BreadcrumbSettings : IPluginSettingsKey
+    public sealed record BreadcrumbSettings : ISettingsKey
     {
         public static string Key => nameof(Breadcrumb);
+
+        public string ContextKey { get; set; }
 
         public Utf8String JsonLdKey = (Utf8String)"JsonLd";
 

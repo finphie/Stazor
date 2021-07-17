@@ -15,11 +15,13 @@ namespace Stazor.Plugins.Metadata
     {
         readonly IStazorLogger _logger;
         readonly BreadcrumbSettings _settings;
+        readonly Utf8String _contextKey;
 
         public Breadcrumb(IStazorLogger<Breadcrumb> logger, BreadcrumbSettings settings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _contextKey = new(_settings.ContextKey);
         }
 
         /// <inheritdoc/>
@@ -44,7 +46,7 @@ namespace Stazor.Plugins.Metadata
             builder.Append("</ol>");
             builder.Append("</nav>");
 
-            document.Context.Add(_settings.Key, new Utf8String(builder.AsSpan().ToArray()));
+            document.Context.Add(_contextKey, new Utf8String(builder.AsSpan().ToArray()));
 
             if (_settings.JsonLd)
             {

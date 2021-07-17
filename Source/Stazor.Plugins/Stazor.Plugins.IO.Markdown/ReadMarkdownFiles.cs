@@ -27,6 +27,7 @@ namespace Stazor.Plugins.IO
 
         readonly IStazorLogger _logger;
         readonly ReadMarkdownFilesSettings _settings;
+        readonly Utf8String _contextKey;
 
         readonly IDeserializer _yamlDeserializer;
 
@@ -37,6 +38,7 @@ namespace Stazor.Plugins.IO
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _contextKey = new(_settings.ContextKey);
 
             // Markdown関連の設定
             //_writer = new();
@@ -102,7 +104,7 @@ namespace Stazor.Plugins.IO
             renderer.Render(markdown);
             writer.Flush();
 
-            document.Context.Add(_settings.Key, (Utf8String)writer.ToString());
+            document.Context.Add(_contextKey, (Utf8String)writer.ToString());
             //writer.GetStringBuilder().Clear();
 
             _logger.Debug("End");

@@ -4,9 +4,11 @@ using Stazor.Plugins.IO.Helpers;
 
 namespace Stazor.Plugins.IO
 {
-    public sealed record ReadMarkdownFilesSettings : IPluginSettingsKey
+    public sealed record ReadMarkdownFilesSettings : ISettingsKey
     {
-        public static string Key => "Markdown";
+        public static string Key => nameof(ReadMarkdownFiles);
+
+        public string ContextKey { get; set; }
 
         /// <summary>
         /// Markdownが存在するフォルダのパスを取得、設定します。
