@@ -9,6 +9,9 @@ using ZLogger;
 
 namespace Stazor.Logging
 {
+    /// <summary>
+    /// Stazor専用ロガーに関する拡張メソッドです。
+    /// </summary>
     public static class StazorLoggingExtensions
     {
         /// <summary>
@@ -54,9 +57,18 @@ namespace Stazor.Logging
             });
         }
 
+        /// <summary>
+        /// Stazor専用ロギング処理を追加します。
+        /// </summary>
+        /// <typeparam name="T">対象の型</typeparam>
+        /// <param name="services">サービスコンテナ</param>
         public static void AddStazorLogging<T>(this IServiceCollection services)
             => services.AddSingleton<IStazorLogger<T>, StazorLogger<T>>();
 
+        /// <summary>
+        /// Stazor専用ロガーを追加します。
+        /// </summary>
+        /// <param name="logging">ログビルダー</param>
         public static void AddStazorLogger(this ILoggingBuilder logging)
         {
             logging.ClearProviders();
