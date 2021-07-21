@@ -8,7 +8,7 @@ using Stazor.Engines;
 namespace Stazor.Themes
 {
     /// <summary>
-    /// The simple blog template.
+    /// シンプルブログ
     /// </summary>
     public sealed class SimpleBlog : ITheme
     {
@@ -17,8 +17,11 @@ namespace Stazor.Themes
         readonly SimpleBlogSettings _settings;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleBlog"/> class.
+        /// <see cref="SimpleBlog"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
+        /// <param name="engine">エンジン</param>
+        /// <param name="pipeline">パイプライン</param>
+        /// <param name="settings">設定</param>
         public SimpleBlog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
         {
             _engine = engine;
