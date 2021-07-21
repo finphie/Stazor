@@ -3,14 +3,14 @@
 namespace Stazor.Themes
 {
     /// <summary>
-    /// Theme contains a set of content such as engine, pipeline, HTML files and CSS files.
+    /// テーマには、エンジンやパイプライン、HTML/CSSファイルなどのコンテンツが含まれます。
     /// </summary>
     public interface ITheme
     {
         /// <summary>
-        /// Executes the job.
+        /// テーマの処理を実行します。
         /// </summary>
-        /// <returns>A <see cref="ValueTask"/> for the asynchronous operation.</returns>
+        /// <returns>テーマの処理を表すタスク</returns>
         ValueTask ExecuteAsync();
     }
 }

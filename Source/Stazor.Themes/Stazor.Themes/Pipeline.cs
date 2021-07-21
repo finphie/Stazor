@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Stazor.Core;
 using Stazor.Logging;
@@ -7,11 +8,12 @@ using Stazor.Plugins;
 namespace Stazor.Themes
 {
     /// <summary>
-    /// The pipeline contains a list of plugins.
+    /// パイプラインは、プラグインの集合体で構成されます。
     /// </summary>
     public abstract class Pipeline : IPipeline
     {
         readonly IStazorLogger _logger;
+
         readonly INewDocumentsPlugin _newDocumentsPlugin;
         readonly IEditDocumentPlugin[] _editDocumentPlugins;
         readonly IPostProcessingPlugin[] _postProcessingPlugins;
@@ -23,17 +25,12 @@ namespace Stazor.Themes
         protected ReadOnlySpan<IPostProcessingPlugin> PostProcessingPlugins => _postProcessingPlugins;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pipeline"/> class.
+        /// <see cref="Pipeline"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
-        public Pipeline(IStazorLogger logger)
-        {
-            _logger = logger;
-        }
+        /// <param name="logger">ロガー</param>
+        public Pipeline(IStazorLogger logger) => _logger = logger;
 
-        /// <summary>
-        /// Executes the job.
-        /// </summary>
-        /// <returns>Returns the document sequence.</returns>
+        /// <inheritdoc/>
         public virtual IStazorDocument[] Execute(string[] filePaths)
         {
             var documents = Document.CreateArray(filePaths.Length);
