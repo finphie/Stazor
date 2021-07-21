@@ -25,11 +25,11 @@ namespace Stazor.Engines
         string Description { get; }
 
         /// <summary>
-        /// ジョブを実行します。
+        /// エンジンの処理を実行します。
         /// </summary>
         /// <param name="bufferWriter">ターゲットのwriter</param>
         /// <param name="document">ドキュメント</param>
-        /// <returns>ジョブを表すタスク</returns>
+        /// <returns>エンジンの処理を表すタスク</returns>
         ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document);
     }
 }
