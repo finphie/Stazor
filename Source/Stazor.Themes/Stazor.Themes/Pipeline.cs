@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Toolkit.HighPerformance.Helpers;
 using Stazor.Core;
 using Stazor.Logging;
 using Stazor.Plugins;
@@ -47,7 +48,7 @@ namespace Stazor.Themes
             var documents = Document.CreateArray(filePaths.Length);
             var sw = System.Diagnostics.Stopwatch.StartNew();
 
-            Microsoft.Toolkit.HighPerformance.Helpers.ParallelHelper.For(0, filePaths.Length, new DocumentCreator(documents, filePaths, NewDocumentsPlugin, _editDocumentPlugins));
+            ParallelHelper.For(0, filePaths.Length, new DocumentCreator(documents, filePaths, NewDocumentsPlugin, _editDocumentPlugins));
 
             sw.Stop();
             Console.WriteLine(sw.Elapsed);
