@@ -17,19 +17,18 @@ namespace Stazor.Themes
         /// <param name="logger">ロガー</param>
         /// <param name="pluginResolver">プラグインリゾルバ</param>
         public SimpleBlogPipeline(IStazorLogger<SimpleBlogPipeline> logger, IPluginResolver pluginResolver)
-            : base(logger)
+            : base(
+                logger,
+                pluginResolver.GetPlugin<ReadMarkdownFiles>(),
+                new[]
+                {
+                    pluginResolver.GetPlugin<Breadcrumb>()
+                },
+                new[]
+                {
+                    pluginResolver.GetPlugin<Sort>()
+                })
         {
-            var newDocumentsPlugin = pluginResolver.GetPlugin<ReadMarkdownFiles>();
-            var editDocumentPlugins = new[]
-            {
-                pluginResolver.GetPlugin<Breadcrumb>()
-            };
-            var postProcessingPlugins = new[]
-            {
-                pluginResolver.GetPlugin<Sort>()
-            };
-
-            Initialize(newDocumentsPlugin, editDocumentPlugins, postProcessingPlugins);
         }
     }
 }

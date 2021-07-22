@@ -1,7 +1,7 @@
 ﻿namespace Stazor.Plugins
 {
     /// <summary>
-    /// 後処理を定義するプラグイン
+    /// 後処理を行うプラグイン
     /// </summary>
     public interface IPostProcessingPlugin : IPlugin
     {
