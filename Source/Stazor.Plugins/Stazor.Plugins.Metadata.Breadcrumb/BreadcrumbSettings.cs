@@ -8,6 +8,12 @@ namespace Stazor.Plugins.Metadata
     /// </summary>
     public sealed record BreadcrumbSettings : ISettingsKey
     {
+        /// <summary>
+        /// キーを取得または設定します。
+        /// </summary>
+        /// <value>
+        /// キー
+        /// </value>
         public static string Key => nameof(Breadcrumb);
 
         /// <summary>

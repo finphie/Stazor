@@ -9,6 +9,12 @@ namespace Stazor.Plugins.IO
     /// </summary>
     public sealed record ReadMarkdownFilesSettings : ISettingsKey
     {
+        /// <summary>
+        /// キーを取得または設定します。
+        /// </summary>
+        /// <value>
+        /// キー
+        /// </value>
         public static string Key => nameof(ReadMarkdownFiles);
 
         /// <summary>
