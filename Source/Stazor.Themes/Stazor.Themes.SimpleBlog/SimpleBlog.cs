@@ -36,15 +36,15 @@ namespace Stazor.Themes
             var buffer = new ArrayBufferWriter<byte>();
             var documents = _pipeline.Execute(filePaths);
 
-            var i = 0;
+            int i;
             for (i = 0; i < documents.Length; i++)
             {
                 await _engine.ExecuteAsync(buffer, documents[i]).ConfigureAwait(false);
 
                 Console.Write(Encoding.UTF8.GetString(buffer.WrittenSpan).Length + ",");
 
-                //using var fs = new FileStream($"g/{i}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
-                //fs.Write(buffer.WrittenSpan);
+                // using var fs = new FileStream($"g/{i}.html", FileMode.Create, FileAccess.Write, FileShare.Read);
+                // fs.Write(buffer.WrittenSpan);
                 buffer.Clear();
             }
 
