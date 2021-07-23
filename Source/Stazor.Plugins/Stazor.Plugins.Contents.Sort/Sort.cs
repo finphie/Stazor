@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Stazor.Logging;
 
@@ -35,6 +36,7 @@ namespace Stazor.Plugins.Contents
         sealed class DocumentComparer : IComparer<IStazorDocument>
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [SuppressMessage("Style", "IDE0046:条件式に変換します", Justification = "可読性のため")]
             public int Compare(IStazorDocument? x, IStazorDocument? y)
             {
                 if (x is null)
