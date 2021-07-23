@@ -61,9 +61,9 @@ namespace Stazor.Plugins.IO
 
             // YAML
             var title = markdown.Descendants<HeadingBlock>()
-                .First(x => x.Level == 1)
-                .Inline
-                .Descendants<LiteralInline>()
+                ?.First(x => x.Level == 1)
+                ?.Inline
+                ?.Descendants<LiteralInline>()
                 .First()
                 .Content;
             var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
