@@ -14,7 +14,7 @@ await Host.CreateDefaultBuilder()
     .ConfigureServices(static (content, services) =>
     {
         // logging
-        services.AddStazorLogging<BuildCommand>();
+        services.AddStazorLogging<App>();
         services.AddStazorLogging<SimpleBlogPipeline>();
 
         // plugin
@@ -36,5 +36,5 @@ await Host.CreateDefaultBuilder()
         services.AddSingleton<IPluginResolver, PluginResolver>();
     })
     .ConfigureLogging(static logging => logging.AddStazorLogger())
-    .RunConsoleAppFrameworkAsync<BuildCommand>(args)
+    .RunConsoleAppFrameworkAsync<App>(args)
     .ConfigureAwait(false);
