@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stazor.Logging;
 using Stazor.Plugins;
+using Stazor.Themes.Helpers;
 
 namespace Stazor.Themes
 {
@@ -20,8 +23,15 @@ namespace Stazor.Themes
         public static T StazorConfigure<T>(this IServiceCollection services, IConfiguration configuration)
             where T : class, new()
         {
-            var settings = new T();
-            configuration.Bind(settings);
+            var settings = configuration.Get<T>();
+            var validationContext = new ValidationContext(settings, null, null);
+            var validationResults = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(settings, validationContext, validationResults, true))
+            {
+                ThrowHelper.ThrowValidationException(validationResults);
+            }
+
             services.AddSingleton(settings);
             return settings;
         }
