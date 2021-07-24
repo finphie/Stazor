@@ -1,6 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using Stazor.Plugins.IO.Helpers;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Plugins.IO
 {
@@ -23,45 +22,21 @@ namespace Stazor.Plugins.IO
         /// <value>
         /// コンテキストのキー
         /// </value>
+        [Required]
         public string ContextKey { get; set; }
 
         /// <summary>
         /// Markdownが存在するディレクトリのパスを取得、設定します。
         /// </summary>
+        [Required]
         public string Path { get; set; }
 
         /// <summary>
         /// HTMLテンプレートファイルのパスを取得、設定します。
         /// </summary>
+        [Required]
+        [FileExtensions(Extensions = ".html")]
         [DisallowNull]
         public string? TemplateFilePath { get; init; }
-
-        public void Validate()
-        {
-            if (string.IsNullOrWhiteSpace(Key))
-            {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Key));
-            }
-
-            if (string.IsNullOrWhiteSpace(Path))
-            {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(Path));
-            }
-
-            if (!Directory.Exists(Path))
-            {
-                ThrowHelper.ThrowDirectoryNotFoundException();
-            }
-
-            if (string.IsNullOrWhiteSpace(TemplateFilePath))
-            {
-                ThrowHelper.ThrowArgumentNullOrWhitespaceException(nameof(TemplateFilePath));
-            }
-
-            if (!File.Exists(TemplateFilePath))
-            {
-                ThrowHelper.ThrowFileNotFoundException(TemplateFilePath);
-            }
-        }
     }
 }

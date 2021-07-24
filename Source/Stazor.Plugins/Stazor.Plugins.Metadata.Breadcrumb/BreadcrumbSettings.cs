@@ -1,4 +1,4 @@
-﻿using Stazor.Plugins.Metadata.Helpers;
+﻿using System.ComponentModel.DataAnnotations;
 using Utf8Utility;
 
 namespace Stazor.Plugins.Metadata
@@ -22,6 +22,7 @@ namespace Stazor.Plugins.Metadata
         /// <value>
         /// コンテキストのキー
         /// </value>
+        [Required]
         public string ContextKey { get; set; }
 
         public Utf8String JsonLdKey = (Utf8String)"JsonLd";
@@ -33,13 +34,5 @@ namespace Stazor.Plugins.Metadata
         /// JSON-LDの出力可否
         /// </value>
         public bool JsonLd { get; set; }
-
-        public void Validate()
-        {
-            if (string.IsNullOrWhiteSpace(Key))
-            {
-                ThrowHelper.ThrowArgumentNullException(nameof(Key));
-            }
-        }
     }
 }
