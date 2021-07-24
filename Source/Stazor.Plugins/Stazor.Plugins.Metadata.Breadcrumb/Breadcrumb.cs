@@ -16,6 +16,7 @@ namespace Stazor.Plugins.Metadata
         readonly IStazorLogger _logger;
         readonly BreadcrumbSettings _settings;
         readonly Utf8String _contextKey;
+        readonly Utf8String _jsonLdKey;
 
         /// <summary>
         /// <see cref="Breadcrumb"/>クラスの新しいインスタンスを初期化します。
@@ -27,6 +28,7 @@ namespace Stazor.Plugins.Metadata
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             _contextKey = new(_settings.ContextKey);
+            _jsonLdKey = new(_settings.JsonLdKey);
         }
 
         /// <inheritdoc/>
@@ -78,7 +80,7 @@ namespace Stazor.Plugins.Metadata
                 json.Items[1].Item = "/" + document.Metadata.Category;
 
                 var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-                document.Context.Add(_settings.JsonLdKey, new Utf8String(jsonLd));
+                document.Context.Add(_jsonLdKey, new Utf8String(jsonLd));
             }
 
             _logger.Debug("End");

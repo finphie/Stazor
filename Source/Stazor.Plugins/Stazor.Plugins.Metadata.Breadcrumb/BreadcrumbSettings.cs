@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Utf8Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Plugins.Metadata
 {
@@ -23,9 +23,18 @@ namespace Stazor.Plugins.Metadata
         /// コンテキストのキー
         /// </value>
         [Required]
-        public string ContextKey { get; set; }
+        [AllowNull]
+        public string ContextKey { get; init; } = "Breadcrumb";
 
-        public Utf8String JsonLdKey = (Utf8String)"JsonLd";
+        /// <summary>
+        /// JSON-LDのキーを取得または設定します。
+        /// </summary>
+        /// <value>
+        /// JSON-LDのキー
+        /// </value>
+        [Required]
+        [AllowNull]
+        public string JsonLdKey { get; init; } = "JsonLd";
 
         /// <summary>
         /// JSON-LDの出力可否を取得または設定します。

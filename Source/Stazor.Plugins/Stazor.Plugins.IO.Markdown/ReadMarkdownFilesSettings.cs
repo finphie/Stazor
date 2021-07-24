@@ -23,20 +23,28 @@ namespace Stazor.Plugins.IO
         /// コンテキストのキー
         /// </value>
         [Required]
-        public string ContextKey { get; set; }
+        [AllowNull]
+        public string ContextKey { get; init; } = "Markdown";
 
         /// <summary>
-        /// Markdownが存在するディレクトリのパスを取得、設定します。
+        /// Markdownが存在するディレクトリのパスを取得または設定します。
         /// </summary>
+        /// <value>
+        /// ディレクトリのパス
+        /// </value>
         [Required]
-        public string Path { get; set; }
+        [AllowNull]
+        public string Path { get; init; }
 
         /// <summary>
-        /// HTMLテンプレートファイルのパスを取得、設定します。
+        /// HTMLテンプレートファイルのパスを取得または設定します。
         /// </summary>
+        /// <value>
+        /// テンプレートファイルのパス
+        /// </value>
         [Required]
         [FileExtensions(Extensions = ".html")]
-        [DisallowNull]
-        public string? TemplateFilePath { get; init; }
+        [AllowNull]
+        public string TemplateFilePath { get; init; }
     }
 }
