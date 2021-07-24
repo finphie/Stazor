@@ -1,28 +1,24 @@
-﻿using System.Collections.Generic;
-
-namespace Stazor.Core
+﻿namespace Stazor.Core
 {
     /// <summary>
-    /// A document consists of a set of content and metadata attributes.
+    /// <see cref="IStazorDocument"/>の新しいインスタンスを作成します。
     /// </summary>
-    public sealed class Document : IDocument
+    public static class Document
     {
-#nullable disable
         /// <summary>
-        /// Initializes a new instance of the <see cref="Document"/> class.
+        /// <see cref="StazorDocument"/>クラスの新しいインスタンスを作成します。
         /// </summary>
-        public Document()
-        {
-        }
-#nullable restore
+        /// <param name="templatePath">テンプレートディレクトリのパス</param>
+        /// <returns>ドキュメントインスタンス</returns>
+        public static IStazorDocument Create(string templatePath)
+            => new StazorDocument(templatePath, Context.Create(), Metadata.Create());
 
-        /// <inheritdoc/>
-        public Dictionary<byte[], byte[]> Content { get; } = new(ByteArrayComparer.Default);
-
-        /// <inheritdoc/>
-        public string TemplatePath { get; init; }
-
-        /// <inheritdoc/>
-        public IMetadata Metadata { get; } = new Metadata();
+        /// <summary>
+        /// <see cref="StazorDocument"/>クラスの配列を作成します。
+        /// </summary>
+        /// <param name="length">長さ</param>
+        /// <returns>ドキュメントのリスト</returns>
+        public static IStazorDocument[] CreateArray(int length)
+            => new StazorDocument[length];
     }
 }

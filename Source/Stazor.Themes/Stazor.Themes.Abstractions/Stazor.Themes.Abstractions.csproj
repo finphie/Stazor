@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Stazor.Engines\Stazor.Engines.Abstractions\Stazor.Engines.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins.Abstractions\Stazor.Plugins.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

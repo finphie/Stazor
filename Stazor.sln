@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29920.165
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor", "Source\Stazor\Stazor.csproj", "{EA9E216B-83C4-44B6-96A1-02D46D15575B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Core", "Source\Stazor.Core\Stazor.Core.csproj", "{033008FF-B179-4E1A-A83B-15958B32A6EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{19C587BA-C1EF-414B-AB3A-ABE59B9220C1}"
@@ -13,23 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{23BA20BD-4AEA-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{8B7C60B1-7C0A-49A2-8635-8AD60B985779}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.Blog", "Source\Stazor.Themes\Stazor.Themes.Blog\Stazor.Themes.Blog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.SimpleBlog", "Source\Stazor.Themes\Stazor.Themes.SimpleBlog\Stazor.Themes.SimpleBlog.csproj", "{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{88A7B2DC-144B-463B-B63D-1CAFB24384E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Breadcrumb", "Source\Stazor.Plugins\Metadata\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj", "{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Metadata.Breadcrumb", "Source\Stazor.Plugins\Stazor.Plugins.Metadata.Breadcrumb\Stazor.Plugins.Metadata.Breadcrumb.csproj", "{2FAF6DE8-3E95-461F-84C3-8B2017D66E34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{3C1DE013-F52E-4183-9FDF-78DC0B0A3874}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.Simple", "Source\Stazor.Engines\Stazor.Engines.Simple\Stazor.Engines.Simple.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.SimpleTextTemplateEngine", "Source\Stazor.Engines\Stazor.Engines.SimpleTextTemplateEngine\Stazor.Engines.SimpleTextTemplateEngine.csproj", "{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{578CF194-B595-42E2-AD3A-5CE0CFF11BE2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Tests.Engines.Simple", "Tests\Engines\Stazor.Tests.Engines.Simple\Stazor.Tests.Engines.Simple.csproj", "{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{6E4A3309-3DAE-456C-B886-1264AC76AF80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A632B5DB-30D0-4773-B080-2B4944DEC5A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,9 +32,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contents", "Contents", "{DC15BA35-40C1-4851-BF77-032E40BFFA0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Contents.Sort", "Source\Stazor.Plugins\Contents\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj", "{D788F003-37B4-4146-8985-E779BC137BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Contents.Sort", "Source\Stazor.Plugins\Stazor.Plugins.Contents.Sort\Stazor.Plugins.Contents.Sort.csproj", "{D788F003-37B4-4146-8985-E779BC137BC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.IO.ReadMarkdownFiles", "Source\Stazor.Plugins\IO\Stazor.Plugins.IO.Markdown\Stazor.Plugins.IO.ReadMarkdownFiles.csproj", "{E87321D9-7152-4E65-9854-6B67F86F481E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.IO.ReadMarkdownFiles", "Source\Stazor.Plugins\Stazor.Plugins.IO.Markdown\Stazor.Plugins.IO.ReadMarkdownFiles.csproj", "{E87321D9-7152-4E65-9854-6B67F86F481E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes", "Source\Stazor.Themes\Stazor.Themes\Stazor.Themes.csproj", "{175EFDD0-3461-45A4-BCEA-AA213558550E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Engines.Abstractions", "Source\Stazor.Engines\Stazor.Engines.Abstractions\Stazor.Engines.Abstractions.csproj", "{D0F3D222-2105-40D2-859B-1F36F15E7B44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{FAA2C973-66C0-4458-86E5-F8C0385D8A26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Logging", "Source\Stazor.Logging\Stazor.Logging\Stazor.Logging.csproj", "{DE674430-25F2-4B0D-A5DD-F9B1000CE995}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Logging.Abstractions", "Source\Stazor.Logging\Stazor.Logging.Abstractions\Stazor.Logging.Abstractions.csproj", "{7881C4CA-135B-4B41-8CD1-0283E30CC896}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins.Abstractions", "Source\Stazor.Plugins\Stazor.Plugins.Abstractions\Stazor.Plugins.Abstractions.csproj", "{AF2C2CBC-F81B-42EC-A645-7F91469FDC43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Plugins", "Source\Stazor.Plugins\Stazor.Plugins\Stazor.Plugins.csproj", "{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Abstractions", "Source\Stazor.Abstractions\Stazor.Abstractions.csproj", "{3882628C-5625-4DF4-96C6-6D070531C387}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stazor.Themes.Abstractions", "Source\Stazor.Themes\Stazor.Themes.Abstractions\Stazor.Themes.Abstractions.csproj", "{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +60,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA9E216B-83C4-44B6-96A1-02D46D15575B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA9E216B-83C4-44B6-96A1-02D46D15575B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA9E216B-83C4-44B6-96A1-02D46D15575B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA9E216B-83C4-44B6-96A1-02D46D15575B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{033008FF-B179-4E1A-A83B-15958B32A6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,10 +76,6 @@ Global
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D788F003-37B4-4146-8985-E779BC137BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D788F003-37B4-4146-8985-E779BC137BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D788F003-37B4-4146-8985-E779BC137BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,26 +84,64 @@ Global
 		{E87321D9-7152-4E65-9854-6B67F86F481E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E87321D9-7152-4E65-9854-6B67F86F481E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E87321D9-7152-4E65-9854-6B67F86F481E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{175EFDD0-3461-45A4-BCEA-AA213558550E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175EFDD0-3461-45A4-BCEA-AA213558550E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175EFDD0-3461-45A4-BCEA-AA213558550E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175EFDD0-3461-45A4-BCEA-AA213558550E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F3D222-2105-40D2-859B-1F36F15E7B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F3D222-2105-40D2-859B-1F36F15E7B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F3D222-2105-40D2-859B-1F36F15E7B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F3D222-2105-40D2-859B-1F36F15E7B44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE674430-25F2-4B0D-A5DD-F9B1000CE995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE674430-25F2-4B0D-A5DD-F9B1000CE995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE674430-25F2-4B0D-A5DD-F9B1000CE995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE674430-25F2-4B0D-A5DD-F9B1000CE995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7881C4CA-135B-4B41-8CD1-0283E30CC896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7881C4CA-135B-4B41-8CD1-0283E30CC896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7881C4CA-135B-4B41-8CD1-0283E30CC896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7881C4CA-135B-4B41-8CD1-0283E30CC896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2C2CBC-F81B-42EC-A645-7F91469FDC43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2C2CBC-F81B-42EC-A645-7F91469FDC43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2C2CBC-F81B-42EC-A645-7F91469FDC43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2C2CBC-F81B-42EC-A645-7F91469FDC43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3882628C-5625-4DF4-96C6-6D070531C387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3882628C-5625-4DF4-96C6-6D070531C387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3882628C-5625-4DF4-96C6-6D070531C387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3882628C-5625-4DF4-96C6-6D070531C387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EA9E216B-83C4-44B6-96A1-02D46D15575B} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{033008FF-B179-4E1A-A83B-15958B32A6EF} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{19C587BA-C1EF-414B-AB3A-ABE59B9220C1} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{23BA20BD-4AEA-43F7-93A2-09DBC9895718} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
 		{8B7C60B1-7C0A-49A2-8635-8AD60B985779} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{FA2F73A7-A5B8-4E30-BE70-55F935A22CB1} = {8B7C60B1-7C0A-49A2-8635-8AD60B985779}
-		{88A7B2DC-144B-463B-B63D-1CAFB24384E3} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
+		{88A7B2DC-144B-463B-B63D-1CAFB24384E3} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
 		{2FAF6DE8-3E95-461F-84C3-8B2017D66E34} = {88A7B2DC-144B-463B-B63D-1CAFB24384E3}
 		{3C1DE013-F52E-4183-9FDF-78DC0B0A3874} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
 		{D4E2F74C-F1A7-4493-BB85-C4B7F0DA5792} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
-		{9A46B6B0-1552-4A12-8FB6-C527B3DFAC11} = {6E4A3309-3DAE-456C-B886-1264AC76AF80}
-		{6E4A3309-3DAE-456C-B886-1264AC76AF80} = {578CF194-B595-42E2-AD3A-5CE0CFF11BE2}
 		{DC15BA35-40C1-4851-BF77-032E40BFFA0A} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
 		{D788F003-37B4-4146-8985-E779BC137BC3} = {DC15BA35-40C1-4851-BF77-032E40BFFA0A}
 		{E87321D9-7152-4E65-9854-6B67F86F481E} = {23BA20BD-4AEA-43F7-93A2-09DBC9895718}
+		{175EFDD0-3461-45A4-BCEA-AA213558550E} = {8B7C60B1-7C0A-49A2-8635-8AD60B985779}
+		{D0F3D222-2105-40D2-859B-1F36F15E7B44} = {3C1DE013-F52E-4183-9FDF-78DC0B0A3874}
+		{FAA2C973-66C0-4458-86E5-F8C0385D8A26} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
+		{DE674430-25F2-4B0D-A5DD-F9B1000CE995} = {FAA2C973-66C0-4458-86E5-F8C0385D8A26}
+		{7881C4CA-135B-4B41-8CD1-0283E30CC896} = {FAA2C973-66C0-4458-86E5-F8C0385D8A26}
+		{AF2C2CBC-F81B-42EC-A645-7F91469FDC43} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
+		{0254F4E7-1593-4FAC-B7A4-03DEA981F3C1} = {19C587BA-C1EF-414B-AB3A-ABE59B9220C1}
+		{3882628C-5625-4DF4-96C6-6D070531C387} = {FF9CE9C4-9CCC-43E0-AB48-16AFE69FA83F}
+		{BC5DA5F5-E2CD-4AE6-AC88-FF7E59169589} = {8B7C60B1-7C0A-49A2-8635-8AD60B985779}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BD94B82-777A-4266-A057-4F2B73161020}
