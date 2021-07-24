@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Themes
 {
@@ -10,19 +11,23 @@ namespace Stazor.Themes
         /// <summary>
         /// コンテンツのパス
         /// </summary>
-        public string ContentPath { get; set; }
+        [Required]
+        [AllowNull]
+        public string ContentPath { get; init; }
 
         /// <summary>
         /// サイトタイトル
         /// </summary>
-        [DisallowNull]
-        public string? SiteTitle { get; set; }
+        [Required]
+        [AllowNull]
+        public string SiteTitle { get; init; }
 
         /// <summary>
         /// コピーライト
         /// </summary>
-        [DisallowNull]
-        public string? Copyright { get; set; }
+        [Required]
+        [AllowNull]
+        public string Copyright { get; init; }
 
         // slug
         // カテゴリ・タグ
