@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="SimpleTextTemplate.Abstractions" Version="0.2.0" />
-    <PackageReference Include="Utf8Utility" Version="0.6.0" />
+    <PackageReference Include="Utf8Utility" Version="0.7.0" />
   </ItemGroup>
 
   <ItemGroup>
