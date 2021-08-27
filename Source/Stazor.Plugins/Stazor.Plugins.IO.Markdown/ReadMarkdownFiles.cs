@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Markdig;
+﻿using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Renderers;
 using Markdig.Syntax;
@@ -12,93 +9,92 @@ using Utf8Utility;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Stazor.Plugins.IO
+namespace Stazor.Plugins.IO;
+
+/// <summary>
+/// マークダウンファイルを解析してHTMLにレンダリングします。
+/// </summary>
+public sealed class ReadMarkdownFiles : INewDocumentsPlugin
 {
+    static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
+        .UseAutoLinks()
+        .UsePipeTables()
+        .UseYamlFrontMatter()
+        .Build();
+
+    readonly IStazorLogger _logger;
+    readonly ReadMarkdownFilesSettings _settings;
+    readonly Utf8String _contextKey;
+
+    readonly IDeserializer _yamlDeserializer;
+
     /// <summary>
-    /// マークダウンファイルを解析してHTMLにレンダリングします。
+    /// <see cref="ReadMarkdownFiles"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
-    public sealed class ReadMarkdownFiles : INewDocumentsPlugin
+    /// <param name="logger">ロガー</param>
+    /// <param name="settings">設定</param>
+    public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
     {
-        static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
-            .UseAutoLinks()
-            .UsePipeTables()
-            .UseYamlFrontMatter()
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _contextKey = new(_settings.ContextKey);
+
+        _yamlDeserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .WithNodeTypeResolver(SortedSetResolver.Default)
             .Build();
+    }
 
-        readonly IStazorLogger _logger;
-        readonly ReadMarkdownFilesSettings _settings;
-        readonly Utf8String _contextKey;
+    /// <inheritdoc/>
+    public IStazorDocument CreateDocument(string filePath)
+    {
+        _logger.Debug("Start");
 
-        readonly IDeserializer _yamlDeserializer;
+        // ファイル読み込み
+        var data = File.ReadAllText(filePath);
 
-        /// <summary>
-        /// <see cref="ReadMarkdownFiles"/>クラスの新しいインスタンスを初期化します。
-        /// </summary>
-        /// <param name="logger">ロガー</param>
-        /// <param name="settings">設定</param>
-        public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
+        // Markdown
+        var markdown = Markdown.Parse(data, Pipeline);
+
+        // YAML
+        var title = markdown.Descendants<HeadingBlock>()
+            ?.First(x => x.Level == 1)
+            ?.Inline
+            ?.Descendants<LiteralInline>()
+            .First()
+            .Content;
+        var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+
+        // ドキュメント作成
+        var document = Document.Create(_settings.TemplateFilePath);
+
+        if (yaml is not null)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            _contextKey = new(_settings.ContextKey);
+            var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
+            var metadata = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
 
-            _yamlDeserializer = new DeserializerBuilder()
-                .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                .WithNodeTypeResolver(SortedSetResolver.Default)
-                .Build();
+            document.Metadata.Title = metadata.Title;
+            document.Metadata.PublishedDate = metadata.PublishedDate;
+            document.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
+                ? metadata.ModifiedDate
+                : metadata.PublishedDate;
+            document.Metadata.Category = metadata.Category;
+            document.Metadata.Tags = metadata.Tags;
         }
 
-        /// <inheritdoc/>
-        public IStazorDocument CreateDocument(string filePath)
-        {
-            _logger.Debug("Start");
+        document.Metadata.Title = title.ToString();
 
-            // ファイル読み込み
-            var data = File.ReadAllText(filePath);
+        // MarkdownからHTMLに変換
+        var writer = new StringWriter();
+        var renderer = new HtmlRenderer(writer);
+        Pipeline.Setup(renderer);
+        renderer.Render(markdown);
+        writer.Flush();
 
-            // Markdown
-            var markdown = Markdown.Parse(data, Pipeline);
+        document.Context.Add(_contextKey, (Utf8String)writer.ToString());
 
-            // YAML
-            var title = markdown.Descendants<HeadingBlock>()
-                ?.First(x => x.Level == 1)
-                ?.Inline
-                ?.Descendants<LiteralInline>()
-                .First()
-                .Content;
-            var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+        _logger.Debug("End");
 
-            // ドキュメント作成
-            var document = Document.Create(_settings.TemplateFilePath);
-
-            if (yaml is not null)
-            {
-                var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-                var metadata = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
-
-                document.Metadata.Title = metadata.Title;
-                document.Metadata.PublishedDate = metadata.PublishedDate;
-                document.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
-                    ? metadata.ModifiedDate
-                    : metadata.PublishedDate;
-                document.Metadata.Category = metadata.Category;
-                document.Metadata.Tags = metadata.Tags;
-            }
-
-            document.Metadata.Title = title.ToString();
-
-            // MarkdownからHTMLに変換
-            var writer = new StringWriter();
-            var renderer = new HtmlRenderer(writer);
-            Pipeline.Setup(renderer);
-            renderer.Render(markdown);
-            writer.Flush();
-
-            document.Context.Add(_contextKey, (Utf8String)writer.ToString());
-
-            _logger.Debug("End");
-
-            return document;
-        }
+        return document;
     }
 }

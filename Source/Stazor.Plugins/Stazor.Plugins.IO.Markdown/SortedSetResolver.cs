@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using YamlDotNet.Core.Events;
+﻿using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace Stazor.Plugins.IO
+namespace Stazor.Plugins.IO;
+
+/// <summary>
+/// SortedSet resolver.
+/// </summary>
+sealed class SortedSetResolver : INodeTypeResolver
 {
     /// <summary>
-    /// SortedSet resolver.
+    /// Gets a singleton instance of the <see cref="SortedSetResolver"/>.
     /// </summary>
-    sealed class SortedSetResolver : INodeTypeResolver
+    public static readonly SortedSetResolver Default = new();
+
+    /// <inheritdoc/>
+    public bool Resolve(NodeEvent? nodeEvent, ref Type currentType)
     {
-        /// <summary>
-        /// Gets a singleton instance of the <see cref="SortedSetResolver"/>.
-        /// </summary>
-        public static readonly SortedSetResolver Default = new();
-
-        /// <inheritdoc/>
-        public bool Resolve(NodeEvent? nodeEvent, ref Type currentType)
+        if (currentType != typeof(IReadOnlySet<string>))
         {
-            if (currentType != typeof(IReadOnlySet<string>))
-            {
-                return false;
-            }
-
-            currentType = typeof(SortedSet<string>);
-            return true;
+            return false;
         }
+
+        currentType = typeof(SortedSet<string>);
+        return true;
     }
 }
