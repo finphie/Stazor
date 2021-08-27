@@ -1,15 +1,14 @@
-﻿namespace Stazor.Core
+﻿namespace Stazor.Core;
+
+/// <summary>
+/// メタデータ作成クラスです。
+/// </summary>
+public static class Metadata
 {
     /// <summary>
-    /// メタデータ作成クラスです。
+    /// メタデータを作成します。
     /// </summary>
-    public static class Metadata
-    {
-        /// <summary>
-        /// メタデータを作成します。
-        /// </summary>
-        /// <returns>メタデータ</returns>
-        public static IStazorMetadata Create()
-            => new StazorMetadata();
-    }
+    /// <returns>メタデータ</returns>
+    public static IStazorMetadata Create()
+        => new StazorMetadata();
 }

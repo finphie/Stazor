@@ -1,25 +1,23 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Stazor.Plugins
+namespace Stazor.Plugins;
+
+/// <summary>
+/// プラグインのオブジェクトを取得するクラスです。
+/// </summary>
+public sealed class PluginResolver : IPluginResolver
 {
+    readonly IServiceProvider _provider;
+
     /// <summary>
-    /// プラグインのオブジェクトを取得するクラスです。
+    /// <see cref="PluginResolver"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
-    public sealed class PluginResolver : IPluginResolver
-    {
-        readonly IServiceProvider _provider;
+    /// <param name="provider">プラグインのオブジェクトを取得するために必要な<see cref="IServiceProvider"/></param>
+    public PluginResolver(IServiceProvider provider)
+        => _provider = provider;
 
-        /// <summary>
-        /// <see cref="PluginResolver"/>クラスの新しいインスタンスを初期化します。
-        /// </summary>
-        /// <param name="provider">プラグインのオブジェクトを取得するために必要な<see cref="IServiceProvider"/></param>
-        public PluginResolver(IServiceProvider provider)
-            => _provider = provider;
-
-        /// <inheritdoc/>
-        public T GetPlugin<T>()
-            where T : IPlugin
-            => _provider.GetRequiredService<T>();
-    }
+    /// <inheritdoc/>
+    public T GetPlugin<T>()
+        where T : IPlugin
+        => _provider.GetRequiredService<T>();
 }

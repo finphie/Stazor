@@ -1,9 +1,8 @@
-﻿namespace Stazor.Plugins
+﻿namespace Stazor.Plugins;
+
+/// <summary>
+/// プラグインのインターフェイスです。
+/// </summary>
+public interface IPlugin
 {
-    /// <summary>
-    /// プラグインのインターフェイスです。
-    /// </summary>
-    public interface IPlugin
-    {
-    }
 }
