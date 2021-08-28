@@ -6,15 +6,12 @@ namespace Stazor.Plugins.Metadata;
 /// <summary>
 /// <see cref="Breadcrumb"/>プラグインの設定クラスです。
 /// </summary>
-public sealed record BreadcrumbSettings : ISettingsKey
+public sealed record BreadcrumbSettings
 {
     /// <summary>
-    /// キーを取得または設定します。
-    /// </summary>
-    /// <value>
     /// キー
-    /// </value>
-    public static string Key => nameof(Breadcrumb);
+    /// </summary>
+    public const string Key = nameof(Breadcrumb);
 
     /// <summary>
     /// コンテキストのキーを取得または設定します。
