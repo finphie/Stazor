@@ -56,7 +56,7 @@ public static class StazorExtensions
     /// <param name="configuration">構成</param>
     public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services, IConfiguration configuration)
         where TPlugin : class, IPlugin
-        where TSettings : class, ISettingsKey, new()
+        where TSettings : class, new()
     {
         services.AddPlugin<TPlugin>();
         services.StazorConfigure<TSettings>(configuration);
@@ -71,7 +71,7 @@ public static class StazorExtensions
     /// <param name="configuration">構成</param>
     public static void AddTheme<TTheme, TSettings>(this IServiceCollection services, IConfiguration configuration)
         where TTheme : class, ITheme
-        where TSettings : class, ISettingsKey, new()
+        where TSettings : class, new()
     {
         services.AddStazorLogging<TTheme>();
         services.AddSingleton<ITheme, TTheme>();

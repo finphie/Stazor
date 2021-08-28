@@ -6,15 +6,12 @@ namespace Stazor.Plugins.IO;
 /// <summary>
 /// <see cref="ReadMarkdownFiles"/>プラグインの設定クラスです。
 /// </summary>
-public sealed record ReadMarkdownFilesSettings : ISettingsKey
+public sealed record ReadMarkdownFilesSettings
 {
     /// <summary>
-    /// キーを取得または設定します。
-    /// </summary>
-    /// <value>
     /// キー
-    /// </value>
-    public static string Key => nameof(ReadMarkdownFiles);
+    /// </summary>
+    public const string Key = nameof(ReadMarkdownFiles);
 
     /// <summary>
     /// コンテキストのキーを取得または設定します。
