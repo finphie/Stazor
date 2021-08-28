@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 using ZLogger;
 
 namespace Stazor.Logging;
@@ -7,6 +8,7 @@ namespace Stazor.Logging;
 /// Stazor専用のロガークラスです。
 /// </summary>
 /// <typeparam name="TCategoryName">カテゴリー名</typeparam>
+[SuppressMessage("Usage", "CA2252:This API requires opting into preview features", Justification = "アナライザーの誤検知(https://github.com/dotnet/roslyn-analyzers/issues/5366)")]
 public sealed class StazorLogger<TCategoryName> : IStazorLogger<TCategoryName>
 {
     readonly ILogger _logger;
