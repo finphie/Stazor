@@ -73,10 +73,10 @@ public static class StazorLoggingExtensions
         logging.ClearProviders();
         logging.AddZLoggerConsole(static options =>
         {
-            var prefixFormat = ZString.PrepareUtf8<DateTime, LogLevel, string>("{0:O} [{1}] {2} - ");
+            var prefixFormat = ZString.PrepareUtf8<DateTime, int, LogLevel, string>("{0:O},{1} [{2}] {3} - ");
 
             options.PrefixFormatter = (writer, info) =>
-                prefixFormat.FormatTo(ref writer, info.Timestamp.UtcDateTime, info.LogLevel, info.CategoryName);
+                prefixFormat.FormatTo(ref writer, info.Timestamp.UtcDateTime, Environment.CurrentManagedThreadId, info.LogLevel, info.CategoryName);
         });
     }
 }
