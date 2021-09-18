@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Cysharp.Text;
@@ -17,6 +18,7 @@ public static class StazorLoggingExtensions
     /// ログレベルの解析メソッドを登録
     /// </summary>
     [ModuleInitializer]
+    [SuppressMessage("Usage", "CA2255:The 'ModuleInitializer' attribute should not be used in libraries", Justification = "無効化しても問題ないはず")]
     public static void RegisterLogLevel()
     {
         Utf8ValueStringBuilder.RegisterTryFormat(static (LogLevel logLevel, Span<byte> destination, out int written, StandardFormat _) =>
