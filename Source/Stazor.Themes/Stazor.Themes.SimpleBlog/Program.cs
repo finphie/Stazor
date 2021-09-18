@@ -8,7 +8,6 @@ using Stazor.Plugins.Contents;
 using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Themes;
-using Stazor.Themes.Commands;
 
 await Host.CreateDefaultBuilder()
     .ConfigureServices(static (content, services) =>

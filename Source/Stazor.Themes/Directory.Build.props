@@ -1,5 +1,9 @@
 <Project>
 
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Stazor.Themes'">
+    <RootNamespace>$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.'))))</RootNamespace>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(MSBuildProjectName)' != 'Stazor.Themes' And '$(MSBuildProjectName)' != 'Stazor.Themes.Abstractions'">
     <ProjectReference Include="..\Stazor.Themes\Stazor.Themes.csproj" />
   </ItemGroup>

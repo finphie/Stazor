@@ -1,7 +1,7 @@
 ﻿using ConsoleAppFramework;
 using Stazor.Logging;
 
-namespace Stazor.Themes.Commands;
+namespace Stazor.Themes;
 
 /// <summary>
 /// コマンド

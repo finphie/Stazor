@@ -1,5 +1,9 @@
 <Project>
 
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Stazor.Engines'">
+    <RootNamespace>$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.'))))</RootNamespace>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(MSBuildProjectName)' != 'Stazor.Engines.Abstractions'">
     <ProjectReference Include="..\Stazor.Engines.Abstractions\Stazor.Engines.Abstractions.csproj" />
   </ItemGroup>
