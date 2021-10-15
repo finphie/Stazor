@@ -9,9 +9,10 @@ public static class Document
     /// <see cref="StazorDocument"/>クラスの新しいインスタンスを作成します。
     /// </summary>
     /// <param name="templatePath">テンプレートディレクトリのパス</param>
+    /// <param name="metadata">メタデータ</param>
     /// <returns>ドキュメントインスタンス</returns>
-    public static IStazorDocument Create(string templatePath)
-        => new StazorDocument(templatePath, Context.Create(), Metadata.Create());
+    public static IStazorDocument Create(string templatePath, IStazorMetadata metadata)
+        => new StazorDocument(templatePath, Context.Create(), metadata);
 
     /// <summary>
     /// <see cref="StazorDocument"/>クラスの配列を作成します。

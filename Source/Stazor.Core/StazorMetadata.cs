@@ -1,27 +1,19 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Stazor.Core;
 
 /// <summary>
 /// メタデータ
 /// </summary>
-public sealed record StazorMetadata : IStazorMetadata
-{
-    /// <inheritdoc/>
-    [AllowNull]
-    public string Title { get; set; }
-
-    /// <inheritdoc/>
-    public DateTimeOffset PublishedDate { get; set; }
-
-    /// <inheritdoc/>
-    public DateTimeOffset ModifiedDate { get; set; }
-
-    /// <inheritdoc/>
-    [AllowNull]
-    public string Category { get; set; }
-
-    /// <inheritdoc/>
-    [AllowNull]
-    public IReadOnlySet<string> Tags { get; set; }
-}
+/// <param name="Title">タイトル</param>
+/// <param name="PublishedDate">公開日</param>
+/// <param name="ModifiedDate">更新日</param>
+/// <param name="Category">カテゴリー</param>
+/// <param name="Tags">タグ</param>
+// TODO: internalに変更する。現状は、YAMLデシリアライズするためpublicにする必要あり。
+public sealed record StazorMetadata(
+    [property: Required] string Title,
+    DateTimeOffset PublishedDate,
+    DateTimeOffset ModifiedDate,
+    [property: Required] string Category,
+    [property: Required] IReadOnlySet<string> Tags) : IStazorMetadata;
