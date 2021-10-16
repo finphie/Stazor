@@ -27,5 +27,8 @@ public static class Document
     /// <param name="length">長さ</param>
     /// <returns>ドキュメントのリスト</returns>
     public static IStazorDocument[] CreateArray(int length)
-        => new StazorDocument[length];
+    {
+        ThrowHelper.ThrowArgumentOutOfRangeExceptionIfNegativeNumber(length);
+        return new StazorDocument[length];
+    }
 }

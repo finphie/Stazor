@@ -31,6 +31,21 @@ static class ThrowHelper
         => throw new ArgumentException($"{paramName}が不正な日時です。");
 
     /// <summary>
+    /// 新しい<see cref="ArgumentOutOfRangeException"/>例外をスローします。
+    /// </summary>
+    /// <param name="number">値</param>
+    /// <param name="paramName">引数名</param>
+    /// <exception cref="ArgumentOutOfRangeException">常にこの例外をスローします。</exception>
+    [DebuggerHidden]
+    public static void ThrowArgumentOutOfRangeExceptionIfNegativeNumber(int number, [CallerArgumentExpression("number")] string? paramName = null)
+    {
+        if (number < 0)
+        {
+            throw new ArgumentOutOfRangeException(paramName);
+        }
+    }
+
+    /// <summary>
     /// 対象の文字列がnullまたは空白の場合、新しい<see cref="ArgumentException"/>例外をスローします。
     /// </summary>
     /// <param name="argument">対象の文字列</param>
