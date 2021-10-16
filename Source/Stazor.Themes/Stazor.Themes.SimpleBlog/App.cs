@@ -18,8 +18,8 @@ public sealed class App : ConsoleAppBase
     /// <param name="theme">テーマ</param>
     public App(IStazorLogger<App> logger, ITheme theme)
     {
-        _logger = logger;
-        _theme = theme;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _theme = theme ?? throw new ArgumentNullException(nameof(theme));
     }
 
     /// <summary>

@@ -21,9 +21,9 @@ public sealed class SimpleBlog : ITheme
     /// <param name="settings">設定</param>
     public SimpleBlog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
     {
-        _engine = engine;
-        _pipeline = pipeline;
-        _settings = settings;
+        _engine = engine ?? throw new ArgumentNullException(nameof(engine));
+        _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     }
 
     /// <inheritdoc/>

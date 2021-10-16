@@ -16,14 +16,7 @@ sealed class StazorContext : IStazorContext
     /// </summary>
     /// <param name="symbols">識別子とUTF-8文字列のペアリスト</param>
     public StazorContext(IUtf8StringDictionary<Utf8String> symbols)
-    {
-        if (symbols is null)
-        {
-            ThrowHelper.ThrowArgumentNullException(nameof(symbols));
-        }
-
-        _symbols = symbols;
-    }
+        => _symbols = symbols ?? throw new ArgumentNullException(nameof(symbols));
 
     /// <inheritdoc/>
     public void Add(Utf8String key, Utf8String value)

@@ -23,6 +23,7 @@ public sealed class Sort : IPostProcessingPlugin
     /// <inheritdoc/>
     public void AfterExecute(IStazorDocument[] documents)
     {
+        ArgumentNullException.ThrowIfNull(documents);
         _logger.Information("Start");
 
         // TODO: ソート処理を自前で実装する。

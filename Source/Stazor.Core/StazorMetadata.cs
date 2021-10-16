@@ -6,8 +6,8 @@ namespace Stazor.Core;
 /// メタデータ
 /// </summary>
 /// <param name="Title">タイトル</param>
-/// <param name="PublishedDate">公開日</param>
-/// <param name="ModifiedDate">更新日</param>
+/// <param name="PublishedDate">公開日時</param>
+/// <param name="ModifiedDate">更新日時</param>
 /// <param name="Category">カテゴリー</param>
 /// <param name="Tags">タグ</param>
 // TODO: internalに変更する。現状は、YAMLデシリアライズするためpublicにする必要あり。

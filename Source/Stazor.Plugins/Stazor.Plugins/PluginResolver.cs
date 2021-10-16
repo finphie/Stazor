@@ -14,7 +14,7 @@ public sealed class PluginResolver : IPluginResolver
     /// </summary>
     /// <param name="provider">プラグインのオブジェクトを取得するために必要な<see cref="IServiceProvider"/></param>
     public PluginResolver(IServiceProvider provider)
-        => _provider = provider;
+        => _provider = provider ?? throw new ArgumentNullException(nameof(provider));
 
     /// <inheritdoc/>
     public T GetPlugin<T>()

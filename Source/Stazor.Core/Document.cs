@@ -1,4 +1,6 @@
-﻿namespace Stazor.Core;
+﻿using Stazor.Core.Helpers;
+
+namespace Stazor.Core;
 
 /// <summary>
 /// <see cref="IStazorDocument"/>の新しいインスタンスを作成します。
@@ -12,7 +14,12 @@ public static class Document
     /// <param name="metadata">メタデータ</param>
     /// <returns>ドキュメントインスタンス</returns>
     public static IStazorDocument Create(string templatePath, IStazorMetadata metadata)
-        => new StazorDocument(templatePath, Context.Create(), metadata);
+    {
+        ThrowHelper.ThrowDirectoryNotFoundExceptionIfDirectoryNotFound(templatePath);
+        ArgumentNullException.ThrowIfNull(metadata);
+
+        return new StazorDocument(templatePath, Context.Create(), metadata);
+    }
 
     /// <summary>
     /// <see cref="StazorDocument"/>クラスの配列を作成します。
