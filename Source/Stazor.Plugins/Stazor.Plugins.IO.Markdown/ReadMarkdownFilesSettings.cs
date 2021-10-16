@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Plugins.IO;
 
@@ -20,7 +19,6 @@ public sealed record ReadMarkdownFilesSettings
     /// コンテキストのキー
     /// </value>
     [Required]
-    [AllowNull]
     public string ContextKey { get; init; } = "Markdown";
 
     /// <summary>
@@ -30,8 +28,9 @@ public sealed record ReadMarkdownFilesSettings
     /// ディレクトリのパス
     /// </value>
     [Required]
-    [AllowNull]
+#pragma warning disable CS8618
     public string Path { get; init; }
+#pragma warning restore CS8618
 
     /// <summary>
     /// HTMLテンプレートファイルのパスを取得または設定します。
@@ -41,6 +40,7 @@ public sealed record ReadMarkdownFilesSettings
     /// </value>
     [Required]
     [FileExtensions(Extensions = ".html")]
-    [AllowNull]
+#pragma warning disable CS8618
     public string TemplateFilePath { get; init; }
+#pragma warning restore CS8618
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Plugins.Metadata;
 
@@ -20,7 +19,6 @@ public sealed record BreadcrumbSettings
     /// コンテキストのキー
     /// </value>
     [Required]
-    [AllowNull]
     public string ContextKey { get; init; } = "Breadcrumb";
 
     /// <summary>
@@ -30,7 +28,6 @@ public sealed record BreadcrumbSettings
     /// JSON-LDのキー
     /// </value>
     [Required]
-    [AllowNull]
     public string JsonLdKey { get; init; } = "JsonLd";
 
     /// <summary>

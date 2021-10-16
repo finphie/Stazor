@@ -50,39 +50,36 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     {
         _logger.Debug("Start");
 
-        // ファイル読み込み
         var data = File.ReadAllText(filePath);
-
-        // Markdown
         var markdown = Markdown.Parse(data, Pipeline);
+        var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
-        // YAML
+        if (yaml is null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // H1タグになる部分をタイトルとする。
         var title = markdown.Descendants<HeadingBlock>()
             ?.First(x => x.Level == 1)
             ?.Inline
             ?.Descendants<LiteralInline>()
             .First()
-            .Content;
-        var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+            .Content
+            .ToString();
 
-        // ドキュメント作成
-        var document = Document.Create(_settings.TemplateFilePath);
-
-        if (yaml is not null)
+        if (title is null)
         {
-            var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-            var metadata = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
-
-            document.Metadata.Title = metadata.Title;
-            document.Metadata.PublishedDate = metadata.PublishedDate;
-            document.Metadata.ModifiedDate = metadata.ModifiedDate > metadata.PublishedDate
-                ? metadata.ModifiedDate
-                : metadata.PublishedDate;
-            document.Metadata.Category = metadata.Category;
-            document.Metadata.Tags = metadata.Tags;
+            throw new InvalidOperationException();
         }
 
-        document.Metadata.Title = title.ToString();
+        var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
+        var metadata2 = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
+        var modifiedDate = metadata2.ModifiedDate > metadata2.PublishedDate
+            ? metadata2.ModifiedDate
+            : metadata2.PublishedDate;
+
+        var metadata = Metadata.Create(title, metadata2.PublishedDate, modifiedDate, metadata2.Category, metadata2.Tags);
 
         // MarkdownからHTMLに変換
         var writer = new StringWriter();
@@ -91,6 +88,7 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         renderer.Render(markdown);
         writer.Flush();
 
+        var document = Document.Create(_settings.TemplateFilePath, metadata);
         document.Context.Add(_contextKey, (Utf8String)writer.ToString());
 
         _logger.Debug("End");

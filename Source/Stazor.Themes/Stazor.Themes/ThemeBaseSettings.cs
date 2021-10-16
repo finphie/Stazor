@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Stazor.Themes;
 
@@ -12,22 +11,25 @@ public abstract record ThemeBaseSettings
     /// コンテンツのパス
     /// </summary>
     [Required]
-    [AllowNull]
+#pragma warning disable CS8618
     public string ContentPath { get; init; }
+#pragma warning restore CS8618
 
     /// <summary>
     /// サイトタイトル
     /// </summary>
     [Required]
-    [AllowNull]
+#pragma warning disable CS8618
     public string SiteTitle { get; init; }
+#pragma warning restore CS8618
 
     /// <summary>
     /// コピーライト
     /// </summary>
     [Required]
-    [AllowNull]
+#pragma warning disable CS8618
     public string Copyright { get; init; }
+#pragma warning restore CS8618
 
     // slug
     // カテゴリ・タグ

@@ -11,7 +11,7 @@ public interface IStazorMetadata
     /// <value>
     /// タイトル
     /// </value>
-    string? Title { get; set; }
+    string Title { get; init; }
 
     /// <summary>
     /// 公開日を取得または設定します。
@@ -19,7 +19,7 @@ public interface IStazorMetadata
     /// <value>
     /// 公開日
     /// </value>
-    DateTimeOffset PublishedDate { get; set; }
+    DateTimeOffset PublishedDate { get; init; }
 
     /// <summary>
     /// 更新日を取得または設定します。
@@ -27,21 +27,21 @@ public interface IStazorMetadata
     /// <value>
     /// 更新日
     /// </value>
-    DateTimeOffset ModifiedDate { get; set; }
+    DateTimeOffset ModifiedDate { get; init; }
 
     /// <summary>
-    /// カテゴリー名を取得または設定します。
+    /// カテゴリーを取得または設定します。
     /// </summary>
     /// <value>
-    /// カテゴリー名
+    /// カテゴリー
     /// </value>
-    string? Category { get; set; }
+    string Category { get; init; }
 
     /// <summary>
-    /// タグ名を取得または設定します。
+    /// タグを取得または設定します。
     /// </summary>
     /// <value>
     /// タグ
     /// </value>
-    IReadOnlySet<string> Tags { get; set; }
+    IReadOnlySet<string> Tags { get; init; }
 }
