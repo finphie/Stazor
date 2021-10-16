@@ -5,6 +5,7 @@ using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Stazor.Core;
 using Stazor.Logging;
+using Stazor.Plugins.IO.Helpers;
 using Utf8Utility;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -48,12 +49,14 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     /// <inheritdoc/>
     public IStazorDocument CreateDocument(string filePath)
     {
+        ThrowHelper.ThrowFileNotFoundExceptionIfFileNotFound(filePath);
         _logger.Debug("Start");
 
         var data = File.ReadAllText(filePath);
         var markdown = Markdown.Parse(data, Pipeline);
         var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
+        // TODO: 例外メッセージ
         if (yaml is null)
         {
             throw new InvalidOperationException();

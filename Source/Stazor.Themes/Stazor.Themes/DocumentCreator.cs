@@ -23,11 +23,10 @@ readonly struct DocumentCreator : IAction
     /// <param name="editDocumentPlugins">ドキュメント編集用プラグインの配列</param>
     public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins)
     {
-        _documents = documents;
-        _filePaths = filePaths;
-
-        _newDocumentsPlugin = newDocumentsPlugin;
-        _editDocumentPlugins = editDocumentPlugins;
+        _documents = documents ?? throw new ArgumentNullException(nameof(documents));
+        _filePaths = filePaths ?? throw new ArgumentNullException(nameof(filePaths));
+        _newDocumentsPlugin = newDocumentsPlugin ?? throw new ArgumentNullException(nameof(newDocumentsPlugin));
+        _editDocumentPlugins = editDocumentPlugins ?? throw new ArgumentNullException(nameof(editDocumentPlugins));
     }
 
     /// <inheritdoc/>

@@ -19,10 +19,8 @@ public sealed class SimpleTextTemplateEngine : IEngine
     /// <inheritdoc/>
     public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document)
     {
-        if (document is null)
-        {
-            throw new ArgumentNullException(nameof(document));
-        }
+        ArgumentNullException.ThrowIfNull(bufferWriter);
+        ArgumentNullException.ThrowIfNull(document);
 
         var path = document.TemplatePath;
 

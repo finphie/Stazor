@@ -22,7 +22,12 @@ public abstract class Pipeline : IPipeline
     /// <param name="editDocumentPlugins">ドキュメント編集用プラグインの配列</param>
     /// <param name="postProcessingPlugins">後処理を行うプラグインの配列</param>
     public Pipeline(IStazorLogger logger, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins, IPostProcessingPlugin[] postProcessingPlugins)
-        => (_logger, NewDocumentsPlugin, _editDocumentPlugins, _postProcessingPlugins) = (logger, newDocumentsPlugin, editDocumentPlugins, postProcessingPlugins);
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        NewDocumentsPlugin = newDocumentsPlugin ?? throw new ArgumentNullException(nameof(newDocumentsPlugin));
+        _editDocumentPlugins = editDocumentPlugins ?? throw new ArgumentNullException(nameof(editDocumentPlugins));
+        _postProcessingPlugins = postProcessingPlugins ?? throw new ArgumentNullException(nameof(postProcessingPlugins));
+    }
 
     /// <summary>
     /// ドキュメント新規作成用プラグイン
@@ -42,6 +47,7 @@ public abstract class Pipeline : IPipeline
     /// <inheritdoc/>
     public virtual IStazorDocument[] Execute(string[] filePaths)
     {
+        ArgumentNullException.ThrowIfNull(filePaths);
         _logger.Debug("Start");
 
         var documents = Document.CreateArray(filePaths.Length);

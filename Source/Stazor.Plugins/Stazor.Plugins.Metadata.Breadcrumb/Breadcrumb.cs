@@ -33,6 +33,7 @@ public sealed class Breadcrumb : IEditDocumentPlugin
     /// <inheritdoc/>
     public void Execute(IStazorDocument document)
     {
+        ArgumentNullException.ThrowIfNull(document);
         _logger.Debug("Start");
 
         using var builder = ZString.CreateUtf8StringBuilder(true);

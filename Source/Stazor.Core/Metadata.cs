@@ -1,4 +1,6 @@
-﻿namespace Stazor.Core;
+﻿using Stazor.Core.Helpers;
+
+namespace Stazor.Core;
 
 /// <summary>
 /// メタデータ作成クラスです。
@@ -9,11 +11,22 @@ public static class Metadata
     /// メタデータを作成します。
     /// </summary>
     /// <param name="title">タイトル</param>
-    /// <param name="publishedDate">公開日</param>
-    /// <param name="modifiedDate">更新日</param>
+    /// <param name="publishedDate">公開日時</param>
+    /// <param name="modifiedDate">更新日時</param>
     /// <param name="category">カテゴリー</param>
     /// <param name="tags">タグ</param>
     /// <returns>メタデータ</returns>
     public static IStazorMetadata Create(string title, DateTimeOffset publishedDate, DateTimeOffset modifiedDate, string category, IReadOnlySet<string> tags)
-        => new StazorMetadata(title, publishedDate, modifiedDate, category, tags);
+    {
+        ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(title);
+        ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(category);
+        ArgumentNullException.ThrowIfNull(tags);
+
+        if (publishedDate > modifiedDate)
+        {
+            ThrowHelper.ThrowInvalidDateException(nameof(modifiedDate));
+        }
+
+        return new StazorMetadata(title, publishedDate, modifiedDate, category, tags);
+    }
 }
