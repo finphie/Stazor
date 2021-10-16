@@ -22,6 +22,9 @@ public static class StazorExtensions
     public static T StazorConfigure<T>(this IServiceCollection services, IConfiguration configuration)
         where T : class, new()
     {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configuration);
+
         var settings = configuration.Get<T>();
         var validationContext = new ValidationContext(settings, null, null);
         var validationResults = new List<ValidationResult>();
@@ -43,6 +46,8 @@ public static class StazorExtensions
     public static void AddPlugin<TPlugin>(this IServiceCollection services)
         where TPlugin : class, IPlugin
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         services.AddStazorLogging<TPlugin>();
         services.AddSingleton<TPlugin>();
     }
@@ -58,6 +63,9 @@ public static class StazorExtensions
         where TPlugin : class, IPlugin
         where TSettings : class, new()
     {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddPlugin<TPlugin>();
         services.StazorConfigure<TSettings>(configuration);
     }
@@ -73,6 +81,9 @@ public static class StazorExtensions
         where TTheme : class, ITheme
         where TSettings : class, new()
     {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddStazorLogging<TTheme>();
         services.AddSingleton<ITheme, TTheme>();
         services.StazorConfigure<TSettings>(configuration);
