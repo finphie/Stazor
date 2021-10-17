@@ -1,4 +1,4 @@
-﻿using SimpleTextTemplate.Abstractions;
+﻿using SimpleTextTemplate;
 using Utf8Utility;
 
 namespace Stazor;
