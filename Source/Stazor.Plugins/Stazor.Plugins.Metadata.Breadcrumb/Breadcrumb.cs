@@ -14,8 +14,8 @@ public sealed class Breadcrumb : IEditDocumentPlugin
 {
     readonly IStazorLogger _logger;
     readonly BreadcrumbSettings _settings;
-    readonly Utf8String _contextKey;
-    readonly Utf8String _jsonLdKey;
+    readonly Utf8Array _contextKey;
+    readonly Utf8Array _jsonLdKey;
 
     /// <summary>
     /// <see cref="Breadcrumb"/>クラスの新しいインスタンスを初期化します。
@@ -53,7 +53,7 @@ public sealed class Breadcrumb : IEditDocumentPlugin
         builder.Append("</ol>");
         builder.Append("</nav>");
 
-        document.Context.Add(_contextKey, new Utf8String(builder.AsSpan().ToArray()));
+        document.Context.Add(_contextKey, new Utf8Array(builder.AsSpan().ToArray()));
 
         if (_settings.JsonLd)
         {
@@ -80,7 +80,7 @@ public sealed class Breadcrumb : IEditDocumentPlugin
             json.Items[1].Item = "/" + document.Metadata.Category;
 
             var jsonLd = JsonSerializer.Serialize(json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
-            document.Context.Add(_jsonLdKey, new Utf8String(jsonLd));
+            document.Context.Add(_jsonLdKey, new Utf8Array(jsonLd));
         }
 
         _logger.Debug("End");

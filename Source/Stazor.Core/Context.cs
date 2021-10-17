@@ -12,5 +12,5 @@ public static class Context
     /// </summary>
     /// <returns>コンテキスト</returns>
     public static IStazorContext Create()
-        => new StazorContext(new Utf8StringDictionary<Utf8String>());
+        => new StazorContext(new Utf8ArrayDictionary<Utf8Array>());
 }

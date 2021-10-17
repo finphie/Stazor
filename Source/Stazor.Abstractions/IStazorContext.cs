@@ -1,4 +1,4 @@
-﻿using SimpleTextTemplate.Abstractions;
+﻿using SimpleTextTemplate;
 using Utf8Utility;
 
 namespace Stazor;
@@ -13,5 +13,5 @@ public interface IStazorContext : IContext
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="value">値</param>
-    void Add(Utf8String key, Utf8String value);
+    void Add(Utf8Array key, Utf8Array value);
 }
