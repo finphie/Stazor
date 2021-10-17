@@ -25,7 +25,7 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
 
     readonly IStazorLogger _logger;
     readonly ReadMarkdownFilesSettings _settings;
-    readonly Utf8String _contextKey;
+    readonly Utf8Array _contextKey;
 
     readonly IDeserializer _yamlDeserializer;
 
@@ -92,7 +92,7 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         writer.Flush();
 
         var document = Document.Create(_settings.TemplateFilePath, metadata);
-        document.Context.Add(_contextKey, (Utf8String)writer.ToString());
+        document.Context.Add(_contextKey, (Utf8Array)writer.ToString());
 
         _logger.Debug("End");
 

@@ -9,17 +9,17 @@ namespace Stazor.Core;
 /// </summary>
 sealed class StazorContext : IStazorContext
 {
-    readonly IUtf8StringDictionary<Utf8String> _symbols;
+    readonly IUtf8ArrayDictionary<Utf8Array> _symbols;
 
     /// <summary>
     /// <see cref="StazorContext"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="symbols">識別子とUTF-8文字列のペアリスト</param>
-    public StazorContext(IUtf8StringDictionary<Utf8String> symbols)
+    public StazorContext(IUtf8ArrayDictionary<Utf8Array> symbols)
         => _symbols = symbols ?? throw new ArgumentNullException(nameof(symbols));
 
     /// <inheritdoc/>
-    public void Add(Utf8String key, Utf8String value)
+    public void Add(Utf8Array key, Utf8Array value)
     {
         if (!_symbols.TryAdd(key, value))
         {
@@ -28,10 +28,10 @@ sealed class StazorContext : IStazorContext
     }
 
     /// <inheritdoc/>
-    public bool TryGetValue(Utf8String key, [NotNullWhen(true)] out Utf8String value)
+    public bool TryGetValue(Utf8Array key, [NotNullWhen(true)] out Utf8Array value)
         => _symbols.TryGetValue(key, out value);
 
     /// <inheritdoc/>
-    public bool TryGetValue(ReadOnlySpan<byte> key, [NotNullWhen(true)] out Utf8String value)
+    public bool TryGetValue(ReadOnlySpan<byte> key, [NotNullWhen(true)] out Utf8Array value)
         => _symbols.TryGetValue(key, out value);
 }
