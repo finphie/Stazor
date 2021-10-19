@@ -59,22 +59,4 @@ static class ThrowHelper
             throw new ArgumentException($"The argument '{paramName}' cannot be null, empty or contain only whitespace.", paramName);
         }
     }
-
-    /// <summary>
-    /// 対象のパスが存在しない場合、新しい例外をスローします。
-    /// </summary>
-    /// <param name="path">パス</param>
-    /// <param name="paramName">パラメーター名</param>
-    /// <exception cref="ArgumentNullException">パスがnullの場合にこの例外をスローします。</exception>
-    /// <exception cref="DirectoryNotFoundException">パスが存在しない場合にこの例外をスローします。</exception>
-    [DebuggerHidden]
-    public static void ThrowDirectoryNotFoundExceptionIfDirectoryNotFound(string path, [CallerArgumentExpression("path")] string? paramName = null)
-    {
-        ArgumentNullException.ThrowIfNull(path, paramName);
-
-        if (!Directory.Exists(path))
-        {
-            throw new DirectoryNotFoundException($"Could not find a part of the path '{path}'.");
-        }
-    }
 }
