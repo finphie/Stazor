@@ -10,12 +10,12 @@ public static class Document
     /// <summary>
     /// <see cref="StazorDocument"/>クラスの新しいインスタンスを作成します。
     /// </summary>
-    /// <param name="templatePath">テンプレートディレクトリのパス</param>
+    /// <param name="templatePath">テンプレートファイルのパス</param>
     /// <param name="metadata">メタデータ</param>
     /// <returns>ドキュメントインスタンス</returns>
     public static IStazorDocument Create(string templatePath, IStazorMetadata metadata)
     {
-        ThrowHelper.ThrowDirectoryNotFoundExceptionIfDirectoryNotFound(templatePath);
+        ArgumentNullException.ThrowIfNull(templatePath);
         ArgumentNullException.ThrowIfNull(metadata);
 
         return new StazorDocument(templatePath, Context.Create(), metadata);

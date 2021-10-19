@@ -6,10 +6,10 @@
 public interface IStazorDocument
 {
     /// <summary>
-    /// テンプレートのパスを取得します。
+    /// テンプレートファイルのパスを取得します。
     /// </summary>
     /// <value>
-    /// テンプレートパス
+    /// テンプレートファイルのパス
     /// </value>
     string TemplatePath { get; init; }
 
