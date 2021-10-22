@@ -57,6 +57,18 @@ ref struct YamlFrontMatterReader
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryReadKeyAndDateTimeOffset(out ReadOnlySpan<char> key, out DateTimeOffset dateTime)
+    {
+        if (!TryReadKeyValuePair(out key, out var value))
+        {
+            dateTime = default;
+            return false;
+        }
+
+        return DateTimeOffset.TryParse(value, out dateTime);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryReadKeyAndFlowStyleList(out ReadOnlySpan<char> key, [MaybeNullWhen(false)] out SortedSet<string> list)
     {
         SkipWhiteSpace();
@@ -91,13 +103,17 @@ ref struct YamlFrontMatterReader
         }
 
         key = span[..index];
-        _position += index;
+
+        // +1は「:」の読み飛ばし
+        _position += index + 1;
         return true;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     bool TryReadValue(out ReadOnlySpan<char> value)
     {
+        SkipSingleQuotation();
+
         var span = _buffer[_position..];
         var index = span.IndexOfAny('\n', ' ', '\r');
 
@@ -107,8 +123,16 @@ ref struct YamlFrontMatterReader
             return false;
         }
 
+        if (span[index - 1] == '\'')
+        {
+            index--;
+        }
+
+        SkipSingleQuotation();
+
         value = span[..index];
         _position += index;
+
         return true;
     }
 
@@ -175,6 +199,16 @@ ref struct YamlFrontMatterReader
                 break;
             }
 
+            _position++;
+        }
+    }
+
+    void SkipSingleQuotation()
+    {
+        ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
+
+        if (_position < _buffer.Length && Unsafe.Add(ref bufferStart, (nint)(uint)_position) == '\'')
+        {
             _position++;
         }
     }
