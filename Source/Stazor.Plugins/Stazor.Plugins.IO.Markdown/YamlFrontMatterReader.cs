@@ -120,7 +120,7 @@ ref struct YamlFrontMatterReader
 
         key = span[..index];
 
-        // +1は「:」の読み飛ばし
+        // +1は':'の読み飛ばし
         _position += index + 1;
         return true;
     }
@@ -187,22 +187,24 @@ ref struct YamlFrontMatterReader
         _position++;
         list = new();
 
+        // -1は']'の除外
+        end += _position - 1;
+
         while (_position < _buffer.Length)
         {
             SkipWhiteSpace();
 
-            var span = _buffer.Slice(_position, end);
+            var span = _buffer[_position..end];
             var index = span.IndexOf(',');
 
             if (index <= 0)
             {
-                list.Add(span[..^1].ToString());
+                list.Add(span.ToString());
                 break;
             }
 
             var value = span[..index];
             _position += index + 1;
-            end -= index + 1;
 
             list.Add(value.ToString());
         }
