@@ -12,14 +12,25 @@ ref struct YamlFrontMatterReader
     readonly ReadOnlySpan<char> _buffer;
     int _position;
 
+    /// <summary>
+    /// <see cref="YamlFrontMatterReader"/>構造体の新しいインスタンスを初期化します。
+    /// </summary>
+    /// <param name="input">UTF-16文字列</param>
     public YamlFrontMatterReader(ReadOnlySpan<char> input)
     {
         _buffer = input;
         _position = 0;
     }
 
+    /// <summary>
+    /// セパレーターをスキップします。
+    /// </summary>
+    /// <returns>
+    /// 現在位置にセパレーターがある場合は<see langword="true"/>、
+    /// それ以外の場合は<see langword="false"/>。
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryReadSeparator()
+    public bool TrySkipSeparator()
     {
         ReadOnlySpan<char> separator = "---";
 
@@ -34,18 +45,23 @@ ref struct YamlFrontMatterReader
         return true;
     }
 
+    /// <summary>
+    /// キーと値を取得します。
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <param name="value">値</param>
+    /// <returns>
+    /// 解析に成功した場合は<see langword="true"/>、
+    /// 失敗した場合は<see langword="false"/>。
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryReadKeyValuePair(out ReadOnlySpan<char> key, out ReadOnlySpan<char> value)
     {
-        SkipWhiteSpace();
-
         if (!TryReadKey(out key))
         {
             value = ReadOnlySpan<char>.Empty;
             return false;
         }
-
-        SkipWhiteSpace();
 
         if (!TryReadValue(out value))
         {
@@ -56,6 +72,15 @@ ref struct YamlFrontMatterReader
         return true;
     }
 
+    /// <summary>
+    /// キーと日時を取得します。
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <param name="dateTime">日時</param>
+    /// <returns>
+    /// 解析に成功した場合は<see langword="true"/>、
+    /// 失敗した場合は<see langword="false"/>。
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryReadKeyAndDateTimeOffset(out ReadOnlySpan<char> key, out DateTimeOffset dateTime)
     {
@@ -68,18 +93,23 @@ ref struct YamlFrontMatterReader
         return DateTimeOffset.TryParse(value, out dateTime);
     }
 
+    /// <summary>
+    /// キーと文字列のリストを取得します。
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <param name="list">文字列のリスト</param>
+    /// <returns>
+    /// 解析に成功した場合は<see langword="true"/>、
+    /// 失敗した場合は<see langword="false"/>。
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryReadKeyAndFlowStyleList(out ReadOnlySpan<char> key, [MaybeNullWhen(false)] out SortedSet<string> list)
     {
-        SkipWhiteSpace();
-
         if (!TryReadKey(out key))
         {
             list = null;
             return false;
         }
-
-        SkipWhiteSpace();
 
         if (!TryReadFlowStyleList(out list))
         {
@@ -93,6 +123,8 @@ ref struct YamlFrontMatterReader
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     bool TryReadKey(out ReadOnlySpan<char> key)
     {
+        SkipWhiteSpace();
+
         var span = _buffer[_position..];
         var index = span.IndexOf(':');
 
@@ -112,6 +144,7 @@ ref struct YamlFrontMatterReader
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     bool TryReadValue(out ReadOnlySpan<char> value)
     {
+        SkipWhiteSpace();
         SkipSingleQuotation();
 
         var span = _buffer[_position..];
@@ -139,6 +172,8 @@ ref struct YamlFrontMatterReader
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     bool TryReadFlowStyleList([MaybeNullWhen(false)] out SortedSet<string> list)
     {
+        SkipWhiteSpace();
+
         var end = _buffer[_position..].IndexOf(']');
 
         if (_buffer[_position] != '[' || end <= 0)
@@ -203,6 +238,7 @@ ref struct YamlFrontMatterReader
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     void SkipSingleQuotation()
     {
         ref var bufferStart = ref MemoryMarshal.GetReference(_buffer);
