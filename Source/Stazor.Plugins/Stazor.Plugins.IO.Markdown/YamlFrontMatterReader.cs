@@ -50,9 +50,9 @@ ref struct YamlFrontMatterReader
     /// </returns>
     /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ReadKeyAndString(out ReadOnlySpan<char> key)
+    public string ReadKeyAndString(ReadOnlySpan<char> key)
     {
-        if (!TryReadKeyValuePair(out key, out var value))
+        if (!TryReadKeyValuePair(out var k, out var value) || !k.SequenceEqual(key))
         {
             ThrowHelper.ThrowYamlParserException(_position);
         }
@@ -69,9 +69,9 @@ ref struct YamlFrontMatterReader
     /// </returns>
     /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public DateTimeOffset ReadKeyAndDateTimeOffset(out ReadOnlySpan<char> key)
+    public DateTimeOffset ReadDateTimeOffset(ReadOnlySpan<char> key)
     {
-        if (!TryReadKeyValuePair(out key, out var value))
+        if (!TryReadKeyValuePair(out var k, out var value) || !k.SequenceEqual(key))
         {
             ThrowHelper.ThrowYamlParserException(_position);
         }
@@ -88,9 +88,9 @@ ref struct YamlFrontMatterReader
     /// </returns>
     /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SortedSet<string> ReadKeyAndFlowStyleList(out ReadOnlySpan<char> key)
+    public SortedSet<string> ReadKeyAndFlowStyleList(ReadOnlySpan<char> key)
     {
-        if (!TryReadKey(out key))
+        if (!TryReadKey(out var k) || !k.SequenceEqual(key))
         {
             ThrowHelper.ThrowYamlParserException(_position);
         }
