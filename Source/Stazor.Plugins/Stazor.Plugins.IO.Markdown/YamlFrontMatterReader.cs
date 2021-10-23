@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Stazor.Plugins.IO.Helpers;
 
 namespace Stazor.Plugins.IO;
 
@@ -25,99 +26,82 @@ ref struct YamlFrontMatterReader
     /// <summary>
     /// セパレーターをスキップします。
     /// </summary>
-    /// <returns>
-    /// 現在位置にセパレーターがある場合は<see langword="true"/>、
-    /// それ以外の場合は<see langword="false"/>。
-    /// </returns>
+    /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TrySkipSeparator()
+    public void SkipSeparator()
     {
         ReadOnlySpan<char> separator = "---";
 
         if (!_buffer[_position..].StartsWith(separator))
         {
-            return false;
+            ThrowHelper.ThrowYamlParserException(_position);
         }
 
         _position += separator.Length;
         SkipWhiteSpaceAndNewLine();
-
-        return true;
     }
 
     /// <summary>
-    /// キーと値を取得します。
+    /// キーと文字列を取得します。
     /// </summary>
     /// <param name="key">キー</param>
-    /// <param name="value">値</param>
     /// <returns>
-    /// 解析に成功した場合は<see langword="true"/>、
-    /// 失敗した場合は<see langword="false"/>。
+    /// 文字列を返します。
     /// </returns>
+    /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryReadKeyValuePair(out ReadOnlySpan<char> key, out ReadOnlySpan<char> value)
+    public string ReadKeyAndString(out ReadOnlySpan<char> key)
     {
-        if (!TryReadKey(out key))
+        if (!TryReadKeyValuePair(out key, out var value))
         {
-            value = ReadOnlySpan<char>.Empty;
-            return false;
+            ThrowHelper.ThrowYamlParserException(_position);
         }
 
-        if (!TryReadValue(out value))
-        {
-            return false;
-        }
-
-        SkipWhiteSpaceAndNewLine();
-        return true;
+        return value.ToString();
     }
 
     /// <summary>
     /// キーと日時を取得します。
     /// </summary>
     /// <param name="key">キー</param>
-    /// <param name="dateTime">日時</param>
     /// <returns>
-    /// 解析に成功した場合は<see langword="true"/>、
-    /// 失敗した場合は<see langword="false"/>。
+    /// 日時を返します。
     /// </returns>
+    /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryReadKeyAndDateTimeOffset(out ReadOnlySpan<char> key, out DateTimeOffset dateTime)
+    public DateTimeOffset ReadKeyAndDateTimeOffset(out ReadOnlySpan<char> key)
     {
         if (!TryReadKeyValuePair(out key, out var value))
         {
-            dateTime = default;
-            return false;
+            ThrowHelper.ThrowYamlParserException(_position);
         }
 
-        return DateTimeOffset.TryParse(value, out dateTime);
+        return DateTimeOffset.Parse(value);
     }
 
     /// <summary>
     /// キーと文字列のリストを取得します。
     /// </summary>
     /// <param name="key">キー</param>
-    /// <param name="list">文字列のリスト</param>
     /// <returns>
-    /// 解析に成功した場合は<see langword="true"/>、
-    /// 失敗した場合は<see langword="false"/>。
+    /// 文字列のリストを返します。
     /// </returns>
+    /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryReadKeyAndFlowStyleList(out ReadOnlySpan<char> key, [MaybeNullWhen(false)] out SortedSet<string> list)
+    public SortedSet<string> ReadKeyAndFlowStyleList(out ReadOnlySpan<char> key)
     {
         if (!TryReadKey(out key))
         {
-            list = null;
-            return false;
+            ThrowHelper.ThrowYamlParserException(_position);
         }
 
-        if (!TryReadFlowStyleList(out list))
+        if (!TryReadFlowStyleList(out var list))
         {
-            return false;
+            ThrowHelper.ThrowYamlParserException(_position);
         }
 
         SkipWhiteSpaceAndNewLine();
-        return true;
+        return list;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -166,6 +150,24 @@ ref struct YamlFrontMatterReader
         value = span[..index];
         _position += index;
 
+        return true;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    bool TryReadKeyValuePair(out ReadOnlySpan<char> key, out ReadOnlySpan<char> value)
+    {
+        if (!TryReadKey(out key))
+        {
+            value = ReadOnlySpan<char>.Empty;
+            return false;
+        }
+
+        if (!TryReadValue(out value))
+        {
+            return false;
+        }
+
+        SkipWhiteSpaceAndNewLine();
         return true;
     }
 

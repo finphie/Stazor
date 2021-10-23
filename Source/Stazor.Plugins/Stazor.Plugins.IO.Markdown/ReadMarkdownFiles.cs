@@ -69,33 +69,14 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
 
         var yaml = data.AsSpan(yamlBlock.Span.Start, yamlBlock.Span.Length);
         var reader = new YamlFrontMatterReader(yaml);
+        reader.SkipSeparator();
 
-        if (!reader.TrySkipSeparator())
-        {
-            throw new InvalidOperationException();
-        }
+        var publishedDate = reader.ReadKeyAndDateTimeOffset(out var key1);
+        var modifiedDate = reader.ReadKeyAndDateTimeOffset(out var key2);
+        var category = reader.ReadKeyAndString(out var key3);
+        var tags = reader.ReadKeyAndFlowStyleList(out var key4);
 
-        if (!reader.TryReadKeyAndDateTimeOffset(out var key1, out var publishedDate))
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (!reader.TryReadKeyAndDateTimeOffset(out var key2, out var modifiedDate))
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (!reader.TryReadKeyValuePair(out var key3, out var category))
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (!reader.TryReadKeyAndFlowStyleList(out var key4, out var tags))
-        {
-            throw new InvalidOperationException();
-        }
-
-        var metadata = Metadata.Create(title, publishedDate, modifiedDate, category.ToString(), tags);
+        var metadata = Metadata.Create(title, publishedDate, modifiedDate, category, tags);
 
         // MarkdownからHTMLに変換
         var writer = new StringWriter();
