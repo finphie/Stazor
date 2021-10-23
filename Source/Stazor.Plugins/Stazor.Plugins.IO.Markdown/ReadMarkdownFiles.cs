@@ -47,10 +47,9 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         var markdown = Markdown.Parse(data, Pipeline);
         var yamlBlock = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
-        // TODO: 例外メッセージ
         if (yamlBlock is null)
         {
-            throw new InvalidOperationException();
+            ThrowHelper.ThrowYamlParserException(0);
         }
 
         // H1タグになる部分をタイトルとする。
