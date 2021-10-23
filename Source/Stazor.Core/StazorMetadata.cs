@@ -10,8 +10,7 @@ namespace Stazor.Core;
 /// <param name="ModifiedDate">更新日時</param>
 /// <param name="Category">カテゴリー</param>
 /// <param name="Tags">タグ</param>
-// TODO: internalに変更する。現状は、YAMLデシリアライズするためpublicにする必要あり。
-public sealed record StazorMetadata(
+sealed record StazorMetadata(
     [property: Required] string Title,
     DateTimeOffset PublishedDate,
     DateTimeOffset ModifiedDate,
