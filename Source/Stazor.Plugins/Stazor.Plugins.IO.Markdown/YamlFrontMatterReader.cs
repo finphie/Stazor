@@ -145,10 +145,9 @@ ref struct YamlFrontMatterReader
             index--;
         }
 
-        SkipSingleQuotation();
-
         value = span[..index];
         _position += index;
+        SkipSingleQuotation();
 
         return true;
     }
