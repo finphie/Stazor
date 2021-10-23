@@ -184,21 +184,25 @@ ref struct YamlFrontMatterReader
             return false;
         }
 
-        SkipWhiteSpace();
+        _position++;
         list = new();
 
         while (_position < _buffer.Length)
         {
-            var span = _buffer[_position..end];
+            SkipWhiteSpace();
+
+            var span = _buffer.Slice(_position, end);
             var index = span.IndexOf(',');
 
             if (index <= 0)
             {
+                list.Add(span[..^1].ToString());
                 break;
             }
 
             var value = span[..index];
-            _position += index;
+            _position += index + 1;
+            end -= index + 1;
 
             list.Add(value.ToString());
         }
