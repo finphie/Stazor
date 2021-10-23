@@ -7,8 +7,6 @@ using Stazor.Core;
 using Stazor.Logging;
 using Stazor.Plugins.IO.Helpers;
 using Utf8Utility;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Stazor.Plugins.IO;
 
@@ -27,8 +25,6 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     readonly ReadMarkdownFilesSettings _settings;
     readonly Utf8Array _contextKey;
 
-    readonly IDeserializer _yamlDeserializer;
-
     /// <summary>
     /// <see cref="ReadMarkdownFiles"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
@@ -39,11 +35,6 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         _contextKey = new(_settings.ContextKey);
-
-        _yamlDeserializer = new DeserializerBuilder()
-            .WithNamingConvention(UnderscoredNamingConvention.Instance)
-            .WithNodeTypeResolver(SortedSetResolver.Default)
-            .Build();
     }
 
     /// <inheritdoc/>
@@ -54,12 +45,11 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
 
         var data = File.ReadAllText(filePath);
         var markdown = Markdown.Parse(data, Pipeline);
-        var yaml = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+        var yamlBlock = markdown.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
-        // TODO: 例外メッセージ
-        if (yaml is null)
+        if (yamlBlock is null)
         {
-            throw new InvalidOperationException();
+            ThrowHelper.ThrowYamlParserException(0);
         }
 
         // H1タグになる部分をタイトルとする。
@@ -76,13 +66,16 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
             throw new InvalidOperationException();
         }
 
-        var yamlString = data.Substring(yaml.Span.Start + 4, yaml.Span.Length - 8);
-        var metadata2 = _yamlDeserializer.Deserialize<StazorMetadata>(yamlString);
-        var modifiedDate = metadata2.ModifiedDate > metadata2.PublishedDate
-            ? metadata2.ModifiedDate
-            : metadata2.PublishedDate;
+        var yaml = data.AsSpan(yamlBlock.Span.Start, yamlBlock.Span.Length);
+        var reader = new YamlFrontMatterReader(yaml);
+        reader.SkipSeparator();
 
-        var metadata = Metadata.Create(title, metadata2.PublishedDate, modifiedDate, metadata2.Category, metadata2.Tags);
+        var publishedDate = reader.ReadDateTimeOffset("published_date");
+        var modifiedDate = reader.ReadDateTimeOffset("modified_date");
+        var category = reader.ReadKeyAndString("category");
+        var tags = reader.ReadKeyAndFlowStyleList("tags");
+
+        var metadata = Metadata.Create(title, publishedDate, modifiedDate, category, tags);
 
         // MarkdownからHTMLに変換
         var writer = new StringWriter();

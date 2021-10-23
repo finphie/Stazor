@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Stazor.Plugins.IO.Helpers;
@@ -8,6 +9,16 @@ namespace Stazor.Plugins.IO.Helpers;
 /// </summary>
 static class ThrowHelper
 {
+    /// <summary>
+    /// YAMLの解析に失敗に関する例外をスローします。
+    /// </summary>
+    /// <param name="position">エラーが発生した位置</param>
+    /// <exception cref="YamlParserException">常にこの例外をスローします。</exception>
+    [DebuggerHidden]
+    [DoesNotReturn]
+    public static void ThrowYamlParserException(int position)
+        => throw new YamlParserException(position);
+
     /// <summary>
     /// 対象のファイルが存在しない場合、新しい例外をスローします。
     /// </summary>
