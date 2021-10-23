@@ -70,10 +70,10 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         var reader = new YamlFrontMatterReader(yaml);
         reader.SkipSeparator();
 
-        var publishedDate = reader.ReadKeyAndDateTimeOffset(out var key1);
-        var modifiedDate = reader.ReadKeyAndDateTimeOffset(out var key2);
-        var category = reader.ReadKeyAndString(out var key3);
-        var tags = reader.ReadKeyAndFlowStyleList(out var key4);
+        var publishedDate = reader.ReadDateTimeOffset("published_date");
+        var modifiedDate = reader.ReadDateTimeOffset("modified_date");
+        var category = reader.ReadKeyAndString("category");
+        var tags = reader.ReadKeyAndFlowStyleList("tags");
 
         var metadata = Metadata.Create(title, publishedDate, modifiedDate, category, tags);
 
