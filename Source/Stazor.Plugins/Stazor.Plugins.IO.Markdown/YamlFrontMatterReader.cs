@@ -199,7 +199,7 @@ ref struct YamlFrontMatterReader
 
             if (index <= 0)
             {
-                list.Add(span.ToString());
+                list.Add(span.TrimEnd(' ').ToString());
                 break;
             }
 
