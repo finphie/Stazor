@@ -47,7 +47,7 @@ public sealed class Breadcrumb : IEditDocumentPlugin
         builder.Append("</ol>");
         builder.Append("</nav>");
 
-        document.Context.Add(_contextKey, new Utf8Array(builder.AsSpan().ToArray()));
+        document.Context.Add(_contextKey, new Utf8Array(builder.AsSpan()));
 
         if (_settings.JsonLd)
         {
@@ -65,7 +65,7 @@ public sealed class Breadcrumb : IEditDocumentPlugin
             builder.Append(document.Metadata.Category);
             builder.Append(Json3);
 
-            document.Context.Add(_jsonLdKey, new Utf8Array(builder.AsSpan().ToArray()));
+            document.Context.Add(_jsonLdKey, new Utf8Array(builder.AsSpan()));
         }
 
         _logger.Debug("End");
