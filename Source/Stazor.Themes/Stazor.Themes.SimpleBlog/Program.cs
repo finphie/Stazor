@@ -17,7 +17,6 @@ await Host.CreateDefaultBuilder()
         services.AddStazorLogging<SimpleBlogPipeline>();
 
         // plugin
-        // TODO: 設定値検証
         services.AddPlugin<ReadMarkdownFiles, ReadMarkdownFilesSettings>(content.Configuration.GetSection(ReadMarkdownFilesSettings.Key));
         services.AddPlugin<Breadcrumb, BreadcrumbSettings>(content.Configuration.GetSection(BreadcrumbSettings.Key));
         services.AddPlugin<Sort>();
