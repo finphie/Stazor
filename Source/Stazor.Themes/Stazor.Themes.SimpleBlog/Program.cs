@@ -36,6 +36,4 @@ await Host.CreateDefaultBuilder()
     })
     .ConfigureLogging(static logging => logging.AddStazorLogger())
     .RunConsoleAppFrameworkAsync<App>(args)
-#pragma warning disable format
     .ConfigureAwait(false);
-#pragma warning restore format
