@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Utf8Utility;
 
 namespace Stazor.Core;
 
@@ -11,8 +12,8 @@ namespace Stazor.Core;
 /// <param name="Category">カテゴリー</param>
 /// <param name="Tags">タグ</param>
 sealed record StazorMetadata(
-    [property: Required] string Title,
+    [property: Required] Utf8Array Title,
     DateTimeOffset PublishedDate,
     DateTimeOffset ModifiedDate,
     [property: Required] string Category,
-    [property: Required] IReadOnlySet<string> Tags) : IStazorMetadata;
+    [property: Required] IReadOnlySet<Utf8Array> Tags) : IStazorMetadata;

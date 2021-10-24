@@ -1,4 +1,5 @@
 ﻿using Stazor.Core.Helpers;
+using Utf8Utility;
 
 namespace Stazor.Core;
 
@@ -16,9 +17,9 @@ public static class Metadata
     /// <param name="category">カテゴリー</param>
     /// <param name="tags">タグ</param>
     /// <returns>メタデータ</returns>
-    public static IStazorMetadata Create(string title, DateTimeOffset publishedDate, DateTimeOffset modifiedDate, string category, IReadOnlySet<string> tags)
+    public static IStazorMetadata Create(Utf8Array title, DateTimeOffset publishedDate, DateTimeOffset modifiedDate, string category, IReadOnlySet<Utf8Array> tags)
     {
-        ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(title);
+        ThrowHelper.ThrowArgumentEmptyExceptionIfNullOrWhitespace(title);
         ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(category);
         ArgumentNullException.ThrowIfNull(tags);
 

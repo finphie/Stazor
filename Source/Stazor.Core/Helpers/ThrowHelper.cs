@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Utf8Utility;
 
 namespace Stazor.Core.Helpers;
 
@@ -42,6 +43,21 @@ static class ThrowHelper
         if (number < 0)
         {
             throw new ArgumentOutOfRangeException(paramName);
+        }
+    }
+
+    /// <summary>
+    /// 対象のUTF-8配列が空の場合、新しい<see cref="ArgumentException"/>例外をスローします。
+    /// </summary>
+    /// <param name="argument">対象のUTF-８配列</param>
+    /// <param name="paramName">引数名</param>
+    /// <exception cref="ArgumentException">常にこの例外をスローします。</exception>
+    [DebuggerHidden]
+    public static void ThrowArgumentEmptyExceptionIfNullOrWhitespace(Utf8Array argument, [CallerArgumentExpression("argument")] string? paramName = null)
+    {
+        if (argument == Utf8Array.Empty)
+        {
+            throw new ArgumentException($"The argument '{paramName}' cannot be empty.", paramName);
         }
     }
 

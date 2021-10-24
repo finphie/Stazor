@@ -53,20 +53,22 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         }
 
         // H1タグになる部分をタイトルとする。
-        var title = markdown.Descendants<HeadingBlock>()
+        var titleSlice = markdown.Descendants<HeadingBlock>()
             ?.First(x => x.Level == 1)
             ?.Inline
             ?.Descendants<LiteralInline>()
-            .First()
-            .Content
-            .ToString();
+            ?.First()
+            ?.Content;
 
-        if (title is null)
+        if (!titleSlice.HasValue)
         {
             throw new InvalidOperationException();
         }
 
+        var span = data.AsSpan();
+        var title = span.Slice(titleSlice.Value.Start, titleSlice.Value.Length);
         var yaml = data.AsSpan(yamlBlock.Span.Start, yamlBlock.Span.Length);
+
         var reader = new YamlFrontMatterReader(yaml);
         reader.SkipSeparator();
 
@@ -75,7 +77,7 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
         var category = reader.ReadKeyAndString("category");
         var tags = reader.ReadKeyAndFlowStyleList("tags");
 
-        var metadata = Metadata.Create(title, publishedDate, modifiedDate, category, tags);
+        var metadata = Metadata.Create(new(title), publishedDate, modifiedDate, category, tags);
 
         // MarkdownからHTMLに変換
         var writer = new StringWriter();

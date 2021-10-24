@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Stazor.Plugins.IO.Helpers;
+using Utf8Utility;
 
 namespace Stazor.Plugins.IO;
 
@@ -88,7 +89,7 @@ ref struct YamlFrontMatterReader
     /// </returns>
     /// <exception cref="YamlParserException">解析に失敗した場合はこの例外をスローします。</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SortedSet<string> ReadKeyAndFlowStyleList(ReadOnlySpan<char> key)
+    public SortedSet<Utf8Array> ReadKeyAndFlowStyleList(ReadOnlySpan<char> key)
     {
         if (!TryReadKey(out var k) || !k.SequenceEqual(key))
         {
@@ -171,7 +172,7 @@ ref struct YamlFrontMatterReader
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    bool TryReadFlowStyleList([MaybeNullWhen(false)] out SortedSet<string> list)
+    bool TryReadFlowStyleList([MaybeNullWhen(false)] out SortedSet<Utf8Array> list)
     {
         SkipWhiteSpace();
 
@@ -198,14 +199,14 @@ ref struct YamlFrontMatterReader
 
             if (index <= 0)
             {
-                list.Add(span.TrimEnd(' ').ToString());
+                list.Add(new(span.TrimEnd(' ')));
                 break;
             }
 
             var value = span[..index];
             _position += index + 1;
 
-            list.Add(value.ToString());
+            list.Add(new(value));
         }
 
         return true;

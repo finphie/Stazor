@@ -1,4 +1,6 @@
-﻿namespace Stazor;
+﻿using Utf8Utility;
+
+namespace Stazor;
 
 /// <summary>
 /// メタデータ
@@ -11,7 +13,7 @@ public interface IStazorMetadata
     /// <value>
     /// タイトル
     /// </value>
-    string Title { get; init; }
+    Utf8Array Title { get; init; }
 
     /// <summary>
     /// 公開日を取得または設定します。
@@ -43,5 +45,5 @@ public interface IStazorMetadata
     /// <value>
     /// タグ
     /// </value>
-    IReadOnlySet<string> Tags { get; init; }
+    IReadOnlySet<Utf8Array> Tags { get; init; }
 }
