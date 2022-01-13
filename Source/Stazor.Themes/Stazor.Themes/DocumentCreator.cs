@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.HighPerformance.Helpers;
+﻿using CommunityToolkit.HighPerformance.Helpers;
 using Stazor.Plugins;
 
 namespace Stazor.Themes;
