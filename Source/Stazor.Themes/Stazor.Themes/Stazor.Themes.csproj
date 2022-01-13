@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.HighPerformance" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Stazor.Core\Stazor.Core.csproj" />
     <ProjectReference Include="..\..\Stazor.Logging\Stazor.Logging\Stazor.Logging.csproj" />
     <ProjectReference Include="..\..\Stazor.Plugins\Stazor.Plugins\Stazor.Plugins.csproj" />
