@@ -1,6 +1,4 @@
-﻿using ConsoleAppFramework;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Stazor.Engines;
 using Stazor.Logging;
 using Stazor.Plugins;
@@ -9,11 +7,10 @@ using Stazor.Plugins.IO;
 using Stazor.Plugins.Metadata;
 using Stazor.Themes;
 
-await Host.CreateDefaultBuilder()
+var builder = ConsoleApp.CreateBuilder(args)
     .ConfigureServices(static (content, services) =>
     {
         // logging
-        services.AddStazorLogging<App>();
         services.AddStazorLogging<SimpleBlogPipeline>();
 
         // plugin
@@ -33,6 +30,10 @@ await Host.CreateDefaultBuilder()
         // plugin resolver
         services.AddSingleton<IPluginResolver, PluginResolver>();
     })
-    .ConfigureLogging(static logging => logging.AddStazorLogger())
-    .RunConsoleAppFrameworkAsync<App>(args)
-    .ConfigureAwait(false);
+    .ConfigureLogging(static logging => logging.AddStazorLogger());
+
+var app = builder.Build();
+
+app.AddCommand("build", static async (ITheme theme) => await theme.ExecuteAsync().ConfigureAwait(false));
+
+app.Run();
