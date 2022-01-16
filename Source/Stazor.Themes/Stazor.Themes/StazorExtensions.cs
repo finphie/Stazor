@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stazor.Logging;
@@ -19,6 +20,7 @@ public static class StazorExtensions
     /// <param name="services">サービスコンテナ</param>
     /// <param name="configuration">構成</param>
     /// <returns>設定クラスのオブジェクト</returns>
+    [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
     public static T StazorConfigure<T>(this IServiceCollection services, IConfiguration configuration)
         where T : class, new()
     {
@@ -59,6 +61,7 @@ public static class StazorExtensions
     /// <typeparam name="TSettings">設定の型</typeparam>
     /// <param name="services">サービスコンテナ</param>
     /// <param name="configuration">構成</param>
+    [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
     public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services, IConfiguration configuration)
         where TPlugin : class, IPlugin
         where TSettings : class, new()
@@ -77,6 +80,7 @@ public static class StazorExtensions
     /// <typeparam name="TSettings">設定の型</typeparam>
     /// <param name="services">サービスコンテナ</param>
     /// <param name="configuration">構成</param>
+    [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
     public static void AddTheme<TTheme, TSettings>(this IServiceCollection services, IConfiguration configuration)
         where TTheme : class, ITheme
         where TSettings : class, new()
