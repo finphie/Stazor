@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="SimpleTextTemplate" Version="0.6.0" />
-    <PackageReference Include="SimpleTextTemplate.Contexts" Version="0.6.0" />
+    <PackageReference Include="SimpleTextTemplate.Contexts" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
