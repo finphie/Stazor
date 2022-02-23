@@ -26,7 +26,7 @@ public sealed class SimpleTextTemplateEngine : IEngine
 
         if (_table.TryGetValue(path, out var value))
         {
-            value.RenderTo(bufferWriter, document.Context);
+            value.Render(bufferWriter, document.Context);
             return ValueTask.CompletedTask;
         }
 
@@ -34,7 +34,7 @@ public sealed class SimpleTextTemplateEngine : IEngine
         var template = Template.Parse(file);
         _table.Add(path, template);
 
-        template.RenderTo(bufferWriter, document.Context);
+        template.Render(bufferWriter, document.Context);
 
         return ValueTask.CompletedTask;
     }
