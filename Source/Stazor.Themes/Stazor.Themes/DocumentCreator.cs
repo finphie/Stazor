@@ -21,12 +21,12 @@ readonly struct DocumentCreator : IAction
     /// <param name="filePaths">ファイルパスの配列</param>
     /// <param name="newDocumentsPlugin">ドキュメント新規作成用プラグイン</param>
     /// <param name="editDocumentPlugins">ドキュメント編集用プラグインの配列</param>
-    public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins)
+    public DocumentCreator(IStazorDocument[] documents!!, string[] filePaths!!, INewDocumentsPlugin newDocumentsPlugin!!, IEditDocumentPlugin[] editDocumentPlugins!!)
     {
-        _documents = documents ?? throw new ArgumentNullException(nameof(documents));
-        _filePaths = filePaths ?? throw new ArgumentNullException(nameof(filePaths));
-        _newDocumentsPlugin = newDocumentsPlugin ?? throw new ArgumentNullException(nameof(newDocumentsPlugin));
-        _editDocumentPlugins = editDocumentPlugins ?? throw new ArgumentNullException(nameof(editDocumentPlugins));
+        _documents = documents;
+        _filePaths = filePaths;
+        _newDocumentsPlugin = newDocumentsPlugin;
+        _editDocumentPlugins = editDocumentPlugins;
     }
 
     /// <inheritdoc/>

@@ -30,10 +30,10 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     /// </summary>
     /// <param name="logger">ロガー</param>
     /// <param name="settings">設定</param>
-    public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
+    public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger!!, ReadMarkdownFilesSettings settings!!)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _logger = logger;
+        _settings = settings;
         _contextKey = new(_settings.ContextKey);
     }
 

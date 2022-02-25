@@ -16,11 +16,10 @@ public static class Metadata
     /// <param name="category">カテゴリー</param>
     /// <param name="tags">タグ</param>
     /// <returns>メタデータ</returns>
-    public static IStazorMetadata Create(string title, DateTimeOffset publishedDate, DateTimeOffset modifiedDate, string category, IReadOnlySet<string> tags)
+    public static IStazorMetadata Create(string title, DateTimeOffset publishedDate, DateTimeOffset modifiedDate, string category, IReadOnlySet<string> tags!!)
     {
         ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(title);
         ThrowHelper.ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(category);
-        ArgumentNullException.ThrowIfNull(tags);
 
         if (publishedDate > modifiedDate)
         {
