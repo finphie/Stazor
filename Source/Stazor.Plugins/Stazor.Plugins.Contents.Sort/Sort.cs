@@ -17,13 +17,12 @@ public sealed class Sort : IPostProcessingPlugin
     /// <see cref="Sort"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="logger">ロガー</param>
-    public Sort(IStazorLogger<Sort> logger)
-        => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    public Sort(IStazorLogger<Sort> logger!!)
+        => _logger = logger;
 
     /// <inheritdoc/>
-    public void AfterExecute(IStazorDocument[] documents)
+    public void AfterExecute(IStazorDocument[] documents!!)
     {
-        ArgumentNullException.ThrowIfNull(documents);
         _logger.Information("Start");
 
         // TODO: ソート処理を自前で実装する。

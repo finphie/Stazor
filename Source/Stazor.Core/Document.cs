@@ -13,13 +13,8 @@ public static class Document
     /// <param name="templatePath">テンプレートファイルのパス</param>
     /// <param name="metadata">メタデータ</param>
     /// <returns>ドキュメントインスタンス</returns>
-    public static IStazorDocument Create(string templatePath, IStazorMetadata metadata)
-    {
-        ArgumentNullException.ThrowIfNull(templatePath);
-        ArgumentNullException.ThrowIfNull(metadata);
-
-        return new StazorDocument(templatePath, Context.Create(), metadata);
-    }
+    public static IStazorDocument Create(string templatePath!!, IStazorMetadata metadata!!)
+        => new StazorDocument(templatePath, Context.Create(), metadata);
 
     /// <summary>
     /// <see cref="StazorDocument"/>クラスの配列を作成します。

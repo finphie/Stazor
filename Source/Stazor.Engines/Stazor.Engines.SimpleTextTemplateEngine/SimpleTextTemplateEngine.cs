@@ -17,11 +17,8 @@ public sealed class SimpleTextTemplateEngine : IEngine
     public string Description => "SimpleTextTemplateライブラリを利用したエンジンです。";
 
     /// <inheritdoc/>
-    public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter, IStazorDocument document)
+    public ValueTask ExecuteAsync(IBufferWriter<byte> bufferWriter!!, IStazorDocument document!!)
     {
-        ArgumentNullException.ThrowIfNull(bufferWriter);
-        ArgumentNullException.ThrowIfNull(document);
-
         var path = document.TemplatePath;
 
         if (_table.TryGetValue(path, out var value))

@@ -21,12 +21,9 @@ public static class StazorExtensions
     /// <param name="configuration">構成</param>
     /// <returns>設定クラスのオブジェクト</returns>
     [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
-    public static T StazorConfigure<T>(this IServiceCollection services, IConfiguration configuration)
+    public static T StazorConfigure<T>(this IServiceCollection services!!, IConfiguration configuration!!)
         where T : class, new()
     {
-        ArgumentNullException.ThrowIfNull(services);
-        ArgumentNullException.ThrowIfNull(configuration);
-
         var settings = configuration.Get<T>();
         var validationContext = new ValidationContext(settings, null, null);
         var validationResults = new List<ValidationResult>();
@@ -45,11 +42,9 @@ public static class StazorExtensions
     /// </summary>
     /// <typeparam name="TPlugin">プラグインの型</typeparam>
     /// <param name="services">サービスコンテナ</param>
-    public static void AddPlugin<TPlugin>(this IServiceCollection services)
+    public static void AddPlugin<TPlugin>(this IServiceCollection services!!)
         where TPlugin : class, IPlugin
     {
-        ArgumentNullException.ThrowIfNull(services);
-
         services.AddStazorLogging<TPlugin>();
         services.AddSingleton<TPlugin>();
     }
@@ -62,13 +57,10 @@ public static class StazorExtensions
     /// <param name="services">サービスコンテナ</param>
     /// <param name="configuration">構成</param>
     [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
-    public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services, IConfiguration configuration)
+    public static void AddPlugin<TPlugin, TSettings>(this IServiceCollection services!!, IConfiguration configuration!!)
         where TPlugin : class, IPlugin
         where TSettings : class, new()
     {
-        ArgumentNullException.ThrowIfNull(services);
-        ArgumentNullException.ThrowIfNull(configuration);
-
         services.AddPlugin<TPlugin>();
         services.StazorConfigure<TSettings>(configuration);
     }
@@ -81,13 +73,10 @@ public static class StazorExtensions
     /// <param name="services">サービスコンテナ</param>
     /// <param name="configuration">構成</param>
     [RequiresUnreferencedCode("設定クラスの作成と検証では、リフレクションを使用します。")]
-    public static void AddTheme<TTheme, TSettings>(this IServiceCollection services, IConfiguration configuration)
+    public static void AddTheme<TTheme, TSettings>(this IServiceCollection services!!, IConfiguration configuration!!)
         where TTheme : class, ITheme
         where TSettings : class, new()
     {
-        ArgumentNullException.ThrowIfNull(services);
-        ArgumentNullException.ThrowIfNull(configuration);
-
         services.AddStazorLogging<TTheme>();
         services.AddSingleton<ITheme, TTheme>();
         services.StazorConfigure<TSettings>(configuration);

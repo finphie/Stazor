@@ -19,18 +19,17 @@ public sealed class Breadcrumb : IEditDocumentPlugin
     /// </summary>
     /// <param name="logger">ロガー</param>
     /// <param name="settings">設定</param>
-    public Breadcrumb(IStazorLogger<Breadcrumb> logger, BreadcrumbSettings settings)
+    public Breadcrumb(IStazorLogger<Breadcrumb> logger!!, BreadcrumbSettings settings!!)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _logger = logger;
+        _settings = settings;
         _contextKey = new(_settings.ContextKey);
         _jsonLdKey = new(_settings.JsonLdKey);
     }
 
     /// <inheritdoc/>
-    public void Execute(IStazorDocument document)
+    public void Execute(IStazorDocument document!!)
     {
-        ArgumentNullException.ThrowIfNull(document);
         _logger.Debug("Start");
 
         using var builder = ZString.CreateUtf8StringBuilder();
