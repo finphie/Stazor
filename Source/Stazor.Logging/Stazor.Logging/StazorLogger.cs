@@ -15,8 +15,11 @@ public sealed class StazorLogger<TCategoryName> : IStazorLogger<TCategoryName>
     /// <see cref="StazorLogger{TCategoryName}"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="logger">ロガー</param>
-    public StazorLogger(ILogger<TCategoryName> logger!!)
-        => _logger = logger;
+    public StazorLogger(ILogger<TCategoryName> logger)
+    {
+        ArgumentNullException.ThrowIfNull(logger);
+        _logger = logger;
+    }
 
     /// <inheritdoc/>
     public void Trace(string message) => _logger.ZLogTrace(message);

@@ -27,7 +27,7 @@ static class ThrowHelper
     /// <exception cref="ArgumentNullException">ファイルがnullの場合にこの例外をスローします。</exception>
     /// <exception cref="FileNotFoundException">ファイルが存在しない場合にこの例外をスローします。</exception>
     [DebuggerHidden]
-    public static void ThrowFileNotFoundExceptionIfFileNotFound(string filePath, [CallerArgumentExpression("filePath")] string? paramName = null)
+    public static void ThrowFileNotFoundExceptionIfFileNotFound(string filePath, [CallerArgumentExpression(nameof(filePath))] string? paramName = null)
     {
         ArgumentNullException.ThrowIfNull(filePath, paramName);
 

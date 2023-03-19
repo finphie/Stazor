@@ -21,8 +21,13 @@ public abstract class Pipeline : IPipeline
     /// <param name="newDocumentsPlugin">ドキュメント新規作成用プラグイン</param>
     /// <param name="editDocumentPlugins">ドキュメント編集用プラグインの配列</param>
     /// <param name="postProcessingPlugins">後処理を行うプラグインの配列</param>
-    public Pipeline(IStazorLogger logger!!, INewDocumentsPlugin newDocumentsPlugin!!, IEditDocumentPlugin[] editDocumentPlugins!!, IPostProcessingPlugin[] postProcessingPlugins!!)
+    public Pipeline(IStazorLogger logger, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins, IPostProcessingPlugin[] postProcessingPlugins)
     {
+        ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(newDocumentsPlugin);
+        ArgumentNullException.ThrowIfNull(editDocumentPlugins);
+        ArgumentNullException.ThrowIfNull(postProcessingPlugins);
+
         _logger = logger;
         NewDocumentsPlugin = newDocumentsPlugin;
         _editDocumentPlugins = editDocumentPlugins;
@@ -45,8 +50,10 @@ public abstract class Pipeline : IPipeline
     protected ReadOnlySpan<IPostProcessingPlugin> PostProcessingPlugins => _postProcessingPlugins;
 
     /// <inheritdoc/>
-    public virtual IStazorDocument[] Execute(string[] filePaths!!)
+    public virtual IStazorDocument[] Execute(string[] filePaths)
     {
+        ArgumentNullException.ThrowIfNull(filePaths);
+
         _logger.Debug("Start");
 
         var documents = Document.CreateArray(filePaths.Length);

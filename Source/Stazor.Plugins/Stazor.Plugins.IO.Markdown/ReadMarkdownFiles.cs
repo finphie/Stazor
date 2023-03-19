@@ -30,8 +30,11 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
     /// </summary>
     /// <param name="logger">ロガー</param>
     /// <param name="settings">設定</param>
-    public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger!!, ReadMarkdownFilesSettings settings!!)
+    public ReadMarkdownFiles(IStazorLogger<ReadMarkdownFiles> logger, ReadMarkdownFilesSettings settings)
     {
+        ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(settings);
+
         _logger = logger;
         _settings = settings;
         _contextKey = new(_settings.ContextKey);
@@ -59,12 +62,7 @@ public sealed class ReadMarkdownFiles : INewDocumentsPlugin
             ?.Descendants<LiteralInline>()
             .First()
             .Content
-            .ToString();
-
-        if (title is null)
-        {
-            throw new InvalidOperationException();
-        }
+            .ToString() ?? throw new InvalidOperationException();
 
         var yaml = data.AsSpan(yamlBlock.Span.Start, yamlBlock.Span.Length);
         var reader = new YamlFrontMatterReader(yaml);

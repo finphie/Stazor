@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Stazor.Plugins.IO.Helpers;
@@ -76,7 +77,7 @@ ref struct YamlFrontMatterReader
             ThrowHelper.ThrowYamlParserException(_position);
         }
 
-        return DateTimeOffset.Parse(value);
+        return DateTimeOffset.Parse(value, CultureInfo.InvariantCulture);
     }
 
     /// <summary>
