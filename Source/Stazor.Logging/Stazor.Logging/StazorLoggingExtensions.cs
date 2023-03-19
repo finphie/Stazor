@@ -63,15 +63,20 @@ public static class StazorLoggingExtensions
     /// </summary>
     /// <typeparam name="T">対象の型</typeparam>
     /// <param name="services">サービスコンテナ</param>
-    public static void AddStazorLogging<T>(this IServiceCollection services!!)
-        => services.AddSingleton<IStazorLogger<T>, StazorLogger<T>>();
+    public static void AddStazorLogging<T>(this IServiceCollection services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        services.AddSingleton<IStazorLogger<T>, StazorLogger<T>>();
+    }
 
     /// <summary>
     /// Stazor専用ロガーを追加します。
     /// </summary>
     /// <param name="logging">ログビルダー</param>
-    public static void AddStazorLogger(this ILoggingBuilder logging!!)
+    public static void AddStazorLogger(this ILoggingBuilder logging)
     {
+        ArgumentNullException.ThrowIfNull(logging);
+
         logging.ClearProviders();
         logging.AddZLoggerConsole(static options =>
         {

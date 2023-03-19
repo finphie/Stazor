@@ -5,6 +5,12 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Description>シンプルなブログを作成するアプリケーションです。</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>blog</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="ConsoleAppFramework" Version="4.0.6" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -23,5 +29,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Import Project="$(BuildCommonDirectory)Exe.props" />
 
 </Project>

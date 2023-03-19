@@ -19,8 +19,12 @@ public sealed class SimpleBlog : ITheme
     /// <param name="engine">エンジン</param>
     /// <param name="pipeline">パイプライン</param>
     /// <param name="settings">設定</param>
-    public SimpleBlog(IEngine engine!!, IPipeline pipeline!!, SimpleBlogSettings settings!!)
+    public SimpleBlog(IEngine engine, IPipeline pipeline, SimpleBlogSettings settings)
     {
+        ArgumentNullException.ThrowIfNull(engine);
+        ArgumentNullException.ThrowIfNull(pipeline);
+        ArgumentNullException.ThrowIfNull(settings);
+
         _engine = engine;
         _pipeline = pipeline;
         _settings = settings;

@@ -13,8 +13,11 @@ public sealed class PluginResolver : IPluginResolver
     /// <see cref="PluginResolver"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="provider">プラグインのオブジェクトを取得するために必要な<see cref="IServiceProvider"/></param>
-    public PluginResolver(IServiceProvider provider!!)
-        => _provider = provider;
+    public PluginResolver(IServiceProvider provider)
+    {
+        ArgumentNullException.ThrowIfNull(provider);
+        _provider = provider;
+    }
 
     /// <inheritdoc/>
     public T GetPlugin<T>()

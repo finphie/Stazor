@@ -21,8 +21,13 @@ readonly struct DocumentCreator : IAction
     /// <param name="filePaths">ファイルパスの配列</param>
     /// <param name="newDocumentsPlugin">ドキュメント新規作成用プラグイン</param>
     /// <param name="editDocumentPlugins">ドキュメント編集用プラグインの配列</param>
-    public DocumentCreator(IStazorDocument[] documents!!, string[] filePaths!!, INewDocumentsPlugin newDocumentsPlugin!!, IEditDocumentPlugin[] editDocumentPlugins!!)
+    public DocumentCreator(IStazorDocument[] documents, string[] filePaths, INewDocumentsPlugin newDocumentsPlugin, IEditDocumentPlugin[] editDocumentPlugins)
     {
+        ArgumentNullException.ThrowIfNull(documents);
+        ArgumentNullException.ThrowIfNull(filePaths);
+        ArgumentNullException.ThrowIfNull(newDocumentsPlugin);
+        ArgumentNullException.ThrowIfNull(editDocumentPlugins);
+
         _documents = documents;
         _filePaths = filePaths;
         _newDocumentsPlugin = newDocumentsPlugin;

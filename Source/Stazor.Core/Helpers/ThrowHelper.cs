@@ -37,7 +37,7 @@ static class ThrowHelper
     /// <param name="paramName">引数名</param>
     /// <exception cref="ArgumentOutOfRangeException">常にこの例外をスローします。</exception>
     [DebuggerHidden]
-    public static void ThrowArgumentOutOfRangeExceptionIfNegativeNumber(int number, [CallerArgumentExpression("number")] string? paramName = null)
+    public static void ThrowArgumentOutOfRangeExceptionIfNegativeNumber(int number, [CallerArgumentExpression(nameof(number))] string? paramName = null)
     {
         if (number < 0)
         {
@@ -52,7 +52,7 @@ static class ThrowHelper
     /// <param name="paramName">引数名</param>
     /// <exception cref="ArgumentException">常にこの例外をスローします。</exception>
     [DebuggerHidden]
-    public static void ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(string argument, [CallerArgumentExpression("argument")] string? paramName = null)
+    public static void ThrowArgumentNullOrWhitespaceExceptionIfNullOrWhitespace(string argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
         if (string.IsNullOrWhiteSpace(argument))
         {

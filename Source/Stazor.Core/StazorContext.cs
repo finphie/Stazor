@@ -15,8 +15,11 @@ sealed class StazorContext : IStazorContext
     /// <see cref="StazorContext"/>クラスの新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="symbols">識別子とUTF-8文字列のペアリスト</param>
-    public StazorContext(IUtf8ArrayDictionary<Utf8Array> symbols!!)
-        => _symbols = symbols;
+    public StazorContext(IUtf8ArrayDictionary<Utf8Array> symbols)
+    {
+        ArgumentNullException.ThrowIfNull(symbols);
+        _symbols = symbols;
+    }
 
     /// <inheritdoc/>
     public void Add(Utf8Array key, Utf8Array value)
